@@ -1,0 +1,17 @@
+<div>
+	<h3>Applicant: {{applicant}}</h3>
+	<h4>FERPA Score: {{ferpa}}</h4>
+	<br>
+	<!--Instruction Set-->
+	<div class="center-block">
+		<h4>Instructions: </h4>
+		<p ng-show="CurrentInstructionSet">Instructions to fill out form....</p>
+		<p ng-hide="CurrentInstructionSet">Instructions to take ferpa quiz.....</p>
+		<br>
+		<br>
+		<input type="button" class="btn btn-default btn-lg" ng-click="goToForm()" ng-show="CurrentInstructionSet" value="Fill out form">
+		<input type="button" class="btn btn-default btn-lg" ng-click="takeFERPA()" ng-hide="CurrentInstructionSet" value="Take FERPA Quiz">
+	</div>
+	<br><br>
+	<h5>SiS Form Application <small>created by A-Team</small><h5>
+</div>
