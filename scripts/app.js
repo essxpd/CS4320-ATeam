@@ -1,4 +1,4 @@
-angular.module('cs4320aTeamApp'), []
+angular.module('cs4320aTeamApp', ['ngRoute'])
   .config(function($routeProvider){
     $routeProvider
       .when('/', {
