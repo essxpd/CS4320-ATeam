@@ -1,0 +1,33 @@
+<div>
+	<h3>SiS Security Form</h3>
+	<br>
+	<br>
+	<!--Auto Fill Bio Data-->
+	<p>Full Legal Name: {{name}}</p>
+	<p>FERPA Score: {{ferpa}}</p>
+	<p>Date of Birth: {{DoB}}</p>
+	<!--Drop Down Menu-->
+	<div class="form-group">
+		<label for="sel1">Requested Security Level:</label>
+		<select class="form-control" id="selectSecurityLevel">
+			<option ng-repeat="levels in securityLevels">{{levels.number}}</option>
+		</select>
+	</div>
+	<br>
+	<br>
+	<!--Verification Questions :: securityLevels object will look like this
+	{ level : 
+		{ number : 1, questions : [question1, question2, question3, question4] }
+		{ number : 2, questions : [question1, question2, question3] }
+	}	
+	The Checkboxes will be grouped by the requested security level
+	once a security level is requested a list will be populated with
+	the relevant questions and currentLevelRequested will be set equal to the selected number
+	{ question: question1
+	  question: question2
+	  question: question3 } -- call this currentLevelQuestions  --  associates with currentLevelRequested
+	-->
+	<div>
+		<input ng-repeat="questions in currentLevelQuestions" class="checkbox" type="checkbox" name={{currentLevelRequested}} value={{questions}}>{{questions}}</input>
+	</div>
+</div>
