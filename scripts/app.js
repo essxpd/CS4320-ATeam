@@ -6,10 +6,11 @@ angular.module('cs4320aTeamApp', ["ngRoute"])
 				templateUrl: "views/applicant.html",
 				controller: "MainCtrl",
 			})
+			.when("/form",{
+				templateUrl: "views/form.html",
+				controller: "MainCtrl"
+			})
 			.otherwise({
 				redirectTo: "/"
 			});
 	}]);
-
-	
-
