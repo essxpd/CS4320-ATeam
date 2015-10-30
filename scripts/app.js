@@ -1,17 +1,21 @@
 angular.module('cs4320aTeamApp', ['ngRoute'])
+
   .config(function($routeProvider){
-    $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl',
-        controllerAs: 'main'
-      })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl',
-        controllerAs: 'about'
-      })
-      .otherwise({
-        redirectTo: '/'
-      });
-  });
+      $routeProvider.when("/",
+        {
+          templateUrl: "applicant.html",
+          controller: "MainCtrl",
+          controllerAs: "main"
+        }
+    )
+    .when("/form",
+        {
+          templateUrl: "form.html",
+          controller: "MainCtrl",
+          controllerAs: "main"
+        }
+    )
+    .otherwise({
+      redirectTo: "/"
+    });
+  })

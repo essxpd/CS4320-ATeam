@@ -1,4 +1,5 @@
 angular.module('cs4320aTeamApp')
   .controller('MainCtrl', function($scope){
-    $scope.title = "CS4320 A Team App";
+    $scope.applicant = "John Doe";
+    $scope.ferpa = "90";
   });
