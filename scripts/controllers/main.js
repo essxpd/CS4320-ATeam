@@ -22,16 +22,20 @@ angular.module('cs4320aTeamApp')
 
 	//If on form page, do this
 	if($scope.currentPath === '/form'){
-    		/*
+    		/* Edit and uncomment once php is implemented.
     		$http.get('/model/secLevels.php')
     		.success(function(response){
         		$scope.securityLevels = response.securityLevels;
     		});
     		*/
-    		var secLevels = [
-			{"number":"1", "questions":["quesiton1","question2"]},
+        //Temp inclusion of a DoB to show something there in UI
+        $scope.DoB = new Date("September 1, 1939");
+        
+        //Temp dummy data for securityLevels object
+        $scope.securityLevels = [
+			{"number":"1", "questions":["question1","question2"]},
 			{"number":"2", "questions":["question3","question4"]}
-		];
-		$scope.securityLevels = secLevels;
+        ];
+        
 	};
   });
