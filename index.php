@@ -5,6 +5,7 @@
 #                header("Location: https://a-team.cloudapp.net/testProject/CS4320-ATeam/index.php");
         if (!isset($_SESSION['loggedIn']))
                 header("Location: http://a-team.cloudapp.net/testProject/CS4320-ATeam/login.php");
+#		will need to change testProject to Project before deployment
 ?>
 <html>
 <head>
