@@ -12,40 +12,53 @@
     <p>Phone Number: {{phoneNum}}</p>
     
     <!-- Choose appropriate request type -->
-    <div class="form-group" ng-model="requestType">
+    <div class="form-group">
         <label for="requestType">Choose which type of request you would like to make:</label>
-        <select class="form-control">
+        <select class="form-control" ng-model="requestType">
             <option value="new">New Request</option>
             <option value="additional">Additional Request</option>
         </select>
     </div>
     
     <!-- Are you a student worker? -->
-    <div class="checkbox" ng-model="studentWorker">
-        <label><input type="checkbox" value="sWisChecked">Check if Student Worker</label>
+    <div class="checkbox">
+        <label><input type="checkbox" ng-model="studentWorker.value"><b>Check if Student Worker</b></label>
+    </div>
+    
+    <!-- Copy Security of Current/Former Staff Member -->
+    <div class="checkbox">
+        <label><input type="checkbox" ng-model="toggle" ng-change="toggleSecQuestions()"><b>Should we copy the security of a current or former staff member?</b></label>
+    </div>
+    
+    <div class="form-group" ng-hide="askSecQuestions">
+        <label>
+            Name:
+            <input type="text" name="empName" ng-model="copySecurity.empName" required>
+        </label>
+        <label>
+            Position:
+            <input type="text" name="empPosition" ng-model="copySecurity.empPosition" required>
+        </label>
+        <label>
+            PawPrint/SSO:
+            <input type="text" name="empPawprint" ng-model="copySecurity.empPawprint" required>
+        </label>
+        <label>
+            Employee ID (if available):
+            <input type="text" name="empId" ng-model="copySecurity.empId" required>
+        </label>
     </div>
     
 	<!--Drop Down Menu-->
     <!-- cwm262 note: changed how this select group was working. Implemented ng-options -->
-	<div class="form-group">
+	<div class="form-group" ng-show="askSecQuestions">
 		<label for="selectLevel">Requested Security Level:</label>
         <select class="form-control" ng-model="selectedLevelQuestions" ng-options="levels.questions as levels.number for levels in securityLevels"></select>
 	</div>
-	<!--Verification Questions :: securityLevels object will look like this
-	{ level : 
-		{ number : 1, questions : [question1, question2, question3, question4] }
-		{ number : 2, questions : [question1, question2, question3] }
-	}	
-	The Checkboxes will be grouped by the requested security level
-	once a security level is requested a list will be populated with
-	the relevant questions and currentLevelRequested will be set equal to the selected number
-	{ question: question1
-	  question: question2
-	  question: question3 } -- call this currentLevelQuestions  --  associates with currentLevelRequested
-	-->
+
     <!-- cwm262 note: Changed how this was working to coincide with change to above select group.-->
 	<div class="checkbox" ng-model="selectedLevelQuestions" ng-repeat="questions in selectedLevelQuestions">
-		<label><input type="checkbox" value={{questions}}>{{questions}}</label>
+		<label><input type="checkbox" ng-model="questions.value">{{questions.question}}</label>
 	</div>
     
     <button type="button" class="btn btn-default" ng-click="saveRequest()">Submit</button>
