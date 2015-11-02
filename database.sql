@@ -1,4 +1,3 @@
---A Team
 
 DROP SCHEMA IF EXISTS sqldb CASCADE;
 CREATE SCHEMA sqldb;
