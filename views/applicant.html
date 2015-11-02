@@ -1,5 +1,5 @@
-<div>
-	<h3>Applicant: {{applicant}}</h3>
+<div class="container">
+	<h3>Applicant: {{name}}</h3>
 	<h4>FERPA Score: {{ferpa}}</h4>
 	<br>
 	<!--Previous Submissions-->
@@ -13,7 +13,7 @@
 				</div>
 				<div id="collapseMain" class="panel-collapse collapse">
 					<div class="panel-body">
-						<div ng-repeat="forms in prevForms"><a ng-click="downloadForm(forms.id)">{{forms.complete}}</a></div>
+						<div ng-repeat="forms in prevForms"><a ng-click="downloadForm(forms.id)">{{forms.name}}</a></div>
 					</div>
 			</div>
 		</div>
@@ -30,5 +30,4 @@
 	</div>
 	<br>
 	<br>
-	<h5>SiS Form Application <small>created by A-Team</small><h5>
 </div>

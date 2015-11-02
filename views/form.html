@@ -1,20 +1,36 @@
-<div>
-	<h3>SiS Security Form</h3>
-	<br>
+<div class="container">
+    <br>
 	<br>
 	<!--Auto Fill Bio Data-->
 	<p>Full Legal Name: {{name}}</p>
-	<p>FERPA Score: {{ferpa}}</p>
 	<p>Date of Birth: {{DoB}}</p>
+    <p>Title: {{title}}</p>
+    <p>Department: {{dept}}</p>
+    <p>Pawprint/SSO: {{paw}}</p>
+    <p>Employee ID: {{id}}</p>
+    <p>Campus Address: {{addr}}</p>
+    <p>Phone Number: {{phoneNum}}</p>
+    
+    <!-- Choose appropriate request type -->
+    <div class="form-group" ng-model="requestType">
+        <label for="requestType">Choose which type of request you would like to make:</label>
+        <select class="form-control">
+            <option value="new">New Request</option>
+            <option value="additional">Additional Request</option>
+        </select>
+    </div>
+    
+    <!-- Are you a student worker? -->
+    <div class="checkbox" ng-model="studentWorker">
+        <label><input type="checkbox" value="sWisChecked">Check if Student Worker</label>
+    </div>
+    
 	<!--Drop Down Menu-->
+    <!-- cwm262 note: changed how this select group was working. Implemented ng-options -->
 	<div class="form-group">
-		<label for="sel1">Requested Security Level:</label>
-		<select class="form-control" id="selectSecurityLevel">
-			<option ng-repeat="levels in securityLevels">{{levels.number}}</option>
-		</select>
+		<label for="selectLevel">Requested Security Level:</label>
+        <select class="form-control" ng-model="selectedLevelQuestions" ng-options="levels.questions as levels.number for levels in securityLevels"></select>
 	</div>
-	<br>
-	<br>
 	<!--Verification Questions :: securityLevels object will look like this
 	{ level : 
 		{ number : 1, questions : [question1, question2, question3, question4] }
@@ -27,7 +43,10 @@
 	  question: question2
 	  question: question3 } -- call this currentLevelQuestions  --  associates with currentLevelRequested
 	-->
-	<div>
-		<input ng-repeat="questions in currentLevelQuestions" class="checkbox" type="checkbox" name={{currentLevelRequested}} value={{questions}}>{{questions}}</input>
+    <!-- cwm262 note: Changed how this was working to coincide with change to above select group.-->
+	<div class="checkbox" ng-model="selectedLevelQuestions" ng-repeat="questions in selectedLevelQuestions">
+		<label><input type="checkbox" value={{questions}}>{{questions}}</label>
 	</div>
+    
+    <button type="button" class="btn btn-default" ng-click="saveRequest()">Submit</button>
 </div>
