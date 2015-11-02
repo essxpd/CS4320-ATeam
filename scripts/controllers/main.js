@@ -82,8 +82,8 @@ angular.module('cs4320aTeamApp')
 
             //Temp dummy data for securityLevels object
             $scope.securityLevels = [
-                {"number":"1", "questions":["question1","question2"]},
-                {"number":"2", "questions":["question3","question4"]}
+                {"number":"1", "questions":[{"question":"question1", "value":false},{"question":"question2", "value":false}]},
+                {"number":"2", "questions":[{"question":"question3", "value":false},{"question":"question4", "value":false}]}
             ];
 
             /* To submit security level request data
