@@ -1,4 +1,4 @@
-
+angular.module('cs4320aTeamApp')
     .controller('MainCtrl', function($scope, $location, $http, $window){
         /* Temporary applicant name and ferpa score to make UI skeleton look a little better
         Be sure to Delete once real data is being brought in */
