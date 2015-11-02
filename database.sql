@@ -1,5 +1,4 @@
-
-DROP SCHEMA IF EXISTS sqldb CASCADE;
+DROP SCHEMA IF EXISTS sqldb;
 CREATE SCHEMA sqldb;
 SET search_path = sqldb;
 
