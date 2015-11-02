@@ -71,6 +71,7 @@
     <!-- cwm262 note: Changed how this was working to coincide with change to above select group.-->
 	<div class="checkbox" ng-model="selectedLevelQuestions" ng-repeat="questions in selectedLevelQuestions">
 		<label><input type="checkbox" ng-model="questions.value">{{questions.question}}</label>
+		<label><input type="radio" name="status" ng-model="" ng-repeat="status in questions.status">{{status}}</label>
 	</div>
     
     <button type="button" class="btn btn-default" ng-click="saveRequest()">Submit</button>
