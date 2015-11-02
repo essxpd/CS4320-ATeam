@@ -12,17 +12,17 @@
     <p>Phone Number: {{phoneNum}}</p>
     
     <!-- Choose appropriate request type -->
-    <div class="form-group" ng-model="requestType">
+    <div class="form-group">
         <label for="requestType">Choose which type of request you would like to make:</label>
-        <select class="form-control">
+        <select class="form-control" ng-model="requestType">
             <option value="new">New Request</option>
             <option value="additional">Additional Request</option>
         </select>
     </div>
     
     <!-- Are you a student worker? -->
-    <div class="checkbox" ng-model="studentWorker">
-        <label><input type="checkbox" value="sWisChecked">Check if Student Worker</label>
+    <div class="checkbox">
+        <label><input type="checkbox" ng-model="studentWorker.value">Check if Student Worker</label>
     </div>
     
 	<!--Drop Down Menu-->
