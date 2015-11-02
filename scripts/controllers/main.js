@@ -12,6 +12,7 @@ angular.module('cs4320aTeamApp')
         $scope.addr = "1111 East Broadway";
         $scope.phoneNum = "(555)555-5555";
         /* Delete above code once real data is brought in */
+    
         $scope.login = function(){
             var config = {
                 url: '/model/auth.php',
@@ -50,10 +51,13 @@ angular.module('cs4320aTeamApp')
         $scope.currentPath = $location.path();
 
         //Change instruction menu based on ferpa score
+        //Show goToForm() if ferpa >= 85
+        //Show takeFERPA() if ferpa < 85
         if($scope.ferpa > 85){
             $scope.CurrentInstructionSet = true;
         };
     
+        //Dummy data for prevForms -- Delete for production
         $scope.prevForms = [
             {"id":1421, "name":"form1"},
             {"id":7431, "name":"form41"}
@@ -109,8 +113,8 @@ angular.module('cs4320aTeamApp')
             
             //Temp dummy data for securityLevels object
             $scope.securityLevels = [
-                {"number":"1", "questions":[{"question":"question1", "value":false},{"question":"question2", "value":false}]},
-                {"number":"2", "questions":[{"question":"question3", "value":false},{"question":"question4", "value":false}]}
+                {"number":"1", "questions":[{"question":"question1", "status":["view"]},{"question":"question2", "status":["update"]}]},
+                {"number":"2", "questions":[{"question":"question3", "status":["update"]},{"question":"question4", "status":["view"]}]}
             ];
 
             /* To submit security level request data
