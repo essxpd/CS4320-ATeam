@@ -1,6 +1,5 @@
-<div>
-	<h3>SiS Security Form</h3>
-	<br>
+<div class="container">
+    <br>
 	<br>
 	<!--Auto Fill Bio Data-->
 	<p>Full Legal Name: {{name}}</p>
@@ -23,7 +22,7 @@
     
     <!-- Are you a student worker? -->
     <div class="checkbox" ng-model="studentWorker">
-        <label><input type="checkbox" value="true">Check if Student Worker</label>
+        <label><input type="checkbox" value="sWisChecked">Check if Student Worker</label>
     </div>
     
 	<!--Drop Down Menu-->
@@ -32,8 +31,6 @@
 		<label for="selectLevel">Requested Security Level:</label>
         <select class="form-control" ng-model="selectedLevelQuestions" ng-options="levels.questions as levels.number for levels in securityLevels"></select>
 	</div>
-	<br>
-	<br>
 	<!--Verification Questions :: securityLevels object will look like this
 	{ level : 
 		{ number : 1, questions : [question1, question2, question3, question4] }
