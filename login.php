@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html>
-
+<?php
+        session_start();
+#        if(!$_SERVER['HTTPS'])
+#                header("Location: https://a-team.cloudapp.net/CS4320-ATeam/model/login.php");
+        if (isset($_SESSION['loggedIn']))
+                header("Location: http://a-team.cloudapp.net/testProject/CS4320-ATeam/index.php");
+?>
 <head>
   <meta charset="utf-8">
   <title>CS4320 A-Team Login</title>
@@ -29,10 +35,10 @@
 <div id="login">
 	<form>
 		Username:<br>
-		<input type="text" ng-model="username">
+		<input type="text" ng-model="user.username">
 		<br>
 		Password:<br>
-		<input type="password" ng-model="password">
+		<input type="password" ng-model="user.password">
 		<br><br>
 		<button ng-click="login()">Submit</button>
 	</form>

@@ -17,24 +17,24 @@ angular.module('cs4320aTeamApp')
                 url: '/model/auth.php',
                 method: 'POST',
                 data: {
-                    username: $scope.username,
-                    password: $scope.password
+                    username: $scope.user.username,
+                    password: $scope.user.password
                 },
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }
             $http(config)
             .success(function(data, status, headers, config){
                 if(data.status){
-                    $scope.fname = data.fname;
-                    $scope.lname = data.lname;
-                    $scope.fullName = data.fname + " " + data.lname;
-                    $scope.ferpa = data.ferpa;
-                    $scope.dob = data.dob;
-                    $scope.title = data.title;
-                    $scope.dept = data.dept;
-                    $scope.empID = data.empID;
-                    $scope.campAddr = data.campAddr;
-                    $scope.phoneNum = data.phoneNum;
+                    $scope.user.fname = data.fname;
+                    $scope.user.lname = data.lname;
+                    $scope.user.fullName = data.fname + " " + data.lname;
+                    $scope.user.ferpa = data.ferpa;
+                    $scope.user.dob = data.dob;
+                    $scope.user.title = data.title;
+                    $scope.user.dept = data.dept;
+                    $scope.user.empID = data.empID;
+                    $scope.user.campAddr = data.campAddr;
+                    $scope.user.phoneNum = data.phoneNum;
                     $location.path('/');
                 } 
                 else{

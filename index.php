@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html>
-
+<?php
+        session_start();
+#        if(!$_SERVER['HTTPS'])
+#                header("Location: https://a-team.cloudapp.net/CS4320-ATeam/model/index.php");
+        if (!isset($_SESSION['loggedIn']))
+                header("Location: http://a-team.cloudapp.net/testProject/CS4320-ATeam/login.php");
+?>
 <head>
   <meta charset="utf-8">
   <title>CS4320 A-Team Project</title>
