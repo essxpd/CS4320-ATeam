@@ -1,10 +1,6 @@
-
-DROP SCHEMA IF EXISTS sqldb CASCADE;
-CREATE SCHEMA sqldb;
-SET search_path = sqldb;
-
-create table users (
-	Full_Name varchar(30),
+/*drop table if exists users;*/
+create table users(
+    Full_Name varchar(30),
 	Title varchar(15), /*things like student, teacher, etc...*/
 	Department varchar (30),
 	SSO varchar (15) PRIMARY KEY,
@@ -15,16 +11,20 @@ create table users (
 	User_Type Varchar(15)
 );
 
-create table authentication (
+/*drop table if exists authentication;*/
+create table authentication(
 	SSO varchar(15) PRIMARY KEY,
-	Password_Hash char(40) NOT NULL;
+	Password_Hash char(40) NOT NULL,
 	Salt char(40) NOT NULL,
 	FOREIGN KEY (SSO) REFERENCES users(SSO)
 );
 
-create table log (
+/*drop table if exists log;*/
+create table log(
 	Registration_Date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	Active_Requests int,
 	Date_Approved date,
-	Request_Submitted date
+	Request_Submitted date,
+    SSO varchar(15),
+    FOREIGN KEY (SSO) REFERENCES users(SSO)
 );
