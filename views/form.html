@@ -1,0 +1,78 @@
+<div class="container">
+    <br>
+	<br>
+	<!--Auto Fill Bio Data-->
+	<p>Full Legal Name: {{name}}</p>
+	<p>Date of Birth: {{DoB}}</p>
+    <p>Title: {{title}}</p>
+    <p>Department: {{dept}}</p>
+    <p>Pawprint/SSO: {{paw}}</p>
+    <p>Employee ID: {{id}}</p>
+    <p>Campus Address: {{addr}}</p>
+    <p>Phone Number: {{phoneNum}}</p>
+    
+    <!-- Choose appropriate request type -->
+    <div class="form-group">
+        <label for="requestType">Choose which type of request you would like to make:</label>
+        <select class="form-control" ng-model="requestType">
+            <option value="new">New Request</option>
+            <option value="additional">Additional Request</option>
+        </select>
+    </div>
+    
+    <!-- Are you a student worker? -->
+    <div class="checkbox">
+        <label><input type="checkbox" ng-model="studentWorker"><b>Check if Student Worker</b></label>
+    </div>
+    
+    <!-- Please describe why you need access? -->
+    <div class="form-group">
+        <label>Please describe the type of access needed (i.e., view student name, address, rosters, etc.). Please be specific.</label>
+        <textarea class="form-control" rows="5" ng-model="explainRequest"></textarea>
+    </div>
+    
+    <!-- Copy Security of Current/Former Staff Member -->
+    <div class="checkbox">
+        <label><input type="checkbox" ng-model="toggle" ng-change="toggleSecQuestions()"><b>Should we copy the security of a current or former staff member?</b></label>
+    </div>
+    
+    <form role="form" ng-hide="askSecQuestions">
+        <div class="checkbox">
+            <label><input type="checkbox" ng-model="currentEmpCopy"> Copy current employee?</label>
+        </div>
+        <div class="checkbox">
+            <label><input type="checkbox" ng-model="formerEmpCopy"> Copy former employee?</label>
+        </div>
+        <div class="form-group">
+            <label>Name: </label>
+            <input type="text" class="form-control" name="empName" ng-model="copySecurity.empName" required>
+        </div>
+        <div class="form-group">
+            <label>Position: </label>
+            <input type="text" class="form-control" name="empPosition" ng-model="copySecurity.empPosition" required>
+        </div>
+        <div class="form-group">
+            <label>PawPrint/SSO: </label>
+            <input type="text" class="form-control" name="empPawprint" ng-model="copySecurity.empPawprint" required>
+        </div>
+        <div class="form-group">
+            <label>Employee ID (if available): </label>
+            <input type="text" class="form-control" name="empId" ng-model="copySecurity.empId" required>
+        </div>
+    </form>
+    
+	<!--Drop Down Menu-->
+    <!-- cwm262 note: changed how this select group was working. Implemented ng-options -->
+	<div class="form-group" ng-show="askSecQuestions">
+		<label for="selectLevel">Requested Security Level:</label>
+        <select class="form-control" ng-model="selectedLevelQuestions" ng-options="levels.questions as levels.number for levels in securityLevels"></select>
+	</div>
+
+    <!-- cwm262 note: Changed how this was working to coincide with change to above select group.-->
+	<div class="checkbox" ng-model="selectedLevelQuestions" ng-repeat="questions in selectedLevelQuestions">
+		<label><input type="checkbox" ng-model="questions.value">{{questions.question}}</label>
+		<label><input type="radio" name="status" ng-model="" ng-repeat="status in questions.status">{{status}}</label>
+	</div>
+    
+    <button type="button" class="btn btn-default" ng-click="saveRequest()">Submit</button>
+</div>

@@ -1,17 +1,16 @@
-angular.module('cs4320aTeamApp', ['ngRoute'])
-  .config(function($routeProvider){
-    $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl',
-        controllerAs: 'main'
-      })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl',
-        controllerAs: 'about'
-      })
-      .otherwise({
-        redirectTo: '/'
-      });
-  });
+"use strict";
+angular.module('cs4320aTeamApp', ["ngRoute"])
+	.config(["$routeProvider", function($routeProvider){
+		$routeProvider
+			.when("/", {
+				templateUrl: "views/applicant.html",
+				controller: "MainCtrl",
+			})
+			.when("/form",{
+				templateUrl: "views/form.html",
+				controller: "MainCtrl"
+			})
+			.otherwise({
+				redirectTo: "/"
+			});
+	}]);
