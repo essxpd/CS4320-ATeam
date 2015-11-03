@@ -3,8 +3,8 @@
         session_start();
 #        if(!$_SERVER['HTTPS'])
 #                header("Location: https://a-team.cloudapp.net/testProject/CS4320-ATeam/login.php");
- #       if (isset($_SESSION['loggedIn']))#if logged in redirect to index.php
-  #              header("Location: http://a-team.cloudapp.net/testProject/CS4320-ATeam/index.php");
+        if (isset($_SESSION['loggedIn']))#if logged in redirect to index.php
+                header("Location: http://a-team.cloudapp.net/testProject/CS4320-ATeam/index.php");
 #               will need to change testProject to Project before deployment
 ?>
 <html>

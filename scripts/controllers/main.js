@@ -50,11 +50,6 @@ angular.module('cs4320aTeamApp')
         //Grab current URL
         $scope.currentPath = $location.path();
 
-	// Go to home page
-	$scope.goToHome = function() {
-		$location.path('/');
-	};
-
         //Change instruction menu based on ferpa score
         //Show goToForm() if ferpa >= 85
         //Show takeFERPA() if ferpa < 85
@@ -131,6 +126,6 @@ angular.module('cs4320aTeamApp')
                 }); 
             }
             */
-	
+
         };
       });
