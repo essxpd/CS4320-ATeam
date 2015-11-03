@@ -10,12 +10,7 @@ angular.module('cs4320aTeamApp', ["ngRoute"])
 				templateUrl: "views/form.html",
 				controller: "MainCtrl"
 			})
-			.when("/error",{
-				templateUrl: "views/error.html",
-				controller: "MainCtrl"
-			})
 			.otherwise({
-				templateUrl: "views/404.html",
-				controller: "MainCtrl"
+				redirectTo: "/"
 			});
 	}]);
