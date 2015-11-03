@@ -71,6 +71,12 @@ angular.module('cs4320aTeamApp')
         $scope.goToForm = function(){
             $location.path('/form');
         }
+
+	// Redirects to usets home
+	$scope.goToHome = function() {
+	    $location.path('/');
+	}	
+
         //When user clicks Take FERPA Quiz button, redirect user to ferpa quiz page
         $scope.takeFERPA = function(){
             $window.location.href = "http://myzoutraining.missouri.edu/ferpa.html";
