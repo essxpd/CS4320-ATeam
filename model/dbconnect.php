@@ -3,7 +3,7 @@
 include("../secure/DatabaseAuth.php");
 
 // Create connection
-$conn = mysqli_connect($servername, $username, $password);
+$conn = mysqli_connect(HOSTNAME, USERNAME, PASSWORD);
 
 // Check connection
 if (!$conn) {
