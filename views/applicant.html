@@ -1,6 +1,40 @@
+<!DOCTYPE html>
+<html>
+    
+<head>
+  <meta charset="utf-8">
+  <title>CS4320 A-Team Applicant</title>
+  <meta name="viewport" content="width=device-width">
+    
+    <!-- Bootstrap CSS -->
+      
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+  <!-- Main Style Sheet -->
+  <link rel="stylesheet" href="../styles/main.css">
+    
+    <!-- Applicant Style Sheet -->
+    <link rel="stylesheet" href="../styles/applicant.css">
+
+  <!-- Get AngularJS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+  <!-- Get Angular ngRoute -->
+  <script src="https://code.angularjs.org/1.4.7/angular-route.min.js"></script>
+
+  <script src="scripts/app.js"></script>
+  <script src="scripts/controllers/main.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        </head>
+    <body>
+
 <div class="container">
-	<h3>Applicant: {{name}}</h3>
-	<h4>FERPA Score: {{ferpa}}</h4>
+<h2>Welcome, {{name}}! &nbsp;<small><b>Your current FERPA score is {{ferpa}}.</b></small></h2>
+    
+    <div class="logout"><a href="../model/logout.php"><b>LOGOUT</a></b></div>
+    
 	<br>
 	<!--Previous Submissions-->
 	<div>
@@ -20,14 +54,45 @@
 	<div>
 	<!--Instruction Set-->
 	<div class="center-block">
-		<h4>Instructions: </h4>
-		<p ng-show="CurrentInstructionSet">Instructions to fill out form....</p>
-		<p ng-hide="CurrentInstructionSet">Instructions to take ferpa quiz.....</p>
-		<br>
-		<br>
-		<input type="button" class="btn btn-default btn-lg" ng-click="goToForm()" ng-show="CurrentInstructionSet" value="Fill out form">
-		<input type="button" class="btn btn-default btn-lg" ng-click="takeFERPA()" ng-hide="CurrentInstructionSet" value="Take FERPA Quiz">
+		<h3>Submission Instructions: </h3>
+		<p ng-show="CurrentInstructionSet">
+            
+            Welcome to the Electronic Sis Security Form! Using this form, you can request specific access to various parts of myZou. <b>In order to complete the form, you must have a FERPA score of 85 or above. </b>
+             
+            <br><br>
+            
+            To submit the application, please click on the button below. You will be redirected to the online application form. Please fill out the form completely and click the "SUBMIT" button at the bottom of the screen. If you are confused about a certain form field, please hover over that form field's name. It will provide additional information as to what should be entered into that form. 
+            
+            <br><br>
+            
+            To view previously submitted applications, please refer to the dropdown above.
+         
+            <br><br>
+            
+            If you have any questions, please contact our support desk at <a href="mailto:lmaosupport@missouri.edu">lmaosupport@missouri.edu</a>.
+        
+        </p>
+		<p ng-hide="CurrentInstructionSet">
+            
+            Welcome to the Electronic Sis Security Form! Using this form, you can request specific access to various parts of myZou. <b>In order to complete the form, you must have a FERPA score of 85 or above.</b>
+            
+            <br><br>
+            
+            Unfortunately, your FERPA score isn't high enough to meet the criteria. Please click the button below to retake the FERPA quiz. Once you've achieved a score of 85 or above, please log in; the form will be available for you to submit!
+            
+                        <br><br>
+            
+            If you have any questions, please contact our support desk at <a href="mailto:lmaosupport@missouri.edu">lmaosupport@missouri.edu</a>.
+            
+        </p>
+
+        
+
+		<input type="button" class="applicantbutton" ng-click="goToForm()" ng-show="CurrentInstructionSet" value="Fill Out Form">&nbsp;
+		<input type="button" class="applicantbutton" ng-click="takeFERPA()" ng-hide="CurrentInstructionSet" value="Take FERPA Quiz">
 	</div>
 	<br>
 	<br>
 </div>
+
+            </body></html>

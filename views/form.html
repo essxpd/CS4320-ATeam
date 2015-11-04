@@ -1,6 +1,38 @@
+<!DOCTYPE html>
+<html>
+    
+<head>
+  <meta charset="utf-8">
+  <title>CS4320 A-Team Form</title>
+  <meta name="viewport" content="width=device-width">
+    
+    <!-- Bootstrap CSS -->
+      
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+  <!-- Main Style Sheet -->
+  <link rel="stylesheet" href="../styles/main.css">
+    
+    <!-- Form Style Sheet -->
+    <link rel="stylesheet" href="../styles/form.css">
+    
+
+  <!-- Get AngularJS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+  <!-- Get Angular ngRoute -->
+  <script src="https://code.angularjs.org/1.4.7/angular-route.min.js"></script>
+
+  <script src="scripts/app.js"></script>
+  <script src="scripts/controllers/main.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        </head>
+    <body>
+
 <div class="container">
-    <br>
-	<br>
+    <h2>{{saveError}}</h2>
 	<!--Auto Fill Bio Data-->
 	<p>Full Legal Name: {{name}}</p>
 	<p>Date of Birth: {{DoB}}</p>
@@ -22,7 +54,13 @@
     
     <!-- Are you a student worker? -->
     <div class="checkbox">
-        <label><input type="checkbox" ng-model="studentWorker.value"><b>Check if Student Worker</b></label>
+        <label><input type="checkbox" ng-model="studentWorker"><b>Check if Student Worker</b></label>
+    </div>
+    
+    <!-- Please describe why you need access? -->
+    <div class="form-group">
+        <label>Please describe the type of access needed (i.e., view student name, address, rosters, etc.). Please be specific.</label>
+        <textarea class="form-control" rows="5" ng-model="explainRequest"></textarea>
     </div>
     
     <!-- Copy Security of Current/Former Staff Member -->
@@ -30,24 +68,30 @@
         <label><input type="checkbox" ng-model="toggle" ng-change="toggleSecQuestions()"><b>Should we copy the security of a current or former staff member?</b></label>
     </div>
     
-    <div class="form-group" ng-hide="askSecQuestions">
-        <label>
-            Name:
-            <input type="text" name="empName" ng-model="copySecurity.empName" required>
-        </label>
-        <label>
-            Position:
-            <input type="text" name="empPosition" ng-model="copySecurity.empPosition" required>
-        </label>
-        <label>
-            PawPrint/SSO:
-            <input type="text" name="empPawprint" ng-model="copySecurity.empPawprint" required>
-        </label>
-        <label>
-            Employee ID (if available):
-            <input type="text" name="empId" ng-model="copySecurity.empId" required>
-        </label>
-    </div>
+    <form role="form" ng-hide="askSecQuestions">
+        <div class="checkbox">
+            <label><input type="checkbox" ng-model="currentEmpCopy"> Copy current employee?</label>
+        </div>
+        <div class="checkbox">
+            <label><input type="checkbox" ng-model="formerEmpCopy"> Copy former employee?</label>
+        </div>
+        <div class="form-group">
+            <label data-toggle="tooltip" data-placement="top" title="sample explanation of what goes here. this feature has not yet been fully implemented.">Name: </label>
+            <input type="text" class="form-control" name="empName" ng-model="copySecurity.empName" required>
+        </div>
+        <div class="form-group">
+            <label>Position: </label>
+            <input type="text" class="form-control" name="empPosition" ng-model="copySecurity.empPosition" required>
+        </div>
+        <div class="form-group">
+            <label>PawPrint/SSO: </label>
+            <input type="text" class="form-control" name="empPawprint" ng-model="copySecurity.empPawprint" required>
+        </div>
+        <div class="form-group">
+            <label>Employee ID (if available): </label>
+            <input type="text" class="form-control" name="empId" ng-model="copySecurity.empId" required>
+        </div>
+    </form>
     
 	<!--Drop Down Menu-->
     <!-- cwm262 note: changed how this select group was working. Implemented ng-options -->
@@ -59,7 +103,18 @@
     <!-- cwm262 note: Changed how this was working to coincide with change to above select group.-->
 	<div class="checkbox" ng-model="selectedLevelQuestions" ng-repeat="questions in selectedLevelQuestions">
 		<label><input type="checkbox" ng-model="questions.value">{{questions.question}}</label>
+		<label><input type="radio" name="status" ng-model="" ng-repeat="status in questions.status">{{status}}</label>
 	</div>
     
-    <button type="button" class="btn btn-default" ng-click="saveRequest()">Submit</button>
+    <button type="button" ng-click="saveRequest()">SUBMIT</button>
 </div>
+        
+        <br><br><br>
+        
+        <script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+        
+    </body></html>
