@@ -46,29 +46,10 @@ p a:hover
 }
 
 img {
-
     background: transparent;
     border: 2px solid rgba(0, 0, 0, 1);
     border-radius: 4px;
     display: block;
     margin: 1.3em auto;
     max-width: 95%;
-}
-
-@-webkit-keyframes colorize {
-    0% {
-        -webkit-filter: grayscale(100%);
-    }
-    100% {
-        -webkit-filter: grayscale(0%);
-    }
-}
-
-@keyframes colorize {
-    0% {
-        filter: grayscale(100%);
-    }
-    100% {
-        filter: grayscale(0%);
-    }
 }
