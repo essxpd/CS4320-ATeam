@@ -12,7 +12,7 @@ require("dbconnect.php");
                 
 				echo "<br> made it to begining of first if";
 				$row1 = mysqli_fetch_assoc($result);
-				$localhash = sha1($row['salt'].$pw);
+				$localhash = sha1($row1['Salt'].$pw);
 				$result->close();
 #	               	echo "<br> made it to end of first if";
 
@@ -27,7 +27,7 @@ require("dbconnect.php");
                 
                 $_SESSION["SSO"] = $user;
 
-                if ($localhash == $row1['password_hash'])
+                if ($localhash == $row1['Password_Hash'])
                 {
                         echo 'You logged in!';
 						if($user_type == 'administrator')
