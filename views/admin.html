@@ -1,0 +1,33 @@
+<div class="container">
+        <h3>Applicant: {{name}}</h3>
+        <h4>FERPA Score: {{ferpa}}</h4>
+        <br>
+        <!--Previous Submissions-->
+        <div>
+                <div id="accordionMain" class="panel-group">
+                        <div class="panel panel-default">
+                                <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseMain">Created forms</a>
+                                        </h4>
+                                </div>
+                                <div id="collapseMain" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                                <div ng-repeat="forms in createdForms"><a ng-click="downloadCreatedForm(forms.id)">{{forms.name}}</a></div>
+                                        </div>
+                        </div>
+                </div>
+        <div>
+        <!--Instruction Set-->
+        <div class="center-block">
+                <br>
+		<h4>Instructions: </h4>
+                <p>Instructions to create new forms...</p>
+                <br>
+                <br>
+                <input type="button" class="btn btn-default btn-lg" ng-click="createForm()" value="Create new form">
+        </div>
+        <br>
+        <br>
+</div>
+
