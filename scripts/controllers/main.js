@@ -111,56 +111,99 @@ angular.module('cs4320aTeamApp')
 	    }
 	}
 
-        //If on form page, do this
-        if($scope.currentPath === '/form'){
-            
-            //NgHide and NgShow to control whether security access questions are revealed
-            $scope.askSecQuestions = true;
-            
-            $scope.studentWorker = false;
-            
-            //Tied to ngChange on form.html
-            //If checkbox is toggled, reveals questions about whether security should be copied
-            //If checkbox is toggled back to false, hides questions about copying security and
-            //reveals the usual access level questions instead
-            $scope.toggleSecQuestions = function(){
-                
-                if($scope.toggle === true){
-                
-                    $scope.askSecQuestions = false;
+	//If on form page, do this
+	if($scope.currentPath === '/form'){
+		
+		//NgHide and NgShow to control whether security access questions are revealed
+		$scope.askSecQuestions = true;
+		
+		$scope.studentWorker = false;
+		
+		//Tied to ngChange on form.html
+		//If checkbox is toggled, reveals questions about whether security should be copied
+		//If checkbox is toggled back to false, hides questions about copying security and
+		//reveals the usual access level questions instead
+		$scope.toggleSecQuestions = function(){
+			
+			if($scope.toggle === true){
+			
+				$scope.askSecQuestions = false;
 
-                    $scope.copySecurity = [
-                        {"name":""},
-                        {"position":""},
-                        {"pawprint":""},
-                        {"empId": ""}
-                    ];
-                }
-                else{
-                    $scope.askSecQuestions = true;  
-                }
-                
-            };
-            
-            //Temp dummy data for securityLevels object
-            $scope.securityLevels = [
-                {"number":"1", "questions":[{"question":"question1", "status":["view"]},{"question":"question2", "status":["update"]}]},
-                {"number":"2", "questions":[{"question":"question3", "status":["update"]},{"question":"question4", "status":["view"]}]}
-            ];
-            
-            
-            // To submit security level request data
-            $scope.saveRequest = function(){
-<<<<<<< HEAD
-               $http.post('/model/saveRequest.php', {
-                    requestType: $scope.requestType,
-                    studentWorker: $scope.studentWorker,
-                    secAnswers: $scope.securityLevels
-                }); 
-            }
-            */
+				$scope.copySecurity = [
+					{"name":""},
+					{"position":""},
+					{"pawprint":""},
+					{"empId": ""}
+				];
+			}
+			else{
+				$scope.askSecQuestions = true;  
+			}
+			
+		};
+		
+		//Temp dummy data for securityLevels object
+		$scope.securityLevels = [
+			{"number":"1", "questions":[{"question":"question1", "status":["view"]},{"question":"question2", "status":["update"]}]},
+			{"number":"2", "questions":[{"question":"question3", "status":["update"]},{"question":"question4", "status":["view"]}]}
+		];
+		
+		
+		// To submit security level request data
+		$scope.saveRequest = function(){
+			//Error Message if fields haven't been entered.
+			$scope.saveError = "";
+			
+			//JSON obj to be pushed to mongo // To be changed: swap $scope variables with non-dummy login-acquired data
+			var newData = {
+				"paw" : $scope.paw,
+				"name" : $scope.name,
+				"ferpa" : $scope.ferpa,
+				"title" : $scope.title,
+				"dept" : $scope.dept,
+				"id" : $scope.id,
+				"addr" : $scope.addr,
+				"phoneNum" : $scope.phoneNum,
+				"requestType" : $scope.requestType,
+				"studentWorker" : $scope.studentWorker,
+				"explainRequest" : $sanitize($scope.explainRequest),
+				"securityLevels" : $scope.securityLevels
+			};
+			
+			//Replace securityLevels with the information from copySecurity if they've elected to do that instead.
+			if($scope.toggle === true){
+				newData.securityLevels = angular.copy($scope.copySecurity);
+			}
+			
+			//If type of request hasn't been specified, change error msg to what's below and return.
+			if(!$scope.requestType){
+				$scope.saveError = "Please choose which type of request you would like to make.";
+				return;
+			}
+			
+			if(!$scope.explainRequest){
+				$scope.saveError = "Please describe the type of access needed in the large space below.";
+				return;
+			}
+			
+			console.dir(newData); // Show what's being saved. For testing.
+			
+			// Inserts data into mongo, Temp notifies you in console when success
+			$.ajax({
+				type: "POST",
+				url: './model/mongoScript.php',
+				data: {data : newData},
+				success: function(data){console.log(data);}
+			});
 
-        }
+		   $http.post('/model/saveRequest.php', {
+				requestType: $scope.requestType,
+				studentWorker: $scope.studentWorker,
+				secAnswers: $scope.securityLevels
+			}); 
+
+        	}
+	}
 	// If on the create form page then load form-builder
 	else if($scope.currentPath === '/createForm') {
 		fb = new Formbuilder({
@@ -178,53 +221,5 @@ angular.module('cs4320aTeamApp')
 			$(".fb-body").outerWidth($(".jumbotron").outerWidth());
 		}
 	}
-=======
-                
-                //Error Message if fields haven't been entered.
-                $scope.saveError = "";
-                
-                //JSON obj to be pushed to mongo // To be changed: swap $scope variables with non-dummy login-acquired data
-                var newData = {
-                    "paw" : $scope.paw,
-                    "name" : $scope.name,
-                    "ferpa" : $scope.ferpa,
-                    "title" : $scope.title,
-                    "dept" : $scope.dept,
-                    "id" : $scope.id,
-                    "addr" : $scope.addr,
-                    "phoneNum" : $scope.phoneNum,
-                    "requestType" : $scope.requestType,
-                    "studentWorker" : $scope.studentWorker,
-                    "explainRequest" : $sanitize($scope.explainRequest),
-                    "securityLevels" : $scope.securityLevels
-                };
-                
-                //Replace securityLevels with the information from copySecurity if they've elected to do that instead.
-                if($scope.toggle === true){
-                    newData.securityLevels = angular.copy($scope.copySecurity);
-                }
-                
-                //If type of request hasn't been specified, change error msg to what's below and return.
-                if(!$scope.requestType){
-                    $scope.saveError = "Please choose which type of request you would like to make.";
-                    return;
-                }
-                
-                if(!$scope.explainRequest){
-                    $scope.saveError = "Please describe the type of access needed in the large space below.";
-                    return;
-                }
-                
-                console.dir(newData); // Show what's being saved. For testing.
-                
-                // Inserts data into mongo, Temp notifies you in console when success
-                $.ajax({
-                    type: "POST",
-                    url: './model/mongoScript.php',
-                    data: {data : newData},
-                    success: function(data){console.log(data);}
-                });
-            };
-        };
->>>>>>> faa24dc38fdab240fd11ae4c387149879e498d7c
-      });
+});
+
