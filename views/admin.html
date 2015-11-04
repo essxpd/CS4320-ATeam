@@ -12,7 +12,16 @@
                                 </div>
                                 <div id="collapseMain" class="panel-collapse collapse">
                                         <div class="panel-body">
-                                                <div ng-repeat="forms in createdForms"><a ng-click="downloadCreatedForm(forms.id)">{{forms.name}}</a></div>
+						<div ng-repeat="forms in createdForms">
+							<div>
+								<a ng-click="downloadCreatedForm(forms.id)">{{forms.name}}</a>
+								<div class="float-right">
+									<button type="button" class="btn btn-primary" ng-click="editForm(forms.id)">Edit</button>
+									<button type="button" class="btn btn-danger" ng-click="removeForm(forms.id)">Remove</button>
+								</div>
+							</div>
+							<br>
+						</div>
                                         </div>
                         </div>
                 </div>

@@ -97,6 +97,19 @@ angular.module('cs4320aTeamApp')
 	    $location.path('/createForm');
 	}	
 
+	// Will redirect to a place to edit forms
+	$scope.editForm = function(id) {
+	    $window.alert("You just tried to edit form " + id + "!");
+	}
+
+	// Will remove the form 
+	$scope.removeForm = function(id) {
+	    $response = $window.confirm("Are you sure you would like to remove this form?");
+	    if($response) {
+		$window.alert("You just tried to delete form " + id + "!");
+	    }
+	}
+
         //If on form page, do this
         if($scope.currentPath === '/form'){
             /* Edit and uncomment once php is implemented.
