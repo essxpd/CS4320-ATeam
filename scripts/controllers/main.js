@@ -174,5 +174,9 @@ angular.module('cs4320aTeamApp')
 
 		// Set the width of the form builder equal to the jumbotron
 		$(".fb-body").outerWidth($(".jumbotron").outerWidth());
+		$(window).resize(adjust);
+		function adjust() {
+			$(".fb-body").outerWidth($(".jumbotron").outerWidth());
+		}
 	}
       });
