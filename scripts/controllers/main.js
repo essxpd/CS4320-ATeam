@@ -62,10 +62,20 @@ angular.module('cs4320aTeamApp')
             {"id":1421, "name":"form1"},
             {"id":7431, "name":"form41"}
         ];
-    
+ 
+	// Dummy data for createdForms
+	$scope.createdForms = [
+	    {"id":2345, "name":"myZou"},
+	    {"id":5432, "name":"other form"}
+	];
+   
         $scope.downloadForm = function(id){
             $window.alert("You just tried to download form " + id + "!");
         }
+
+	$scope.downloadCreatedForm = function(id) {
+	    $window.alert("You just tried to download form " + id + "!");
+	}
 
         //On click, changes url to root/form, triggering a view change
         $scope.goToForm = function(){
@@ -81,6 +91,11 @@ angular.module('cs4320aTeamApp')
         $scope.takeFERPA = function(){
             $window.location.href = "http://myzoutraining.missouri.edu/ferpa.html";
         }
+
+	// Take the user to the form creator
+	$scope.createForm = function() {
+	    $location.path('/createForm');
+	}	
 
         //If on form page, do this
         if($scope.currentPath === '/form'){
