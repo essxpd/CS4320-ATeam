@@ -4,8 +4,8 @@
         session_start();
 #        if(!$_SERVER['HTTPS'])
 #                header("Location: https://a-team.cloudapp.net/testProject/CS4320-ATeam/index.php");
-        if (!isset($_SESSION['loggedIn']))
-                header("Location: http://a-team.cloudapp.net/testProject/CS4320-ATeam/login.php");
+#        if (!isset($_SESSION['loggedIn']))
+#                header("Location: http://a-team.cloudapp.net/testProject/CS4320-ATeam/login.php");
 #		will need to change testProject to Project before deployment
 */
 ?>
@@ -33,6 +33,11 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
+  <!-- Get Form builder -->
+  <link rel="stylesheet" href="plugins/FormBuilder/vendor/css/vendor.css">
+  <link rel="stylesheet" href="plugins/FormBuilder/dist/formbuilder.css">
+  <script src="plugins/FormBuilder/vendor/js/vendor.js"></script>
+  <script src="plugins/FormBuilder/dist/formbuilder.js"></script>
 
 </head>
     

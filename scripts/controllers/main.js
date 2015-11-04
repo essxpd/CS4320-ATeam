@@ -61,40 +61,75 @@ angular.module('cs4320aTeamApp')
             {"id":1421, "name":"form1"},
             {"id":7431, "name":"form41"}
         ];
+ 
+	// Dummy data for createdForms
+	$scope.createdForms = [
+	    {"id":2345, "name":"myZou"},
+	    {"id":5432, "name":"other form"}
+	];
+   
     
         //Function to download previously submitted forms. Just a stub for now
         $scope.downloadForm = function(id){
             $window.alert("You just tried to download form " + id + "!");
         }
 
+	$scope.downloadCreatedForm = function(id) {
+	    $window.alert("You just tried to download form " + id + "!");
+	}
+
         //On click, changes url to root/form, triggering a view change
         $scope.goToForm = function(){
             $location.path('/form');
         }
+
+	// Redirects to usets home
+	$scope.goToHome = function() {
+	    $location.path('/');
+	}	
+
         //When user clicks Take FERPA Quiz button, redirect user to ferpa quiz page
         $scope.takeFERPA = function(){
             $window.location.href = "http://myzoutraining.missouri.edu/ferpa.html";
         }
 
-        //If on form page, do this
-        if($scope.currentPath === '/form'){
-            
-            //NgHide and NgShow to control whether security access questions are revealed
-            $scope.askSecQuestions = true;
-            
-            $scope.studentWorker = false;
-            
-            //Tied to ngChange on form.html
-            //If checkbox is toggled, reveals questions about whether security should be copied
-            //If checkbox is toggled back to false, hides questions about copying security and
-            //reveals the usual access level questions instead
-            $scope.toggleSecQuestions = function(){
-                
-                if($scope.toggle === true){
-                
-                    $scope.askSecQuestions = false;
+	// Take the user to the form creator
+	$scope.createForm = function() {
+	    $location.path('/createForm');
+	}	
 
-                    $scope.copySecurity = [
+	// Will redirect to a place to edit forms
+	$scope.editForm = function(id) {
+	    $window.alert("You just tried to edit form " + id + "!");
+	}
+
+	// Will remove the form 
+	$scope.removeForm = function(id) {
+	    $response = $window.confirm("Are you sure you would like to remove this form?");
+	    if($response) {
+		$window.alert("You just tried to delete form " + id + "!");
+	    }
+	}
+
+	//If on form page, do this
+	if($scope.currentPath === '/form'){
+		
+		//NgHide and NgShow to control whether security access questions are revealed
+		$scope.askSecQuestions = true;
+		
+		$scope.studentWorker = false;
+		
+		//Tied to ngChange on form.html
+		//If checkbox is toggled, reveals questions about whether security should be copied
+		//If checkbox is toggled back to false, hides questions about copying security and
+		//reveals the usual access level questions instead
+		$scope.toggleSecQuestions = function(){
+			
+			if($scope.toggle === true){
+			
+				$scope.askSecQuestions = false;
+
+				$scope.copySecurity = [
                         {"name":""},
                         {"position":""},
                         {"pawprint":""},
@@ -164,4 +199,21 @@ angular.module('cs4320aTeamApp')
                 });
             };
         };
-      });
+	// If on the create form page then load form-builder
+	else if($scope.currentPath === '/createForm') {
+		fb = new Formbuilder({
+			selector: '.fb-main',
+		});
+		// Dumps the save to the console
+		fb.on('save', function(payload) {
+			console.log(payload);
+		});
+
+		// Set the width of the form builder equal to the jumbotron
+		$(".fb-body").outerWidth($(".jumbotron").outerWidth());
+		$(window).resize(adjust);
+		function adjust() {
+			$(".fb-body").outerWidth($(".jumbotron").outerWidth());
+		}
+	}
+});
