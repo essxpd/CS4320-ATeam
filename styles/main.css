@@ -87,3 +87,15 @@ img {
 .error {
     color: red;
 }
+.fb-body {
+    padding: 20px;
+    background-color: #444;
+    border-radius: 5px;
+    margin: auto;
+}
+.fb-main {
+    box-sizing: boarder-box;
+    background-color: #fff;
+    border-radius: 5px;
+    min-height: 600px;
+}

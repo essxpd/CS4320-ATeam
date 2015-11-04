@@ -3,7 +3,7 @@ angular.module('cs4320aTeamApp', ["ngRoute"])
 	.config(["$routeProvider", function($routeProvider){
 		$routeProvider
 			.when("/", {
-				templateUrl: "views/admin.html",
+				templateUrl: "views/applicant.html",
 				controller: "MainCtrl",
 			})
 			.when("/form",{
@@ -16,6 +16,9 @@ angular.module('cs4320aTeamApp', ["ngRoute"])
 			})
 			.when("/collapseMain", {
 				redirectTo: "/"
+			})
+			.when("/collapseMainAdmin", {
+				redirectTo: "/admin"
 			})
 			.when("/admin", {
 				templateUrl: "views/admin.html",

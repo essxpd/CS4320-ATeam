@@ -161,5 +161,18 @@ angular.module('cs4320aTeamApp')
             }
             */
 
-        };
+        }
+	// If on the create form page then load form-builder
+	else if($scope.currentPath === '/createForm') {
+		fb = new Formbuilder({
+			selector: '.fb-main',
+		});
+		// Dumps the save to the console
+		fb.on('save', function(payload) {
+			console.log(payload);
+		});
+
+		// Set the width of the form builder equal to the jumbotron
+		$(".fb-body").outerWidth($(".jumbotron").outerWidth());
+	}
       });
