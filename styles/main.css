@@ -81,3 +81,9 @@ img {
 .float-right {
     float: right;
 }
+.center-text {
+    text-align: center;
+}
+.error {
+    color: red;
+}
