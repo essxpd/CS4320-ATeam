@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <?php
-    /*
+    
         session_start();
 #        if(!$_SERVER['HTTPS'])
 #                header("Location: https://a-team.cloudapp.net/testProject/CS4320-ATeam/login.php");
-#        if (isset($_SESSION['loggedIn']))#if logged in redirect to index.php
-#                header("Location: http://a-team.cloudapp.net/testProject/CS4320-ATeam/index.php");
+        if (isset($_SESSION['loggedIn']))#if logged in redirect to index.php
+                header("Location: http://a-team.cloudapp.net/testProject/CS4320-ATeam/index.php");
 #               will need to change testProject to Project before deployment
-    */
+    
 ?>
 <html>
 <head>
@@ -48,15 +48,18 @@
     <h2>Please login below:</h2>
 <div id="login">
     <div class="formwrap">
+<!--	<form action="model/auth.php" method="post">
+-->
 	<form>
-		<input type="text" id="username" ng-model="user.username" placeholder="Username">
+		<input type="text" id="username" ng-model="user.username" placeholder="Username" name="username">
 		<br>
-		<input type="password" id="password" ng-model="user.password" placeholder="Password">
+		<input type="password" id="password" ng-model="user.password" placeholder="Password" name="password">
 		<button id="login-button" ng-click="login()">LOGIN</button>
 	</form>
     </div>    
     
-	<p>{{$scope.errorMsg}}</p>
+<!--	<p>{{$scope.errorMsg}}</p>
+-->
 </div></div>
 <script>
 </script>	
