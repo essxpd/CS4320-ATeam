@@ -198,7 +198,7 @@ angular.module('cs4320aTeamApp')
                     error: function(errorThrown){$scope.saveError = errorThrown;}
                 });
             };
-        };
+        }
 	// If on the create form page then load form-builder
 	else if($scope.currentPath === '/createForm') {
 		fb = new Formbuilder({
