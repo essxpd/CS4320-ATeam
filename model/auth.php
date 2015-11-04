@@ -1,5 +1,7 @@
 <?php
 require("dbconnect.php");
+        session_start();
+
                 $user = htmlspecialchars($_POST['username']);
                 $pw = htmlspecialchars($_POST['password']);
 #                echo "<br>".$user;
@@ -7,10 +9,10 @@ require("dbconnect.php");
 #               echo"<br> heading to first if";
 #				$user = "100";
 				$query1 = "SELECT Salt, Password_Hash FROM authentication WHERE SSO = ". $user;
-                echo "<br>".$query1."<br>";
+#                echo "<br>".$query1."<br>";
 				$result = mysqli_query($conn, $query1) or die('Getting salt and password_hash failed: '.mysqli_error());;
                 
-				echo "<br> made it to begining of first if";
+#				echo "<br> made it to begining of first if";
 				$row1 = mysqli_fetch_assoc($result);
 				$localhash = sha1($row1['Salt'].$pw);
 				$result->close();
@@ -29,13 +31,13 @@ require("dbconnect.php");
 
                 if ($localhash == $row1['Password_Hash'])
                 {
-                        echo 'You logged in!';
-						if($user_type == 'administrator')
+#                        echo 'You logged in!';
+						if($user_type == 'admin')
 							$_SESSION["loggedIn"] = 3;//SiS admin people
 						elseif ($user_type == 'employer')
 							$_SESSION["loggedIn"] = 2;
 						else
-							$_SESSION["loggedIn"] =1;//for applicants
+							$_SESSION["loggedIn"] = 1;//for applicants
 						$_SESSION["User_Type"] = $user_type;
                 }
                 else
@@ -52,10 +54,10 @@ require("dbconnect.php");
                 }
                 else
                 	exit("Error getting User_Type: $mysqli->error");
-                        
-                $mysqli->close();
-                header("Location: http://a-team.cloudapp.net/Jeremy/CS4320-ATeam/index.php");
-                exit();
+                echo "<br>hello<br>";
+        		header("Location: http://a-team.cloudapp.net/testProject/CS4320-ATeam/index.php");#redirect to index page
+				$mysqli->close();
+
                         
 ?>
 
