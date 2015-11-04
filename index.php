@@ -38,6 +38,14 @@
   <link rel="stylesheet" href="plugins/FormBuilder/dist/formbuilder.css">
   <script src="plugins/FormBuilder/vendor/js/vendor.js"></script>
   <script src="plugins/FormBuilder/dist/formbuilder.js"></script>
+  
+  <!-- Style Sheets -->
+  <!-- Main Style Sheet -->
+  <link rel="stylesheet" href="styles/main.css">  
+  <!-- Applicant Style Sheet -->
+  <link rel="stylesheet" href="styles/applicant.css">
+  <!-- Form Style Sheet -->
+  <link rel="stylesheet" href="styles/form.css">
 
 </head>
     
