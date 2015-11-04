@@ -28,3 +28,18 @@ create table log(
     SSO varchar(15),
     FOREIGN KEY (SSO) REFERENCES users(SSO)
 );
+
+INSERT INTO testAuth.users VALUES ('H.M. Murdock','applicant','Computer Science','100','200','1234 University Drive','(573)882-5555','84','user');
+INSERT INTO testAuth.users VALUES ('Templeton Peck','applicant','Computer Science','103','203','1234 University Drive','(573)882-5555','84','user');
+INSERT INTO testAuth.users VALUES ('Bosco Baracus','administrator','Computer Science','101','201','1234 University Drive','(573)882-5555','87','admin');
+INSERT INTO testAuth.users VALUES ('John Hannibal Smith','employer','Computer Science','102','202','1234 University Drive','(573)882-5555','89','employer');
+
+INSERT INTO testAuth.authentication (SSO,Password_Hash,Salt) VALUES ('100','caf1f32ed6147cb1dbb33d75396dc82f2b013b09','9950fa661509b44cd695dc84a720875ed97eae55');
+INSERT INTO testAuth.authentication (SSO,Password_Hash,Salt) VALUES ('101','317c35a9e3e66b882605c76f2465a6c82d6074c7','9950fa661509b44cd695dc84a720875ed97eae55');
+INSERT INTO testAuth.authentication (SSO,Password_Hash,Salt) VALUES ('102','dc5e016f163aeb69207fa16d6da8c390a3f21dbe','9950fa661509b44cd695dc84a720875ed97eae55');
+INSERT INTO testAuth.authentication (SSO,Password_Hash,Salt) VALUES ('103','76373766ce100393fabd011d5e856c3e1a722f57','9950fa661509b44cd695dc84a720875ed97eae55');
+
+INSERT INTO testAuth.log (Active_Requests,Date_Approved,SSO)VALUES ('0','11/3/2015','100');
+INSERT INTO testAuth.log (Active_Requests,Date_Approved,SSO)VALUES ('0','11/3/2015','101');
+INSERT INTO testAuth.log (Active_Requests,Date_Approved,SSO)VALUES ('0','11/3/2015','102');
+INSERT INTO testAuth.log (Active_Requests,Date_Approved,SSO)VALUES ('0','11/3/2015','103');

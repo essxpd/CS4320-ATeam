@@ -12,7 +12,7 @@
 	if($method == 'GET'){
 		$pawprint = $_GET['pawprint'];
 		$collection = $db->$dataTable;
-		$cursor = $collection->find();
+		$cursor = $collection->find({paw : $pawprint});
 		$jsonArr = (json_encode(iterator_to_array($cursor)));
 		echo $jsonArr;
 	}else if($method == 'POST'){
