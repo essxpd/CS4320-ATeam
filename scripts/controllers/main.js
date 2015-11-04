@@ -159,7 +159,8 @@ angular.module('cs4320aTeamApp')
                     type: "POST",
                     url: './model/mongoScript.php',
                     data: {data : newData},
-                    success: function(data){console.log(data);}
+                    success: function(data){console.log(data);},
+                    error: function(errorThrown){$scope.saveError = errorThrown;}
                 });
             };
         };
