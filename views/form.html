@@ -1,5 +1,5 @@
 <div class="container">
-    <h2>{{saveError}}</h2>
+
 	<!--Auto Fill Bio Data-->
 	<p>Full Legal Name: {{name}}</p>
 	<p>Date of Birth: {{DoB}}</p>
@@ -72,6 +72,8 @@
 		<label><input type="checkbox" ng-model="questions.value">{{questions.question}}</label>
 		<label><input type="radio" name="status" ng-model="" ng-repeat="status in questions.status">{{status}}</label>
 	</div>
+    
+        <h2 class="error">{{saveError}}</h2>
     
     <button type="button" ng-click="saveRequest()">SUBMIT</button>
 </div>

@@ -57,47 +57,43 @@ img {
     max-width: 95%;
 }
 
-@-webkit-keyframes colorize {
-    0% {
-        -webkit-filter: grayscale(100%);
-    }
-    100% {
-        -webkit-filter: grayscale(0%);
-    }
-}
-
-@keyframes colorize {
-    0% {
-        filter: grayscale(100%);
-    }
-    100% {
-        filter: grayscale(0%);
-    }
-}
-.center-text {
+.center-text 
+{
     text-align: center;
 }
-.error {
+.error 
+{
     color: red;
 }
-.float-right {
+.float-right 
+{
     float: right;
 }
-.center-text {
+.center-text 
+{
     text-align: center;
 }
-.error {
+.error 
+{
     color: red;
 }
-.fb-body {
+.fb-body 
+{
     padding: 20px;
     background-color: #444;
     border-radius: 5px;
     margin: auto;
 }
-.fb-main {
+.fb-main 
+{
     box-sizing: boarder-box;
     background-color: #fff;
     border-radius: 5px;
     min-height: 600px;
+}
+
+.container .jumbotron, .container-fluid .jumbotron
+{
+    background-color:#f1b82d;
+    border: 1px solid black;
 }
