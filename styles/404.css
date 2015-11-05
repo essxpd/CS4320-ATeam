@@ -1,4 +1,4 @@
-input{
+input .btn .btn-default .btn-lg{
 		appearance: none;
 		outline: 0;
 		background-color: black;
@@ -13,7 +13,7 @@ input{
         margin-top: 1.3em;
 }
 
-input:hover{
+input .btn .btn-default .btn-lg:hover{
 opacity: 0.7;
 }
 

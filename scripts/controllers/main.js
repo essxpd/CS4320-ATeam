@@ -183,7 +183,7 @@ angular.module('cs4320aTeamApp')
                 }
                 
                 if(!$scope.explainRequest){
-                    $scope.saveError = "Please describe the type of access needed in the large space below.";
+                    $scope.saveError = "Please describe the type of access needed in the large space provided.";
                     return;
                 }
                 
