@@ -36,6 +36,19 @@ angular.module('cs4320aTeamApp')
                     $scope.user.campAddr = data.campAddr;
                     $scope.user.phoneNum = data.phoneNum;
                     $location.path('/');
+                    
+                    //Temporary. Vomits all of the previous submissions a user has made into console as objects. Can be interacted with to see data.
+                    $.ajax({
+                        url: './model/mongoScript.php',
+                        type: 'GET',
+                        dataType: 'json',
+                        data: {pawprint: $scope.paw},
+                        success: function(data){
+                            $.each(data, function(key, value){
+                                console.dir(value);    
+                            });
+                        }
+                    });
                 } 
                 else{
                     $scope.errorMsg = 'Login has failed. Please check your name and password then try again.';
@@ -45,7 +58,7 @@ angular.module('cs4320aTeamApp')
                 $scope.errorMsg = "There has been a problem with your login. Please contact so&so@mizzou.edu for support."
             });
         };
-    
+
         //Grab current URL
         $scope.currentPath = $location.path();
 
@@ -56,7 +69,7 @@ angular.module('cs4320aTeamApp')
             $scope.CurrentInstructionSet = true;
         };
     
-        //Dummy data for prevForms -- Delete for production
+        //Dummy data for prevForms -- just to give an idea waht it'll be like. -- Delete for production
         $scope.prevForms = [
             {"id":1421, "name":"form1"},
             {"id":7431, "name":"form41"}
