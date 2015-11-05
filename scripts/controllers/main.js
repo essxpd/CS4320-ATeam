@@ -12,6 +12,7 @@ angular.module('cs4320aTeamApp')
         $scope.phoneNum = "(555)555-5555";
         /* Delete above code once real data is brought in */
     
+        /* Login. Temporarily commented out while we determine best way to handle routing.
         $scope.login = function(){
             var config = {
                 url: '/model/auth.php',
@@ -58,6 +59,20 @@ angular.module('cs4320aTeamApp')
                 $scope.errorMsg = "There has been a problem with your login. Please contact so&so@mizzou.edu for support."
             });
         };
+        */
+    
+        //Temporary. Vomits all of the previous submissions a user has made into console as objects. Can be interacted with to see data.
+        $.ajax({
+            url: './model/mongoScript.php',
+            type: 'GET',
+            dataType: 'json',
+            data: {pawprint: $scope.paw},
+            success: function(data){
+                $.each(data, function(key, value){
+                    console.dir(value);    
+                });
+            }
+        });
 
         //Grab current URL
         $scope.currentPath = $location.path();

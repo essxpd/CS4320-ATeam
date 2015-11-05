@@ -29,7 +29,6 @@ angular.module('cs4320aTeamApp', ["ngRoute", "ngSanitize"])
 				controller: "MainCtrl"
 			})
 			.otherwise({
-				templateUrl: "views/404.html",
-				controller: "MainCtrl"
+				redirectTo: '/'
 			});
 	}]);

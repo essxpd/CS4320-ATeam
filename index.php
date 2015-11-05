@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <?php
 /*
-        session_start();
-#        if(!$_SERVER['HTTPS'])
-#                header("Location: https://a-team.cloudapp.net/testProject/CS4320-ATeam/index.php");
-#        if (!isset($_SESSION['loggedIn']))
-#                header("Location: http://a-team.cloudapp.net/testProject/CS4320-ATeam/login.php");
-#		will need to change testProject to Project before deployment
-*/
+    session_start();
+    if(!$_SERVER['HTTPS'])
+        header("Location: https://a-team.cloudapp.net/testProject/CS4320-ATeam/index.php");
+    if (!isset($_SESSION['loggedIn']))
+        header("Location: http://a-team.cloudapp.net/testProject/CS4320-ATeam/login.php");
+        */
 ?>
 <html>
 <head>
