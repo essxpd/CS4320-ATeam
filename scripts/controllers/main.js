@@ -3,14 +3,44 @@ angular.module('cs4320aTeamApp')
         /* Temporary applicant name and ferpa score to make UI skeleton look a little better
         Be sure to Delete once real data is being brought in */
         $scope.name = "John Doe";
-        $scope.ferpa = 86;
         $scope.title = "Director";
         $scope.dept = "The Dept";
         $scope.paw = "jdoe39";
         $scope.id = "11111111";
         $scope.addr = "1111 East Broadway";
         $scope.phoneNum = "(555)555-5555";
+		$scope.ferpa = 86;
         /* Delete above code once real data is brought in */
+
+		//this is going to be the code to dynamically bring in the bio-data, the php script needs to be created first, once that is done then the above code and be removed and this can be implemented
+		/*function get_bio_data(){
+			//we will need to create a new script called get_bio_data.php that returns the sessions information here
+			$.ajax({
+                type: "GET",
+                url: './model/get_bio_data.php',
+                data: {},
+                success: function(data){console.log(data);
+					var tempArray = [];
+					for(var key in data){
+						tempArray.push(data[key]);
+					}
+					//assumes the data in the session is stored in the same order as it appears in the user table of the mysql database
+					//sets each scope variable equivalent to its corresponding bio-data from the mysql database
+					$scope.name = tempArray[0];
+					$scope.title = tempArray[1];
+					$scope.dept = tempArray[2];
+					$scope.paw = tempArray[3];
+					$scope.id = tempArray[4];
+					$scope.addr = tempArray[5];
+					$scope.phoneNum = tempArray[6];
+					$scope.ferpa = tempArray[7];
+				},
+                error: function(errorThrown){$scope.saveError = errorThrown;}
+            });
+		};*/
+		
+		
+
     
         /* Login. Temporarily commented out while we determine best way to handle routing.
         $scope.login = function(){
@@ -170,11 +200,29 @@ angular.module('cs4320aTeamApp')
                 
             };
             
-            //Temp dummy data for securityLevels object
+            //Working Security Questions... Formatting is not set yet, question layout is still somewhat unclear.
             $scope.securityLevels = [
-                {"number":"1", "questions":[{"question":"question1", "status":["view"]},{"question":"question2", "status":["update"]}]},
-                {"number":"2", "questions":[{"question":"question3", "status":["update"]},{"question":"question4", "status":["view"]}]}
-            ];
+                //{"number":"1", "selectedStatus":"", "questions":[{"question":"question1", "status":["view"]},{"question":"question2", "status":["update"]}]},
+                //{"number":"2", "selectedStatus":"", "questions":[{"question":"question3", "status":["update"]},{"question":"question4", "status":["view"]}]},
+				{"number":"Basic Inquiry", "selectedStatus":"", "questions":[{"question":"Do you need access to bio demo and student data? This includes  names, address, FERPA directory data, photos, term info, degree information, programs, honors and awards, service indicators (holds) and previous schools.", "status":["View"]}]},
+				{"number":"Advanced Inquiry", "selectedStatus":"", "questions":[{"question":"Includes Basic Inquiry Access. Check if you also need access to relations with institution, citizenship, visa, decedant data, student enrollment, gpa, term history, 3C's, advisors, student groups", "status":["View", "Update"]}]},
+				{"number":"3Cs", "selectedStatus":"", "questions":[{"question":"Checklists, Comments, Communications", "status":["View", "Update"]}]},
+				{"number":"Advisor Update", "selectedStatus":"", "questions":[{"question":"Adding an advisor to a student's record", "status":["Update"]}]},
+				{"number":"Department SOC Update", "selectedStatus":"", "questions":[{"question":"Scheduling courses, assigning faculty to course, generating permission numbers", "status":["Update"]}]},
+				{"number":"Service Indicators (Holds)", "selectedStatus":"", "questions":[{"question":"Administrative users with proper security can assign or remove service indicators from a student's record", "status":["View", "Update"]}]},
+				{"number":"Student Group View", "selectedStatus":"", "questions":[{"question":"View groups a student is associated with", "status":["View"]}]},
+				{"number":"View Study List", "selectedStatus":"", "questions":[{"question":"View a student's class schedule", "status":["View"]}]},
+				{"number":"Registrar Enrollment", "selectedStatus":"", "questions":[{"question":"Adding and dropping a course utilizing Enrollment Request", "status":["View", "Update"]}]},
+				{"number":"Advisor Student Center", "selectedStatus":"", "questions":[{"question":"Access to students study list, advisor, program/plan, demographic data, e-mail address", "status":["View"]}]},
+				{"number":"Class Permission", "selectedStatus":"", "questions":[{"question":"Creating general or student specific class permission numbers", "status":["Update"]}]},
+				{"number":"Class Permission View", "selectedStatus":"", "questions":[{"question":"View class permission numbers which have been created for a course", "status":["View"]}]},
+				{"number":"Class Roster", "selectedStatus":"", "questions":[{"question":"View students enrolled, dropped or withdrawn in a course", "status":["View"]}]},
+				{"number":"Block Enrollments", "selectedStatus":"", "questions":[{"question":"Adding and dropping a course utilizing Enrollment Request", "status":["View", "Update"]}]},
+				{"number":"Report Manager", "selectedStatus":"", "questions":[{"question":"Assists in running various reports", "status":["View"]}]},
+				{"number":"Self Service Advisor", "selectedStatus":"", "questions":[{"question":"View Advisee photo, addresses, service indicators, emergency contacts, telephone numbers, grades, class schedule, enrollment appointment, print academic advising profile ", "status":["Update"]}]},
+				{"number":"Fiscal Officer", "selectedStatus":"", "questions":[{"question":"View enrollment summary, term statistics, and UM term statistics", "status":["View"]}]},
+				{"number":"Academic Advising Profile", "selectedStatus":"", "questions":[{"question":"Allows printing of the Academic Advising Profile", "status":["Update"]}]}
+			];
             
             
             // To submit security level request data

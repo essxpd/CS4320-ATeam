@@ -6,7 +6,7 @@
 	<br>
 	<!--Previous Submissions-->
 	<div>
-		<div id="accordionMain" class="panel-group">
+		<div id="accordion" class="panel-group">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h4 class="panel-title">
@@ -17,9 +17,11 @@
 					<div class="panel-body">
 						<div ng-repeat="forms in prevForms"><a ng-click="downloadForm(forms.id)">{{forms.name}}</a></div>
 					</div>
+				</div>
 			</div>
 		</div>
-	<div>
+	</div>
+	
 	<!--Instruction Set-->
 	<div class="center-block">
 		<h3>Submission Instructions: </h3>
