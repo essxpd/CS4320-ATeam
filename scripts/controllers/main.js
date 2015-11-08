@@ -1,7 +1,7 @@
 angular.module('cs4320aTeamApp')
     .controller('MainCtrl', function($scope, $location, $http, $window, $sanitize){
         /* Temporary applicant name and ferpa score to make UI skeleton look a little better
-        Be sure to Delete once real data is being brought in */
+        Be sure to Delete once real data is being brought in
         $scope.name = "John Doe";
         $scope.title = "Director";
         $scope.dept = "The Dept";
@@ -10,7 +10,7 @@ angular.module('cs4320aTeamApp')
         $scope.addr = "1111 East Broadway";
         $scope.phoneNum = "(555)555-5555";
 		$scope.ferpa = 86;
-        /* Delete above code once real data is brought in */
+        Delete above code once real data is brought in */
 
 		//this is going to be the code to dynamically bring in the bio-data, the php script needs to be created first, once that is done then the above code and be removed and this can be implemented
 		/*function get_bio_data(){
@@ -42,44 +42,33 @@ angular.module('cs4320aTeamApp')
 		
 
     
-        /* Login. Temporarily commented out while we determine best way to handle routing.
+        // Login. Temporarily commented out while we determine best way to handle routing.
         $scope.login = function(){
+            var data = {
+                'username' : $scope.user.name,
+                'password' : $scope.user.password
+            }
+            $http.post('././model/auth.php', data)
+                .then(function(response){
+                    $location.path('/');
+                    console.log(response);
+                });
+        }
+            /*
             var config = {
-                url: '/model/auth.php',
+                url: '././model/auth.php',
                 method: 'POST',
                 data: {
-                    username: $scope.user.username,
+                    username: $scope.user.name,
                     password: $scope.user.password
                 },
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                headers: {'Content-Type': 'application/json'}
             }
             $http(config)
             .success(function(data, status, headers, config){
                 if(data.status){
-                    $scope.user.fname = data.fname;
-                    $scope.user.lname = data.lname;
-                    $scope.user.fullName = data.fname + " " + data.lname;
-                    $scope.user.ferpa = data.ferpa;
-                    $scope.user.dob = data.dob;
-                    $scope.user.title = data.title;
-                    $scope.user.dept = data.dept;
-                    $scope.user.empID = data.empID;
-                    $scope.user.campAddr = data.campAddr;
-                    $scope.user.phoneNum = data.phoneNum;
-                    $location.path('/');
                     
-                    //Temporary. Vomits all of the previous submissions a user has made into console as objects. Can be interacted with to see data.
-                    $.ajax({
-                        url: './model/mongoScript.php',
-                        type: 'GET',
-                        dataType: 'json',
-                        data: {pawprint: $scope.paw},
-                        success: function(data){
-                            $.each(data, function(key, value){
-                                console.dir(value);    
-                            });
-                        }
-                    });
+                    $location.path('/');
                 } 
                 else{
                     $scope.errorMsg = 'Login has failed. Please check your name and password then try again.';
@@ -88,8 +77,7 @@ angular.module('cs4320aTeamApp')
             .error(function(data, status, headers, config){
                 $scope.errorMsg = "There has been a problem with your login. Please contact so&so@mizzou.edu for support."
             });
-        };
-        */
+        };*/
     
         //Temporary. Vomits all of the previous submissions a user has made into console as objects. Can be interacted with to see data.
         $.ajax({

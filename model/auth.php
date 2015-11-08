@@ -6,8 +6,8 @@ require("dbconnect.php");
 				$user = $request->username;
 				$pw = $request->password;
 				
-                $user = htmlspecialchars($_POST['username']);
-                $pw = htmlspecialchars($_POST['password']);
+                #$user = htmlspecialchars($_POST['username']);
+                # $pw = htmlspecialchars($_POST['password']);
 #                echo "<br>".$user;
 #                echo "<br>".$pw;
 #               echo"<br> heading to first if";
@@ -75,12 +75,6 @@ require("dbconnect.php");
                 }
                 else
                 	exit("Error getting User_Type: $mysqli->error");
-        		$url = 'http://';
-                $url .= $_SERVER['SERVER_NAME'];
-                $url .= $_SERVER['REQUEST_URI'];
-                $loc = dirname(dirname($url));
-
-                header('Location: ' . $loc);
     
                 $mysqli->close();
 
