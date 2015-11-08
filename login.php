@@ -49,10 +49,10 @@
     <div id="login">
         <div class="formwrap">
             <form action="model/auth.php" method="post">
-                <input type="text" id="username" ng-model="user.username" placeholder="Username" name="username">
+                <input type="text" id="username" placeholder="Username" name="username">
                 <br>
-                <input type="password" id="password" ng-model="user.password" placeholder="Password" name="password">
-                <button id="login-button" ng-click="login()">LOGIN</button>
+                <input type="password" id="password" placeholder="Password" name="password">
+                <button id="login-button">LOGIN</button>
             </form>
         </div>
     <!--	<p>{{$scope.errorMsg}}</p>

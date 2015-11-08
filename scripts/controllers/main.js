@@ -40,43 +40,7 @@ angular.module('cs4320aTeamApp')
 		};*/
     
         $scope.loggedInUser = data.data;
-    
-        // Login. Temporarily commented out while we determine best way to handle routing.
-        $scope.login = function(){
-            var data = {
-                'username' : $scope.user.name,
-                'password' : $scope.user.password
-            }
-            $http.post('././model/auth.php', data)
-                .then(function(){
-                    $location.path("/");
-                });
-        }
-            /*
-            var config = {
-                url: '././model/auth.php',
-                method: 'POST',
-                data: {
-                    username: $scope.user.name,
-                    password: $scope.user.password
-                },
-                headers: {'Content-Type': 'application/json'}
-            }
-            $http(config)
-            .success(function(data, status, headers, config){
-                if(data.status){
-                    
-                    $location.path('/');
-                } 
-                else{
-                    $scope.errorMsg = 'Login has failed. Please check your name and password then try again.';
-                }
-            })
-            .error(function(data, status, headers, config){
-                $scope.errorMsg = "There has been a problem with your login. Please contact so&so@mizzou.edu for support."
-            });
-        };*/
-    
+
         //Temporary. Vomits all of the previous submissions a user has made into console as objects. Can be interacted with to see data.
         $.ajax({
             url: './model/mongoScript.php',
@@ -96,7 +60,7 @@ angular.module('cs4320aTeamApp')
         //Change instruction menu based on ferpa score
         //Show goToForm() if ferpa >= 85
         //Show takeFERPA() if ferpa < 85
-        if($scope.ferpa > 85){
+        if($scope.loggedInUser.Ferpa_Score > 85){
             $scope.CurrentInstructionSet = true;
         };
     
