@@ -1,7 +1,11 @@
 <?php
 require("dbconnect.php");
         session_start();
-
+				$postdata = file_get_contents("php://input");
+				$request = json_decode($postdata);
+				$user = $request->username;
+				$pw = $request->password;
+				
                 $user = htmlspecialchars($_POST['username']);
                 $pw = htmlspecialchars($_POST['password']);
 #                echo "<br>".$user;
@@ -50,6 +54,8 @@ require("dbconnect.php");
 									'Campus_Address' => $row["Campus_Address"], 'Phone_Number' => $row["Phone_Number"], 'Ferpa_Score' => $row["Ferpa_Score"], 'User_Type' => $row["User_Type"]);
 							//puts array into json object
 							$BioData = json_encode($arr);
+							$_SESSION["BioData"] = $arr;
+							echo $BioData;
 							//echo $BioData;//send this wherever you want
 						} else {//error message change to whatever you want
 							echo "0 results";
