@@ -5,6 +5,15 @@ angular.module('cs4320aTeamApp', ["ngRoute", "ngSanitize"])
 			.when("/", {
 				templateUrl: "views/applicant.html",
 				controller: "MainCtrl",
+                resolve: {
+                    data: function($q, $http){
+                        var deferred = $q.defer();
+                        $http({method: 'GET', url: './model/biodata.php'}).then(function(data){
+                            deferred.resolve(data);
+                        });
+                        return deferred.promise;
+                    }
+                }
 			})
 			.when("/form",{
 				templateUrl: "views/form.html",

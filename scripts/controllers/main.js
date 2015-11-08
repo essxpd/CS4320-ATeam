@@ -1,5 +1,5 @@
 angular.module('cs4320aTeamApp')
-    .controller('MainCtrl', function($scope, $location, $http, $window, $sanitize){
+    .controller('MainCtrl', function($scope, $location, $http, $window, $sanitize, $timeout, data){
         /* Temporary applicant name and ferpa score to make UI skeleton look a little better
         Be sure to Delete once real data is being brought in
         $scope.name = "John Doe";
@@ -38,9 +38,8 @@ angular.module('cs4320aTeamApp')
                 error: function(errorThrown){$scope.saveError = errorThrown;}
             });
 		};*/
-		
-		
-
+    
+        $scope.loggedInUser = data.data;
     
         // Login. Temporarily commented out while we determine best way to handle routing.
         $scope.login = function(){
@@ -49,9 +48,8 @@ angular.module('cs4320aTeamApp')
                 'password' : $scope.user.password
             }
             $http.post('././model/auth.php', data)
-                .then(function(response){
-                    $location.path('/');
-                    console.log(response);
+                .then(function(){
+                    $location.path("/");
                 });
         }
             /*

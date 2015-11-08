@@ -41,28 +41,24 @@
 
   
 </head>
-
-<body ng-app="cs4320aTeamApp" ng-controller="MainCtrl">
     
 <div id="logincontainer">    
     
     <h1>Welcome to the Electronic SiS Security Form!</h1>
     <h2>Please login below:</h2>
-<div id="login">
-    <div class="formwrap">
-        <form>
-            <input type="text" id="username" ng-model="user.name" placeholder="Username" name="username">
-            <br>
-            <input type="password" id="password" ng-model="user.password" placeholder="Password" name="password">
-            <button id="login-button" ng-click="login()">LOGIN</button>
-        </form>
-    </div>    
-    
-<!--	<p>{{$scope.errorMsg}}</p>
--->
-</div></div>
-<script>
-</script>	
+    <div id="login">
+        <div class="formwrap">
+            <form action="model/auth.php" method="post">
+                <input type="text" id="username" ng-model="user.username" placeholder="Username" name="username">
+                <br>
+                <input type="password" id="password" ng-model="user.password" placeholder="Password" name="password">
+                <button id="login-button" ng-click="login()">LOGIN</button>
+            </form>
+        </div>
+    <!--	<p>{{$scope.errorMsg}}</p>
+    -->
+    </div>
+</div>	
 </body>
 
 </html>
