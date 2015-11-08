@@ -1,8 +1,9 @@
 <?PHP
 require("dbconnect.php");
+session_start();
 //$SSO = 102;//change 100 to whatever the sso of the signed in user is however you like
-//$SSO = $_SESSION["SSO"];
-$SSO = "102";
+$SSO = $_SESSION["SSO"];
+//$SSO = "102";
 $sql = "SELECT * FROM testAuth.users WHERE sso = " . $SSO;
 $result = mysqli_query($conn, $sql);
 
