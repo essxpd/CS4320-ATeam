@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <?php
-/*
     session_start();
-    if(!$_SERVER['HTTPS'])
-        header("Location: https://a-team.cloudapp.net/testProject/CS4320-ATeam/index.php");
-    if (!isset($_SESSION['loggedIn']))
-        header("Location: http://a-team.cloudapp.net/testProject/CS4320-ATeam/login.php");
-        */
+    //if(!$_SERVER['HTTPS'])
+    //    header("Location: https://a-team.cloudapp.net/Cody/CS4320-ATeam/index.php");
+    if (!isset($_SESSION['loggedIn'])){
+        $host  = $_SERVER['HTTP_HOST'];
+        $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+        $extra = 'login.php';
+        header("Location: http://$host$uri/$extra");
+    }
 ?>
 <html>
 <head>
@@ -62,6 +64,7 @@
         <div class="container">
             Created by the A-Team
         </div>
+        <div class="logout"><a href="./model/logout.php"><b>LOGOUT</a></div>
     </footer>
 </body>
 

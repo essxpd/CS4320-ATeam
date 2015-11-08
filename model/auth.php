@@ -69,9 +69,14 @@ require("dbconnect.php");
                 }
                 else
                 	exit("Error getting User_Type: $mysqli->error");
-                echo "<br>hello<br>";
-        		header("Location: http://a-team.cloudapp.net/testProject/CS4320-ATeam/index.php");#redirect to index page
-				$mysqli->close();
+        		$url = 'http://';
+                $url .= $_SERVER['SERVER_NAME'];
+                $url .= $_SERVER['REQUEST_URI'];
+                $loc = dirname(dirname($url));
+
+                header('Location: ' . $loc);
+    
+                $mysqli->close();
 
                         
 ?>

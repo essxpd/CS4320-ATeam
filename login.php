@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <?php
-    /*
     session_start();
-    if(!$_SERVER['HTTPS'])
-            header("Location: https://a-team.cloudapp.net/testProject/CS4320-ATeam/login.php");
-    if (isset($_SESSION['loggedIn']))
-            header("Location: http://a-team.cloudapp.net/testProject/CS4320-ATeam/index.php");
-    */
+    //if(!$_SERVER['HTTPS'])
+    //        header("Location: https://a-team.cloudapp.net/Cody/CS4320-ATeam/login.php");
+    if (isset($_SESSION['loggedIn'])){
+            $host  = $_SERVER['HTTP_HOST'];
+            $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+            header("Location: http://$host$uri/");
+    }
 ?>
 <html>
 <head>
