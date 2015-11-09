@@ -1,16 +1,7 @@
 angular.module('cs4320aTeamApp')
-    .controller('MainCtrl', function($scope, $location, $http, $window, $sanitize){
-        /* Temporary applicant name and ferpa score to make UI skeleton look a little better
-        Be sure to Delete once real data is being brought in */
-        $scope.name = "John Doe";
-        $scope.title = "Director";
-        $scope.dept = "The Dept";
-        $scope.paw = "jdoe39";
-        $scope.id = "11111111";
-        $scope.addr = "1111 East Broadway";
-        $scope.phoneNum = "(555)555-5555";
-		$scope.ferpa = 86;
+    .controller('MainCtrl', function($scope, $location, $http, $window, $sanitize, $timeout, data){
 
+	$scope.isopen = false;
 	$scope.role = "";
 	$scope.role.update = false;
 	$scope.role.view = false;
@@ -18,93 +9,15 @@ angular.module('cs4320aTeamApp')
 	$scope.form = "";
 	$scope.addedRoles = [];
 
-        /* Delete above code once real data is brought in */
+        //User data is stored here.
+        $scope.loggedInUser = data.data;
 
-		//this is going to be the code to dynamically bring in the bio-data, the php script needs to be created first, once that is done then the above code and be removed and this can be implemented
-		/*function get_bio_data(){
-			//we will need to create a new script called get_bio_data.php that returns the sessions information here
-			$.ajax({
-                type: "GET",
-                url: './model/get_bio_data.php',
-                data: {},
-                success: function(data){console.log(data);
-					var tempArray = [];
-					for(var key in data){
-						tempArray.push(data[key]);
-					}
-					//assumes the data in the session is stored in the same order as it appears in the user table of the mysql database
-					//sets each scope variable equivalent to its corresponding bio-data from the mysql database
-					$scope.name = tempArray[0];
-					$scope.title = tempArray[1];
-					$scope.dept = tempArray[2];
-					$scope.paw = tempArray[3];
-					$scope.id = tempArray[4];
-					$scope.addr = tempArray[5];
-					$scope.phoneNum = tempArray[6];
-					$scope.ferpa = tempArray[7];
-				},
-                error: function(errorThrown){$scope.saveError = errorThrown;}
-            });
-		};*/
-		
-		
-
-    
-        /* Login. Temporarily commented out while we determine best way to handle routing.
-        $scope.login = function(){
-            var config = {
-                url: '/model/auth.php',
-                method: 'POST',
-                data: {
-                    username: $scope.user.username,
-                    password: $scope.user.password
-                },
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            }
-            $http(config)
-            .success(function(data, status, headers, config){
-                if(data.status){
-                    $scope.user.fname = data.fname;
-                    $scope.user.lname = data.lname;
-                    $scope.user.fullName = data.fname + " " + data.lname;
-                    $scope.user.ferpa = data.ferpa;
-                    $scope.user.dob = data.dob;
-                    $scope.user.title = data.title;
-                    $scope.user.dept = data.dept;
-                    $scope.user.empID = data.empID;
-                    $scope.user.campAddr = data.campAddr;
-                    $scope.user.phoneNum = data.phoneNum;
-                    $location.path('/');
-                    
-                    //Temporary. Vomits all of the previous submissions a user has made into console as objects. Can be interacted with to see data.
-                    $.ajax({
-                        url: './model/mongoScript.php',
-                        type: 'GET',
-                        dataType: 'json',
-                        data: {pawprint: $scope.paw},
-                        success: function(data){
-                            $.each(data, function(key, value){
-                                console.dir(value);    
-                            });
-                        }
-                    });
-                } 
-                else{
-                    $scope.errorMsg = 'Login has failed. Please check your name and password then try again.';
-                }
-            })
-            .error(function(data, status, headers, config){
-                $scope.errorMsg = "There has been a problem with your login. Please contact so&so@mizzou.edu for support."
-            });
-        };
-        */
-    
         //Temporary. Vomits all of the previous submissions a user has made into console as objects. Can be interacted with to see data.
         $.ajax({
             url: './model/mongoScript.php',
             type: 'GET',
             dataType: 'json',
-            data: {pawprint: $scope.paw},
+            data: {pawprint: $scope.loggedInUser.SSO},
             success: function(data){
                 $.each(data, function(key, value){
                     console.dir(value);    
@@ -118,7 +31,7 @@ angular.module('cs4320aTeamApp')
         //Change instruction menu based on ferpa score
         //Show goToForm() if ferpa >= 85
         //Show takeFERPA() if ferpa < 85
-        if($scope.ferpa > 85){
+        if($scope.loggedInUser.Ferpa_Score > 85){
             $scope.CurrentInstructionSet = true;
         };
     
@@ -133,7 +46,18 @@ angular.module('cs4320aTeamApp')
 	    {"id":2345, "name":"myZou"},
 	    {"id":5432, "name":"other form"}
 	];
-   
+   $scope.groups = [
+    {
+      title: "Dynamic Group Header - 1",
+      content: "Dynamic Group Body - 1",
+      open: false
+    },
+    {
+      title: "Dynamic Group Header - 2",
+      content: "Dynamic Group Body - 2",
+      open: false
+    }
+  ];
     
         //Function to download previously submitted forms. Just a stub for now
         $scope.downloadForm = function(id){
@@ -195,18 +119,12 @@ angular.module('cs4320aTeamApp')
 			
 				$scope.askSecQuestions = false;
 
-				$scope.copySecurity = [
-                        {"name":""},
-                        {"position":""},
-                        {"pawprint":""},
-                        {"empId": ""}
-                    ];
-                }
-                else{
-                    $scope.askSecQuestions = true;  
-                }
+            }
+            else{
+                $scope.askSecQuestions = true;  
+            }
                 
-            };
+        };
             
             //Working Security Questions... Formatting is not set yet, question layout is still somewhat unclear.
             $scope.securityLevels = [
@@ -241,14 +159,14 @@ angular.module('cs4320aTeamApp')
                 
                 //JSON obj to be pushed to mongo // To be changed: swap $scope variables with non-dummy login-acquired data
                 var newData = {
-                    "paw" : $scope.paw,
-                    "name" : $scope.name,
-                    "ferpa" : $scope.ferpa,
-                    "title" : $scope.title,
-                    "dept" : $scope.dept,
-                    "id" : $scope.id,
-                    "addr" : $scope.addr,
-                    "phoneNum" : $scope.phoneNum,
+                    "paw" : $scope.loggedInUser.SSO,
+                    "name" : $scope.loggedInUser.Full_Name,
+                    "ferpa" : $scope.loggedInUser.Ferpa_Score,
+                    "title" : $scope.loggedInUser.Title,
+                    "dept" : $scope.loggedInUser.Department,
+                    "id" : $scope.loggedInUser.Employee_ID,
+                    "addr" : $scope.loggedInUser.Campus_Addr,
+                    "phoneNum" : $scope.loggedInUser.Phone_Number,
                     "requestType" : $scope.requestType,
                     "studentWorker" : $scope.studentWorker,
                     "explainRequest" : $sanitize($scope.explainRequest),
@@ -256,8 +174,25 @@ angular.module('cs4320aTeamApp')
                 };
                 
                 //Replace securityLevels with the information from copySecurity if they've elected to do that instead.
-                if($scope.toggle === true){
+                if($scope.toggle === true){ //If copySecurity was selected,
+                    //Fill in copySecurity array with text input. ToDo: Sanitize
+                    $scope.copySecurity = [
+                        {"name": $scope.copySecurity.empName},
+                        {"position": $scope.copySecurity.empPosition},
+                        {"pawprint": $scope.copySecurity.empPawprint},
+                        {"empId": $scope.copySecurity.empId}
+                    ];
+                    if($scope.currentEmpCopy){
+                        $scope.copySecurity = $scope.copySecurity.concat([
+                            {"currentEmployee" : $scope.currentEmpCopy}
+                        ]);
+                    } else{
+                        $scope.copySecurity = $scope.copySecurity.concat([
+                            {"formerEmployee" : $scope.formerEmpCopy}
+                        ]);
+                    }
                     newData.securityLevels = angular.copy($scope.copySecurity);
+                    
                 }
                 
                 //If type of request hasn't been specified, change error msg to what's below and return.
@@ -283,7 +218,6 @@ angular.module('cs4320aTeamApp')
                 });
             };
         }
-
 
 	// Adds a role when creating a form
 	$scope.addRole = function()
@@ -316,29 +250,6 @@ angular.module('cs4320aTeamApp')
                 if($scope.saveError)
                         return "";
                
-		$scope.roleNames.push( { 'name' : $scope.role.name } );
-		
-                // Copy the role data into a new div
-                roleInfo = "<div id='" + $scope.role.name + "' class='role'>";
-                roleInfo += "<h4><b>" + $scope.role.name + "</b></h4><hr class='hr-black'>";
-
-                roleInfo += '<input type="button" class="btn btn-role btn-lg btn-danger" ng-click="removeRole(\'' + $scope.role.name + '\')" value="Remove">';
-                roleInfo += "<addbuttons></addbuttons>";
-                roleInfo += "<div class='space-for-buttons'></div>";
-                roleInfo += "<p class='description'><b>Description:</b> " + $scope.role.description + "</p>";
-                roleInfo += "<b>Access type options:</b> <ul class='list-inline'>";
-                if($scope.role.update)
-                        roleInfo += "<li class='glyphicon glyphicon-ok'>update</li>";
-                else
-                        roleInfo += "<li class='glyphicon glyphicon-remove'>update</li>";
-                if($scope.role.view)
-                        roleInfo += "<li class='glyphicon glyphicon-ok'>view</li>";
-                else
-                        roleInfo += "<li class='glyphicon glyphicon-remove'>view</li>";
-
-                roleInfo += "<ul>";
-                roleInfo += "</div>";
-
 		if(!$scope.role.update)
 			$scope.role.update = false;
 		if(!$scope.role.view)
@@ -372,7 +283,8 @@ angular.module('cs4320aTeamApp')
 
 
 		// Submit the packaged form data to mongo
-	
+		var form = angular.toJson($scope.addedRoles);
+		
 		alert();
 	}
 	/*
@@ -380,20 +292,3 @@ angular.module('cs4320aTeamApp')
 		alert('editing');
 	}*/
 })
-/*
-.directive('addrole', function($compile) {
-	return function(scope, element, attrs) {
-		element.bind('click', function() {
-			roleInfo = scope.addRoleHTML();
-			if(roleInfo !== "")
-			{
-				console.log(roleInfo);
-				scope.addedRoles.push();
-				$("#roleTitle").attr("hidden", false);
-				angular.element($("#added-roles")).append($compile(roleInfo)(scope));
-			}
-			scope.$apply();
-		});
-	}
-});
-*/

@@ -120,3 +120,7 @@ img {
    word-wrap: break-word;
    width: 65%;
 }
+.clearfix
+{
+	overflow: auto;
+}

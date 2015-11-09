@@ -1,14 +1,13 @@
 <div class="container">
 
 	<!--Auto Fill Bio Data-->
-	<p>Full Legal Name: {{name}}</p>
-	<p>Date of Birth: {{DoB}}</p>
-    <p>Title: {{title}}</p>
-    <p>Department: {{dept}}</p>
-    <p>Pawprint/SSO: {{paw}}</p>
-    <p>Employee ID: {{id}}</p>
-    <p>Campus Address: {{addr}}</p>
-    <p>Phone Number: {{phoneNum}}</p>
+    <p>Full Legal Name: {{loggedInUser.Full_Name}}</p>
+    <p>Title: {{loggedInUser.Title}}</p>
+    <p>Department: {{loggedInUser.Department}}</p>
+    <p>Pawprint/SSO: {{loggedInUser.SSO}}</p>
+    <p>Employee ID: {{loggedInUser.Employee_ID}}</p>
+    <p>Campus Address: {{loggedInUser.Campus_Address}}</p>
+    <p>Phone Number: {{loggedInUser.Phone_Number}}</p>
     
     <!-- Choose appropriate request type -->
     <div class="form-group">

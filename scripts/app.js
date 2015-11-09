@@ -5,14 +5,42 @@ angular.module('cs4320aTeamApp', ["ngRoute", "ngSanitize"])
 			.when("/", {
 				templateUrl: "views/applicant.html",
 				controller: "MainCtrl",
+                resolve: {
+                    data: function($q, $http){
+                        var deferred = $q.defer();
+                        $http({method: 'GET', url: './model/biodata.php'}).then(function(data){
+                            deferred.resolve(data);
+                        });
+                        return deferred.promise;
+                    }
+                }
 			})
 			.when("/form",{
 				templateUrl: "views/form.html",
-				controller: "MainCtrl"
+				controller: "MainCtrl",
+                resolve: {
+                    data: function($q, $http){
+                        var deferred = $q.defer();
+                        $http({method: 'GET', url: './model/biodata.php'}).then(function(data){
+                            deferred.resolve(data);
+                        });
+                        return deferred.promise;
+                    }
+                }
 			})
 			.when("/createForm",{
 				templateUrl: "views/createForm.html",
-				controller: "MainCtrl"
+				controller: "MainCtrl",
+				resolve: {
+                    			data: function($q, $http){
+                        			var deferred = $q.defer();
+                        			$http({method: 'GET', url: './model/biodata.php'}).then(function(data){
+                           				deferred.resolve(data);
+                        			});
+                        			return deferred.promise;
+				
+					}
+				} 
 			})
 			.when("/collapseMain", {
 				redirectTo: "/"
@@ -22,8 +50,21 @@ angular.module('cs4320aTeamApp', ["ngRoute", "ngSanitize"])
 			})
 			.when("/admin", {
 				templateUrl: "views/admin.html",
-				controller: "MainCtrl"
+				controller: "MainCtrl",
+                resolve: {
+                    data: function($q, $http){
+                        var deferred = $q.defer();
+                        $http({method: 'GET', url: './model/biodata.php'}).then(function(data){
+                            deferred.resolve(data);
+                        });
+                        return deferred.promise;
+                    }
+                }
 			})
+			//.when("/admin", {
+			//	templateUrl: "views/admin.html",
+			//	controller: "MainCtrl"
+			//})
 			.when("/error",{
 				templateUrl: "views/error.html",
 				controller: "MainCtrl"

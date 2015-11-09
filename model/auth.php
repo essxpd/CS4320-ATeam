@@ -1,13 +1,11 @@
 <?php
 require("dbconnect.php");
         session_start();
-
-                $user = htmlspecialchars($_POST['username']);
+				$user = htmlspecialchars($_POST['username']);
                 $pw = htmlspecialchars($_POST['password']);
 #                echo "<br>".$user;
 #                echo "<br>".$pw;
 #               echo"<br> heading to first if";
-#				$user = "100";
 				$query1 = "SELECT Salt, Password_Hash FROM authentication WHERE SSO = ". $user;
 #                echo "<br>".$query1."<br>";
 				$result = mysqli_query($conn, $query1) or die('Getting salt and password_hash failed: '.mysqli_error());;
@@ -50,6 +48,8 @@ require("dbconnect.php");
 									'Campus_Address' => $row["Campus_Address"], 'Phone_Number' => $row["Phone_Number"], 'Ferpa_Score' => $row["Ferpa_Score"], 'User_Type' => $row["User_Type"]);
 							//puts array into json object
 							$BioData = json_encode($arr);
+							$_SESSION["BioData"] = $arr;
+							echo $BioData;
 							//echo $BioData;//send this wherever you want
 						} else {//error message change to whatever you want
 							echo "0 results";
@@ -69,15 +69,14 @@ require("dbconnect.php");
                 }
                 else
                 	exit("Error getting User_Type: $mysqli->error");
-        		$url = 'http://';
+    
+                mysqli_close($conn);
+
+                $url = 'http://';
                 $url .= $_SERVER['SERVER_NAME'];
                 $url .= $_SERVER['REQUEST_URI'];
                 $loc = dirname(dirname($url));
-
                 header('Location: ' . $loc);
-    
-                $mysqli->close();
-
                         
 ?>
 
