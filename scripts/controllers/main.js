@@ -100,18 +100,12 @@ angular.module('cs4320aTeamApp')
 			
 				$scope.askSecQuestions = false;
 
-				$scope.copySecurity = [
-                        {"name":""},
-                        {"position":""},
-                        {"pawprint":""},
-                        {"empId": ""}
-                    ];
-                }
-                else{
-                    $scope.askSecQuestions = true;  
-                }
+            }
+            else{
+                $scope.askSecQuestions = true;  
+            }
                 
-            };
+        };
             
             //Working Security Questions... Formatting is not set yet, question layout is still somewhat unclear.
             $scope.securityLevels = [
@@ -161,8 +155,25 @@ angular.module('cs4320aTeamApp')
                 };
                 
                 //Replace securityLevels with the information from copySecurity if they've elected to do that instead.
-                if($scope.toggle === true){
+                if($scope.toggle === true){ //If copySecurity was selected,
+                    //Fill in copySecurity array with text input. ToDo: Sanitize
+                    $scope.copySecurity = [
+                        {"name": $scope.copySecurity.empName},
+                        {"position": $scope.copySecurity.empPosition},
+                        {"pawprint": $scope.copySecurity.empPawprint},
+                        {"empId": $scope.copySecurity.empId}
+                    ];
+                    if($scope.currentEmpCopy){
+                        $scope.copySecurity = $scope.copySecurity.concat([
+                            {"currentEmployee" : $scope.currentEmpCopy}
+                        ]);
+                    } else{
+                        $scope.copySecurity = $scope.copySecurity.concat([
+                            {"formerEmployee" : $scope.formerEmpCopy}
+                        ]);
+                    }
                     newData.securityLevels = angular.copy($scope.copySecurity);
+                    
                 }
                 
                 //If type of request hasn't been specified, change error msg to what's below and return.
