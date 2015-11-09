@@ -183,14 +183,14 @@ angular.module('cs4320aTeamApp')
                 
                 //JSON obj to be pushed to mongo // To be changed: swap $scope variables with non-dummy login-acquired data
                 var newData = {
-                    "paw" : $scope.paw,
-                    "name" : $scope.name,
-                    "ferpa" : $scope.ferpa,
-                    "title" : $scope.title,
-                    "dept" : $scope.dept,
-                    "id" : $scope.id,
-                    "addr" : $scope.addr,
-                    "phoneNum" : $scope.phoneNum,
+                    "paw" : $scope.loggedInUser.SSO,
+                    "name" : $scope.loggedInUser.Full_Name,
+                    "ferpa" : $scope.loggedInUser.Ferpa_Score,
+                    "title" : $scope.loggedInUser.Title,
+                    "dept" : $scope.loggedInUser.Department,
+                    "id" : $scope.loggedInUser.Employee_ID,
+                    "addr" : $scope.loggedInUser.Campus_Addr,
+                    "phoneNum" : $scope.loggedInUser.Phone_Number,
                     "requestType" : $scope.requestType,
                     "studentWorker" : $scope.studentWorker,
                     "explainRequest" : $sanitize($scope.explainRequest),
