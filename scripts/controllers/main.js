@@ -10,6 +10,14 @@ angular.module('cs4320aTeamApp')
         $scope.addr = "1111 East Broadway";
         $scope.phoneNum = "(555)555-5555";
 		$scope.ferpa = 86;
+
+	$scope.role = "";
+	$scope.role.update = false;
+	$scope.role.view = false;
+	$scope.roleNames = [];
+	$scope.form = "";
+	$scope.addedRoles = [];
+
         /* Delete above code once real data is brought in */
 
 		//this is going to be the code to dynamically bring in the bio-data, the php script needs to be created first, once that is done then the above code and be removed and this can be implemented
@@ -275,21 +283,117 @@ angular.module('cs4320aTeamApp')
                 });
             };
         }
-	// If on the create form page then load form-builder
-	else if($scope.currentPath === '/createForm') {
-		fb = new Formbuilder({
-			selector: '.fb-main',
-		});
-		// Dumps the save to the console
-		fb.on('save', function(payload) {
-			console.log(payload);
-		});
 
-		// Set the width of the form builder equal to the jumbotron
-		$(".fb-body").outerWidth($(".jumbotron").outerWidth());
-		$(window).resize(adjust);
-		function adjust() {
-			$(".fb-body").outerWidth($(".jumbotron").outerWidth());
+
+	// Adds a role when creating a form
+	$scope.addRole = function()
+	{
+		$scope.saveError = "";
+
+                // Check that all of the form was filled out
+                if(!$scope.role.name) {
+                        $scope.saveError = "Please give your role a name.";
+                        return "";
+                }
+                if(!$scope.role.description) {
+                        $scope.saveError = "Please give a description for the function of the role.";
+                        return "";
+                }
+                if(!$scope.role.update && !$scope.role.view) {
+                        $scope.saveError = "Must have atleast one access type selected.";
+                        return "";
+                }
+		
+                // Prevent duplicate roles with same name
+                angular.forEach( $scope.addedRoles, function(value, key) {
+                        if(value.name === $scope.role.name)
+                        {
+                                $scope.saveError = "That role already exists.";
+                                return "";
+                        }
+                });
+
+                if($scope.saveError)
+                        return "";
+               
+		$scope.roleNames.push( { 'name' : $scope.role.name } );
+		
+                // Copy the role data into a new div
+                roleInfo = "<div id='" + $scope.role.name + "' class='role'>";
+                roleInfo += "<h4><b>" + $scope.role.name + "</b></h4><hr class='hr-black'>";
+
+                roleInfo += '<input type="button" class="btn btn-role btn-lg btn-danger" ng-click="removeRole(\'' + $scope.role.name + '\')" value="Remove">';
+                roleInfo += "<addbuttons></addbuttons>";
+                roleInfo += "<div class='space-for-buttons'></div>";
+                roleInfo += "<p class='description'><b>Description:</b> " + $scope.role.description + "</p>";
+                roleInfo += "<b>Access type options:</b> <ul class='list-inline'>";
+                if($scope.role.update)
+                        roleInfo += "<li class='glyphicon glyphicon-ok'>update</li>";
+                else
+                        roleInfo += "<li class='glyphicon glyphicon-remove'>update</li>";
+                if($scope.role.view)
+                        roleInfo += "<li class='glyphicon glyphicon-ok'>view</li>";
+                else
+                        roleInfo += "<li class='glyphicon glyphicon-remove'>view</li>";
+
+                roleInfo += "<ul>";
+                roleInfo += "</div>";
+
+		if(!$scope.role.update)
+			$scope.role.update = false;
+		if(!$scope.role.view)
+			$scope.role.view = false;
+
+                $scope.addedRoles.push({'name': $scope.role.name,
+					'description': $scope.role.description,
+					'update': $scope.role.update,
+					'view': $scope.role.view });
+
+	}
+
+	$scope.removeRole = function(removal) {
+		
+		for(var i = 0; i < $scope.addedRoles.length; i++) {
+			if($scope.addedRoles[i].name == removal)
+				$scope.addedRoles.splice(i, i + 1);
 		}
 	}
+
+	$scope.submitCreatedForm = function() {
+		$scope.submitError = "";
+		if(!$scope.form.name) {
+			$scope.submitError = "Insert form name.";
+			return;
+		}
+		if($scope.addedRoles.length < 1) {
+			$scope.submitError = "Atleast one security role must be added.";
+			return;
+		}
+
+
+		// Submit the packaged form data to mongo
+	
+		alert();
+	}
+	/*
+	$scope.editRole = function() {
+		alert('editing');
+	}*/
+})
+/*
+.directive('addrole', function($compile) {
+	return function(scope, element, attrs) {
+		element.bind('click', function() {
+			roleInfo = scope.addRoleHTML();
+			if(roleInfo !== "")
+			{
+				console.log(roleInfo);
+				scope.addedRoles.push();
+				$("#roleTitle").attr("hidden", false);
+				angular.element($("#added-roles")).append($compile(roleInfo)(scope));
+			}
+			scope.$apply();
+		});
+	}
 });
+*/

@@ -77,23 +77,46 @@ img {
 {
     color: red;
 }
-.fb-body 
-{
-    padding: 20px;
-    background-color: #444;
-    border-radius: 5px;
-    margin: auto;
-}
-.fb-main 
-{
-    box-sizing: boarder-box;
-    background-color: #fff;
-    border-radius: 5px;
-    min-height: 600px;
-}
 
 .container .jumbotron, .container-fluid .jumbotron
 {
     background-color:#f1b82d;
     border: 1px solid black;
+}
+
+#security-role-form
+{
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 10px;
+    background-color: #ECECCA;
+}
+#security-textarea
+{
+    width: 70%;
+}
+.role
+{
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 10px;
+    background-color: #ECECCA;
+}
+.btn-role
+{
+    clear: right;
+    float: right;
+    width: 100px;
+    margin-bottom: 5px;
+}
+.hr-black
+{
+   border-top: 1px solid black;
+}
+.description
+{
+   word-wrap: break-word;
+   width: 65%;
 }
