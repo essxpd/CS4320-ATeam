@@ -63,13 +63,17 @@
     <!-- cwm262 note: changed how this select group was working. Implemented ng-options -->
 	<div class="form-group" ng-show="askSecQuestions">
 		<label for="selectLevel">Requested Security Level: <small>*note: Update assumes access to View as well</small></label>
-        <select class="form-control" ng-model="selectedLevelQuestions" ng-options="levels.questions as levels.number for levels in securityLevels"></select>
-	</div>
+        <select class="form-control" ng-model="selectedLevelQuestions" ng-options="levels.questionsArr as levels.type for levels in securityLevels"></select>
+	</div>	
 
     <!-- cwm262 note: Changed how this was working to coincide with change to above select group.-->
-	<div class="checkbox" ng-model="selectedLevelQuestions" ng-repeat="questions in selectedLevelQuestions">
-		<label><input type="checkbox" ng-model="questions.value">{{questions.question}}</label>
-		<div ng-repeat="status in questions.status"><label><input type="radio" name="status" ng-model="questions.selectedStatus">{{status}}</label></div>
+	<div class="checkbox" ng-model="selectedLevelQuestions" ng-repeat="questionsArr in selectedLevelQuestions">
+			<p>{{questionsArr.number}}</p>
+			<div ng-repeat="questions in questionsArr.questions">
+				<p>{{questions.question}}</p>
+				<div ng-repeat="status in questions.status"><label><input type="checkbox" name="status" ng-model="questions.selectedStatus">{{status}}</label></div>
+			</div>
+			<p>------------------------------------------</p>
 	</div>
     
         <h2 class="error">{{saveError}}</h2>
