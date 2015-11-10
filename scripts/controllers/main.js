@@ -12,19 +12,6 @@ angular.module('cs4320aTeamApp')
         //User data is stored here.
         $scope.loggedInUser = data.data;
 
-        //Temporary. Vomits all of the previous submissions a user has made into console as objects. Can be interacted with to see data.
-        $.ajax({
-            url: './model/mongoScript.php',
-            type: 'GET',
-            dataType: 'json',
-            data: {pawprint: $scope.loggedInUser.SSO},
-            success: function(data){
-                $.each(data, function(key, value){
-                    console.dir(value);    
-                });
-            }
-        });
-
         //Grab current URL
         $scope.currentPath = $location.path();
 
@@ -35,13 +22,19 @@ angular.module('cs4320aTeamApp')
             $scope.CurrentInstructionSet = true;
         };
     
-        //Dummy data for prevForms -- just to give an idea waht it'll be like. -- Delete for production
-        $scope.prevForms = [
-            {"id":1421, "name":"form1"},
-            {"id":7431, "name":"form41"}
-        ];
- 
-
+        if($scope.loggedInUser){
+            $http.get('./model/mongoFindAll.php?paw=' + $scope.loggedInUser.SSO).then(function(response){
+                $scope.prevForms = response.data;    
+            });
+        };
+    
+        //Fix this for your version.
+        $scope.mongoForm = function(id){
+            angular.forEach(id, function(value, key){
+                $window.location.href = "http://a-team.cloudapp.net/Cody/CS4320-ATeam/model/makePDF.php?" + value;
+            })
+        };
+   
    $scope.groups = [
     {
       title: "Dynamic Group Header - 1",
@@ -54,11 +47,6 @@ angular.module('cs4320aTeamApp')
       open: false
     }
   ];
-    
-        //Function to download previously submitted forms. Just a stub for now
-        $scope.downloadForm = function(id){
-            $window.alert("You just tried to download form " + id + "!");
-        }
 
 	$scope.downloadCreatedForm = function(id) {
 	    $window.alert("You just tried to download form " + id + "!");
@@ -156,15 +144,18 @@ angular.module('cs4320aTeamApp')
                 //Error Message if fields haven't been entered.
                 $scope.saveError = "";
                 
+                var date = new Date();
+                
                 //JSON obj to be pushed to mongo // To be changed: swap $scope variables with non-dummy login-acquired data
                 var newData = {
+                    "date" : date,
                     "paw" : $scope.loggedInUser.SSO,
                     "name" : $scope.loggedInUser.Full_Name,
                     "ferpa" : $scope.loggedInUser.Ferpa_Score,
                     "title" : $scope.loggedInUser.Title,
                     "dept" : $scope.loggedInUser.Department,
                     "id" : $scope.loggedInUser.Employee_ID,
-                    "addr" : $scope.loggedInUser.Campus_Addr,
+                    "addr" : $scope.loggedInUser.Campus_Address,
                     "phoneNum" : $scope.loggedInUser.Phone_Number,
                     "requestType" : $scope.requestType,
                     "studentWorker" : $scope.studentWorker,
