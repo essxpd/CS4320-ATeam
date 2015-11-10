@@ -33,12 +33,6 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
-  <!-- Get Form builder -->
-  <link rel="stylesheet" href="plugins/FormBuilder/vendor/css/vendor.css">
-  <link rel="stylesheet" href="plugins/FormBuilder/dist/formbuilder.css">
-  <script src="plugins/FormBuilder/vendor/js/vendor.js"></script>
-  <script src="plugins/FormBuilder/dist/formbuilder.js"></script>
   
   <!-- Style Sheets -->
   <!-- Main Style Sheet -->

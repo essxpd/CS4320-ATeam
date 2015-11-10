@@ -1,58 +1,9 @@
 angular.module('cs4320aTeamApp')
     .controller('MainCtrl', function($scope, $location, $http, $window, $sanitize, $timeout, data){
-        /* Temporary applicant name and ferpa score to make UI skeleton look a little better
-        Be sure to Delete once real data is being brought in
-        $scope.name = "John Doe";
-        $scope.title = "Director";
-        $scope.dept = "The Dept";
-        $scope.paw = "jdoe39";
-        $scope.id = "11111111";
-        $scope.addr = "1111 East Broadway";
-        $scope.phoneNum = "(555)555-5555";
-		$scope.ferpa = 86;
-        Delete above code once real data is brought in */
 
-		//this is going to be the code to dynamically bring in the bio-data, the php script needs to be created first, once that is done then the above code and be removed and this can be implemented
-		/*function get_bio_data(){
-			//we will need to create a new script called get_bio_data.php that returns the sessions information here
-			$.ajax({
-                type: "GET",
-                url: './model/get_bio_data.php',
-                data: {},
-                success: function(data){console.log(data);
-					var tempArray = [];
-					for(var key in data){
-						tempArray.push(data[key]);
-					}
-					//assumes the data in the session is stored in the same order as it appears in the user table of the mysql database
-					//sets each scope variable equivalent to its corresponding bio-data from the mysql database
-					$scope.name = tempArray[0];
-					$scope.title = tempArray[1];
-					$scope.dept = tempArray[2];
-					$scope.paw = tempArray[3];
-					$scope.id = tempArray[4];
-					$scope.addr = tempArray[5];
-					$scope.phoneNum = tempArray[6];
-					$scope.ferpa = tempArray[7];
-				},
-                error: function(errorThrown){$scope.saveError = errorThrown;}
-            });
-		};*/
-    
         $scope.loggedInUser = data.data;
 
         //Temporary. Vomits all of the previous submissions a user has made into console as objects. Can be interacted with to see data.
-        $.ajax({
-            url: './model/mongoScript.php',
-            type: 'GET',
-            dataType: 'json',
-            data: {pawprint: $scope.paw},
-            success: function(data){
-                $.each(data, function(key, value){
-                    console.dir(value);    
-                });
-            }
-        });
 
         //Grab current URL
         $scope.currentPath = $location.path();
@@ -64,17 +15,24 @@ angular.module('cs4320aTeamApp')
             $scope.CurrentInstructionSet = true;
         };
     
-        //Dummy data for prevForms -- just to give an idea waht it'll be like. -- Delete for production
-        $scope.prevForms = [
-            {"id":1421, "name":"form1"},
-            {"id":7431, "name":"form41"}
-        ];
+        if($scope.loggedInUser){
+            $http.get('./model/mongoFindAll.php?paw=' + $scope.loggedInUser.SSO).then(function(response){
+                $scope.prevForms = response.data;    
+            });
+        };
  
-	// Dummy data for createdForms
-	$scope.createdForms = [
-	    {"id":2345, "name":"myZou"},
-	    {"id":5432, "name":"other form"}
-	];
+        // Dummy data for createdForms
+        $scope.createdForms = [
+            {"id":2345, "name":"myZou"},
+            {"id":5432, "name":"other form"}
+        ];
+    
+        //Fix this for your version.
+        $scope.mongoForm = function(id){
+            angular.forEach(id, function(value, key){
+                $window.location.href = "http://a-team.cloudapp.net/Cody/CS4320-ATeam/model/makePDF.php?" + value;
+            })
+        };
    
     
         //Function to download previously submitted forms. Just a stub for now
@@ -175,15 +133,18 @@ angular.module('cs4320aTeamApp')
                 //Error Message if fields haven't been entered.
                 $scope.saveError = "";
                 
+                var date = new Date();
+                
                 //JSON obj to be pushed to mongo // To be changed: swap $scope variables with non-dummy login-acquired data
                 var newData = {
+                    "date" : date,
                     "paw" : $scope.loggedInUser.SSO,
                     "name" : $scope.loggedInUser.Full_Name,
                     "ferpa" : $scope.loggedInUser.Ferpa_Score,
                     "title" : $scope.loggedInUser.Title,
                     "dept" : $scope.loggedInUser.Department,
                     "id" : $scope.loggedInUser.Employee_ID,
-                    "addr" : $scope.loggedInUser.Campus_Addr,
+                    "addr" : $scope.loggedInUser.Campus_Address,
                     "phoneNum" : $scope.loggedInUser.Phone_Number,
                     "requestType" : $scope.requestType,
                     "studentWorker" : $scope.studentWorker,

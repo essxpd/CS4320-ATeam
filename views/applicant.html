@@ -1,6 +1,6 @@
 <div class="container">
 <h2>Welcome, {{loggedInUser.Full_Name}}! &nbsp;<small><b>Your current FERPA score is {{loggedInUser.Ferpa_Score}}.</b></small></h2>
-	<!--Previous Submissions-->
+	<!--Previous Submissions
 	<div>
 		<div id="accordion" class="panel-group">
 			<div class="panel panel-default">
@@ -11,12 +11,28 @@
 				</div>
 				<div id="collapseMain" class="panel-collapse collapse">
 					<div class="panel-body">
-						<div ng-repeat="forms in prevForms"><a ng-click="downloadForm(forms.id)">{{forms.name}}</a></div>
+						<div ng-repeat="forms in prevForms"><a ng-click="downloadForm(forms.id)">{{forms._id}}</a></div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
+    
+    <div id="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Forms Listed By Date Submitted</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="form in prevForms">
+                    <td><a ng-click="mongoForm(form._id)">{{form.date}}</a></td>
+                   <!-- <td><button class="btn btn-primary" ng-click="mongoForm(form._id)">View</button></td> -->
+                </tr>
+            </tbody>
+        </table>
+    </div>
 	
 	<!--Instruction Set-->
 	<div class="center-block">
