@@ -11,7 +11,7 @@ angular.module('cs4320aTeamApp')
 
         //User data is stored here.
         $scope.loggedInUser = data.data;
-
+		
         //Grab current URL
         $scope.currentPath = $location.path();
 
@@ -31,10 +31,15 @@ angular.module('cs4320aTeamApp')
         //Fix this for your version.
         $scope.mongoForm = function(id){
             angular.forEach(id, function(value, key){
-                $window.location.href = "http://a-team.cloudapp.net/Mitch/CS4320-ATeam/model/makePDF.php?" + value;
+                $window.location.href = "http://a-team.cloudapp.net/Chris/CS4320-ATeam/model/makePDF.php?" + value;
             })
         };
+   $scope.findallforms = function(){   
+	    $http.get('./model/mongoFindAll.php?paw=' + $scope.search).then(function(response){
+        $scope.allForms = response.data;    
+        });
    
+    };
    $scope.groups = [
     {
       title: "Dynamic Group Header - 1",

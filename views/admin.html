@@ -27,6 +27,27 @@
                 	</div>
 		</div>
 	</div>
+	    <div id="container">
+		
+		<form>
+			<input type="text" name="user" ng-model="search" required>
+			<button class="btn btn-primary" ng-click="findallforms(search)">Search</button>
+		</form>
+		
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Forms Listed By Date Submitted</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="form in allForms">
+                    <td><a ng-click="mongoForm(form._id)">{{form.date}}</a></td>
+                   <!-- <td><button class="btn btn-primary" ng-click="mongoForm(form._id)">View</button></td> -->
+                </tr>
+            </tbody>
+        </table>
+    </div>
         <!--Instruction Set-->
         <div class="center-block">
                 <br>
