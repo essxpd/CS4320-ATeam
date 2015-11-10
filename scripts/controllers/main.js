@@ -28,20 +28,22 @@ angular.module('cs4320aTeamApp')
             $http.get('./model/mongoFindAll.php?paw=' + $scope.loggedInUser.SSO).then(function(response){
                 $scope.prevForms = response.data;    
             });
-        };
-    }
+        }
+    };
     
         //Fix this for your version.
         $scope.mongoForm = function(id){
+			var htmlToPass = $scope.getSecurityRequestBoxes();
             angular.forEach(id, function(value, key){
-				var htmlToPass = $scope.getSecurityRequestBoxes();
-                $window.location.href = "http://a-team.cloudapp.net/Mitch/CS4320-ATeam/model/makePDF.php?" + value + "&htmlObject=" + htmlToPass;
+				
+                $window.location.href = "http://a-team.cloudapp.net/Chris/CS4320-ATeam/model/makePDF.php?" + value + "&htmlObject=" + htmlToPass;
             })
         };
 	   $scope.findallforms = function(){   
 			$http.get('./model/mongoFindAll.php?paw=' + $scope.search).then(function(response){
 			$scope.allForms = response.data;    
 		});
+	   }
 
 
     function goToHome(){
@@ -53,7 +55,7 @@ angular.module('cs4320aTeamApp')
     }
 
    
-    };
+    
    $scope.groups = [
     {
       title: "Dynamic Group Header - 1",
