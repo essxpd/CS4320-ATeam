@@ -25,6 +25,6 @@
 		$jsonData = $_POST['data'];
 		$collection = $db->$dataTable;
 		$collection->insert($jsonData);
-		echo "inserted successfully";
+		echo "Insert successful";
 	}
 ?>
