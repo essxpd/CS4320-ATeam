@@ -1,6 +1,12 @@
 <div class='container'>
 <h1>Create new security form</h1>
 <h3>{{submitError}}</h3>
+<h3><b>Application:</b></h3>
+<select class='form-control' ng-model='form.application'>
+	<option selected disabled hidden value=''></option>
+	<option ng-repeat='site in websites'>{{site.name}}</option>
+</select>
+<br><br>
 <label>
 	Form name:
 	<input type="text" class="form-control" ng-model='form.name'>
@@ -18,10 +24,10 @@
 		</label><br>
 		<b>Access Type Options: </b><br>
 		<div class='checkbox'>
-			<label><input type='checkbox' value='View' ng-model="role.view"> View</label>
+			<label><input type='checkbox' ng-disabled='role.update' value='View' ng-model="role.view"> View</label>
 		</div>
 		<div class='checkbox'>
-			<label><input type='checkbox' value='Update' ng-model="role.update"> Update</label>
+			<label><input type='checkbox' ng-click='updateCheckBox(role.update)' value='Update' ng-model="role.update"> Update</label>
 		</div>
 		
 		<input type="button" class="btn btn-success" ng-click="addRole()" value="+ Add a new security role">

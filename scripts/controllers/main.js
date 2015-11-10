@@ -1,6 +1,6 @@
 angular.module('cs4320aTeamApp')
     .controller('MainCtrl', function($scope, $location, $http, $window, $sanitize, $timeout, data){
-
+	
 	$scope.isopen = false;
 	$scope.role = "";
 	$scope.role.update = false;
@@ -219,12 +219,13 @@ angular.module('cs4320aTeamApp')
 		    success: function(data){
 			$scope.$apply(function() {
 				$.each(data, function(key, value){
-		
-			    		$scope.createdForms.push({'id': key, 'name': value[0].name, 'roles': value[0].roles});   
+					console.dir(value);
+			    		$scope.createdForms.push({'application': value[0].application, 'id': key, 'name': value[0].name, 'roles': value[0].roles});   
 				});
 			});
 		    }
 		});
+		console.dir($scope.createdForms);
 	}
 
 
@@ -268,7 +269,7 @@ angular.module('cs4320aTeamApp')
 					'description': $scope.role.description,
 					'update': $scope.role.update,
 					'view': $scope.role.view });
-
+		console.log($scope.role.view);
 	}
 
 	$scope.removeRole = function(removal) {
@@ -279,8 +280,34 @@ angular.module('cs4320aTeamApp')
 		}
 	}
 
+	if($scope.currentPath == '/createForm')
+	{
+		$scope.websites = [];
+		$.ajax({
+		    url: './model/applications.php',
+		    type: 'GET',
+		    dataType: 'json',
+		    success: function(data){
+			$scope.$apply(function() {
+				$.each(data, function(key, value){
+					$scope.websites.push({'name': value.name});
+			    		//$scope.createdForms.push({'id': key, 'name': value[0].name, 'roles': value[0].roles});   
+				});
+			});
+		    }
+		});
+		
+	}
+
+
 	$scope.submitCreatedForm = function() {
 		$scope.submitError = "";
+
+		if(!$scope.form.application) {
+			$scope.submitError = "Choose an application.";
+			return;
+		}
+
 		if(!$scope.form.name) {
 			$scope.submitError = "Insert form name.";
 			return;
@@ -290,9 +317,8 @@ angular.module('cs4320aTeamApp')
 			return;
 		}
 
-
 		// Submit the packaged form data to mongo
-		var formData = [{"name": $scope.form.name, "roles": $scope.addedRoles}];
+		var formData = [{"application": $scope.form.application , "name": $scope.form.name, "roles": $scope.addedRoles}];
 
 		//formData = angular.toJson(formData);
 		console.dir(formData);
@@ -304,7 +330,8 @@ angular.module('cs4320aTeamApp')
                     success: function(data){console.log(data);},
                     error: function(errorThrown){$scope.saveError = errorThrown;}
                 });
-
+	    	$location.path('/admin');
+		
 		// Send to MongoDB script
 
 		// Return to admin page
@@ -313,4 +340,11 @@ angular.module('cs4320aTeamApp')
 	$scope.editRole = function() {
 		alert('editing');
 	}*/
+
+	$scope.updateCheckBox = function() {
+		if($scope.role.update)
+		{
+			$scope.role.view = true;
+		}
+	}
 })

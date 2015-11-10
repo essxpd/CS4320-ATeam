@@ -14,6 +14,7 @@
                                         <div class="panel-body">
 						<div ng-repeat="forms in createdForms">
 							<div>
+								<span>{{forms.application}}</span>
 								<a ng-click="downloadCreatedForm(forms.id)">{{forms.name}}</a>
 								<div class="float-right">
 									<input type="button" class="btn btn-primary" ng-click="editForm(forms.id)" value="Edit">
@@ -27,6 +28,11 @@
                 	</div>
 		</div>
 	</div>
+	<!--
+	<h3>Search</h3>
+	<input type='text' class='form-control' ng-model='searchQuery'>
+	<input type='button' class='btn btn-default success' ng-click="search(searchQuery)" value="search">
+-->
         <!--Instruction Set-->
         <div class="center-block">
                 <br>
