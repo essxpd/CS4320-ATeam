@@ -1,9 +1,16 @@
 angular.module('cs4320aTeamApp')
     .controller('MainCtrl', function($scope, $location, $http, $window, $sanitize, $timeout, data){
 
-        $scope.loggedInUser = data.data;
+	$scope.isopen = false;
+	$scope.role = "";
+	$scope.role.update = false;
+	$scope.role.view = false;
+	$scope.roleNames = [];
+	$scope.form = "";
+	$scope.addedRoles = [];
 
-        //Temporary. Vomits all of the previous submissions a user has made into console as objects. Can be interacted with to see data.
+        //User data is stored here.
+        $scope.loggedInUser = data.data;
 
         //Grab current URL
         $scope.currentPath = $location.path();
@@ -20,12 +27,6 @@ angular.module('cs4320aTeamApp')
                 $scope.prevForms = response.data;    
             });
         };
- 
-        // Dummy data for createdForms
-        $scope.createdForms = [
-            {"id":2345, "name":"myZou"},
-            {"id":5432, "name":"other form"}
-        ];
     
         //Fix this for your version.
         $scope.mongoForm = function(id){
@@ -34,11 +35,23 @@ angular.module('cs4320aTeamApp')
             })
         };
    
-    
-        //Function to download previously submitted forms. Just a stub for now
-        $scope.downloadForm = function(id){
-            $window.alert("You just tried to download form " + id + "!");
-        }
+	// Dummy data for createdForms
+	$scope.createdForms = [
+	    {"id":2345, "name":"myZou"},
+	    {"id":5432, "name":"other form"}
+	];
+   $scope.groups = [
+    {
+      title: "Dynamic Group Header - 1",
+      content: "Dynamic Group Body - 1",
+      open: false
+    },
+    {
+      title: "Dynamic Group Header - 2",
+      content: "Dynamic Group Body - 2",
+      open: false
+    }
+  ];
 
 	$scope.downloadCreatedForm = function(id) {
 	    $window.alert("You just tried to download form " + id + "!");
@@ -197,21 +210,77 @@ angular.module('cs4320aTeamApp')
                 });
             };
         }
-	// If on the create form page then load form-builder
-	else if($scope.currentPath === '/createForm') {
-		fb = new Formbuilder({
-			selector: '.fb-main',
-		});
-		// Dumps the save to the console
-		fb.on('save', function(payload) {
-			console.log(payload);
-		});
 
-		// Set the width of the form builder equal to the jumbotron
-		$(".fb-body").outerWidth($(".jumbotron").outerWidth());
-		$(window).resize(adjust);
-		function adjust() {
-			$(".fb-body").outerWidth($(".jumbotron").outerWidth());
+	// Adds a role when creating a form
+	$scope.addRole = function()
+	{
+		$scope.saveError = "";
+
+                // Check that all of the form was filled out
+                if(!$scope.role.name) {
+                        $scope.saveError = "Please give your role a name.";
+                        return "";
+                }
+                if(!$scope.role.description) {
+                        $scope.saveError = "Please give a description for the function of the role.";
+                        return "";
+                }
+                if(!$scope.role.update && !$scope.role.view) {
+                        $scope.saveError = "Must have atleast one access type selected.";
+                        return "";
+                }
+		
+                // Prevent duplicate roles with same name
+                angular.forEach( $scope.addedRoles, function(value, key) {
+                        if(value.name === $scope.role.name)
+                        {
+                                $scope.saveError = "That role already exists.";
+                                return "";
+                        }
+                });
+
+                if($scope.saveError)
+                        return "";
+               
+		if(!$scope.role.update)
+			$scope.role.update = false;
+		if(!$scope.role.view)
+			$scope.role.view = false;
+
+                $scope.addedRoles.push({'name': $scope.role.name,
+					'description': $scope.role.description,
+					'update': $scope.role.update,
+					'view': $scope.role.view });
+
+	}
+
+	$scope.removeRole = function(removal) {
+		
+		for(var i = 0; i < $scope.addedRoles.length; i++) {
+			if($scope.addedRoles[i].name == removal)
+				$scope.addedRoles.splice(i, i + 1);
 		}
 	}
-});
+
+	$scope.submitCreatedForm = function() {
+		$scope.submitError = "";
+		if(!$scope.form.name) {
+			$scope.submitError = "Insert form name.";
+			return;
+		}
+		if($scope.addedRoles.length < 1) {
+			$scope.submitError = "Atleast one security role must be added.";
+			return;
+		}
+
+
+		// Submit the packaged form data to mongo
+		var form = angular.toJson($scope.addedRoles);
+		
+		alert();
+	}
+	/*
+	$scope.editRole = function() {
+		alert('editing');
+	}*/
+})

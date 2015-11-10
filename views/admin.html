@@ -1,5 +1,5 @@
 <div class="container">
-        <h3>User: {{name}}</h3>
+        <h3>Welcome, {{loggedInUser.Full_Name}}!</h3>
         <br>
         <!--Previous Submissions-->
         <div>
@@ -7,10 +7,10 @@
                         <div class="panel panel-default">
                                 <div class="panel-heading">
                                         <h4 class="panel-title">
-                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseMainAdmin">Created forms</a>
+                           			Created forms
                                         </h4>
                                 </div>
-                                <div id="collapseMainAdmin" class="panel-collapse collapse">
+                                <div class="panel-collapse">
                                         <div class="panel-body">
 						<div ng-repeat="forms in createdForms">
 							<div>
@@ -23,9 +23,10 @@
 							<br>
 						</div>
                                         </div>
-                        </div>
-                </div>
-        <div>
+                        	</div>
+                	</div>
+		</div>
+	</div>
         <!--Instruction Set-->
         <div class="center-block">
                 <br>
