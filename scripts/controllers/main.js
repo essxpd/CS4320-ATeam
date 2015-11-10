@@ -22,11 +22,14 @@ angular.module('cs4320aTeamApp')
             $scope.CurrentInstructionSet = true;
         };
     
+    function refresh(){
+        
         if($scope.loggedInUser){
             $http.get('./model/mongoFindAll.php?paw=' + $scope.loggedInUser.SSO).then(function(response){
                 $scope.prevForms = response.data;    
             });
         };
+    }
     
         //Fix this for your version.
         $scope.mongoForm = function(id){
@@ -35,6 +38,14 @@ angular.module('cs4320aTeamApp')
                 $window.location.href = "http://a-team.cloudapp.net/Mitch/CS4320-ATeam/model/makePDF.php?" + value + "&htmlObject=" + htmlToPass;
             })
         };
+
+    function goToHome(){
+        $location.path('/');
+    }
+    
+    if($scope.currentPath === '/'){
+        refresh();
+    }
    
    $scope.groups = [
     {
@@ -253,7 +264,10 @@ angular.module('cs4320aTeamApp')
                     type: "POST",
                     url: './model/mongoScript.php',
                     data: {data : newData},
-                    success: function(data){console.log(data);},
+                    success: function(data){
+                        refresh();
+                        goToHome();
+                    },
                     error: function(errorThrown){$scope.saveError = errorThrown;}
                 });
             };
