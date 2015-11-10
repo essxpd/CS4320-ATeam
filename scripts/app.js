@@ -73,3 +73,4 @@ angular.module('cs4320aTeamApp', ["ngRoute", "ngSanitize"])
 				redirectTo: '/'
 			});
 	}]);
+

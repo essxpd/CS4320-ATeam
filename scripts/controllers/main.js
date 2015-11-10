@@ -41,11 +41,7 @@ angular.module('cs4320aTeamApp')
             {"id":7431, "name":"form41"}
         ];
  
-	// Dummy data for createdForms
-	$scope.createdForms = [
-	    {"id":2345, "name":"myZou"},
-	    {"id":5432, "name":"other form"}
-	];
+
    $scope.groups = [
     {
       title: "Dynamic Group Header - 1",
@@ -90,7 +86,10 @@ angular.module('cs4320aTeamApp')
 
 	// Will redirect to a place to edit forms
 	$scope.editForm = function(id) {
-	    $window.alert("You just tried to edit form " + id + "!");
+
+		//$location.path('/createForm');
+
+		$window.alert("You just tried to edit form " + id + "!");
 	}
 
 	// Will remove the form 
@@ -218,6 +217,25 @@ angular.module('cs4320aTeamApp')
                 });
             };
         }
+	
+	if($scope.currentPath == "/admin")
+	{
+		$scope.createdForms = [];
+		$.ajax({
+		    url: './model/newForms.php',
+		    type: 'GET',
+		    dataType: 'json',
+		    success: function(data){
+			$scope.$apply(function() {
+				$.each(data, function(key, value){
+		
+			    		$scope.createdForms.push({'id': key, 'name': value[0].name, 'roles': value[0].roles});   
+				});
+			});
+		    }
+		});
+	}
+
 
 	// Adds a role when creating a form
 	$scope.addRole = function()
@@ -283,9 +301,22 @@ angular.module('cs4320aTeamApp')
 
 
 		// Submit the packaged form data to mongo
-		var form = angular.toJson($scope.addedRoles);
-		
-		alert();
+		var formData = [{"name": $scope.form.name, "roles": $scope.addedRoles}];
+
+		//formData = angular.toJson(formData);
+		console.dir(formData);
+                
+		$.ajax({
+                    type: "POST",
+                    url: './model/newForms.php',
+                    data: {data : formData},
+                    success: function(data){console.log(data);},
+                    error: function(errorThrown){$scope.saveError = errorThrown;}
+                });
+
+		// Send to MongoDB script
+
+		// Return to admin page
 	}
 	/*
 	$scope.editRole = function() {
