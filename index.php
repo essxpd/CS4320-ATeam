@@ -53,13 +53,15 @@
                 </div>    
             </div>
     </header>
+    
+    <div id="content">
 	<div ng-view></div>
-    <footer>
-        <div class="container">
-            Created by the A-Team
-        </div>
-        <div class="logout"><a href="./model/logout.php"><b>LOGOUT</a></div>
-    </footer>
+    </div>
+
+    <div id="footer">
+    <p>&copy; 2015 CS4320's A-Team</p>
+    </div>
+
 </body>
 
 </html>
