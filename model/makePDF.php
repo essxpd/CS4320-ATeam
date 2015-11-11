@@ -19,7 +19,7 @@ $dbhost = 'localhost';
 		$collection = $db->$dataTable;
         $searchArray = array('id' => $id);
 		$cursor = $collection->find($searchArray);
-		$mongoArr = iterator_to_array($cursor));
+		$mongoArr = iterator_to_array($cursor);
 	}
 
 

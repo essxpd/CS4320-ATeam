@@ -43,7 +43,7 @@ angular.module('cs4320aTeamApp')
 			var htmlToPass = $scope.getSecurityRequestBoxes();
             angular.forEach(id, function(value, key){
 				
-                $window.location.href = "http://a-team.cloudapp.net/Chris/CS4320-ATeam/model/makePDF.php?" + value + "&htmlObject=" + htmlToPass;
+                $window.location.href = "http://a-team.cloudapp.net/Cody/CS4320-ATeam/model/makePDF.php?" + value + "&htmlObject=" + htmlToPass;
             })
         };
 	   $scope.findallforms = function(){   
@@ -116,7 +116,7 @@ angular.module('cs4320aTeamApp')
 	}
 
 	//If on form page, do this
-	if($scope.currentPath === '/form'){
+	//if($scope.currentPath === '/form'){
 		
 		//NgHide and NgShow to control whether security access questions are revealed
 		$scope.askSecQuestions = true;
@@ -286,7 +286,7 @@ angular.module('cs4320aTeamApp')
                     error: function(errorThrown){$scope.saveError = errorThrown;}
                 });
             };
-        }
+        //}
 
 	// Adds a role when creating a form
 	$scope.addRole = function()
