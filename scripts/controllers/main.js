@@ -38,16 +38,20 @@ angular.module('cs4320aTeamApp')
     		});
     	};
     
-        //Fix this for your version.
-        $scope.mongoForm = function(id){
+       $scope.mongoForm = function(id){
             var absUrl = $location.absUrl();
+            var path = $location.path();
+            var str = "#" + path;
+            var str = new RegExp(str, "g");
+            var locStr = absUrl.replace(str, "");
+            //var strToReplace = new RegExp(str, "g");
 			var htmlToPass = $scope.getSecurityRequestBoxes();
             angular.forEach(id, function(value, key){
-                var newLoc = absUrl + "model/makePDF.php?" + value + "&htmlObject=" + htmlToPass;
-                newLoc = newLoc.replace("#/", "");
+                var newLoc = locStr + "model/makePDF.php?" + value + "&htmlObject=" + htmlToPass;
                 $window.location.href = newLoc;
             })
         };
+    
 	   $scope.findallforms = function(){   
 			$http.get('./model/mongoFindAll.php?paw=' + $scope.search).then(function(response){
 			$scope.allForms = response.data;    
