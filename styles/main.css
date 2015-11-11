@@ -1,6 +1,31 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway:400,100,300,200,500,600,700,900,800);
 @import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
 
+ @-webkit-keyframes fadeInDown {
+    0% {
+       opacity: 0;
+       -webkit-transform: translateY(-100px);
+    }
+    100% {
+        opacity: 1;
+       -webkit-transform: translateY(0);
+    }
+ }
+ 
+ @keyframes fadeInDown {
+    0% 
+     {
+       opacity: 0;
+       transform: translateY(-100px);
+     }   
+100% 
+     {
+         opacity: 1;
+         transform: translateY(0);
+    }
+ }
+          
+
 body {
     margin: 0 auto;
     font-family: "Raleway", Times New Roman, Helvetica, Arial, sans-serif;
@@ -92,10 +117,24 @@ clip-path: polygon(0 0, 100% 0%, 100% 84%, 0% 100%);
 
 }
 
+.animated
+{
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;    
+}
+
+    .fadeInDown {
+            -webkit-animation-name: fadeInDown;
+            animation-name: fadeInDown;
+    }
+
 #headertitle
 {
     font-family: 'Montserrat', sans-serif;
     font-size: 3.5vw;
+    text-transform: uppercase;
 }
 
 #headerdesc
@@ -103,6 +142,7 @@ clip-path: polygon(0 0, 100% 0%, 100% 84%, 0% 100%);
     font-family: 'Montserrat', sans-serif;
     font-size: 2.5vw;
     padding-left: 4vw;
+    text-transform: uppercase;
 }
 
 
