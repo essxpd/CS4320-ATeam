@@ -18,10 +18,11 @@ require("dbconnect.php");
 
 #                echo "<br>heading to second if";
 
-				$query2 = "SELECT User_Type FROM users WHERE SSO = ".$user;
+				$query2 = "SELECT User_Type, Department FROM users WHERE SSO = ".$user;
 				$result2 = mysqli_query($conn, $query2) or die('Getting user_type failed: '.mysqli_error());
 				$row2 = $result2->fetch_assoc();
 				$user_type = $row2['User_Type'];
+				$dept = $row2['Department'];
 				$result2->close();
 #                	echo "<br> Made it to second if";
                 
@@ -31,11 +32,18 @@ require("dbconnect.php");
                 {
 #                        echo 'You logged in!';
 						if($user_type == 'admin')
+						{
 							$_SESSION["loggedIn"] = 3;//SiS admin people
+						}
 						elseif ($user_type == 'employer')
+						{
 							$_SESSION["loggedIn"] = 2;
+							$_SESSION["dept"] = $dept;
+						}
 						else
+						{
 							$_SESSION["loggedIn"] = 1;//for applicants
+						}
 						$_SESSION["User_Type"] = $user_type;
 						$SSO = $_SESSION["SSO"];
 						$sql = "SELECT * FROM testAuth.users WHERE sso = " . $SSO;
@@ -76,7 +84,14 @@ require("dbconnect.php");
                 $url .= $_SERVER['SERVER_NAME'];
                 $url .= $_SERVER['REQUEST_URI'];
                 $loc = dirname(dirname($url));
-                header('Location: ' . $loc);
+                if($_SESSION['User_Type'] != 'applicant')
+                {	$endLoc = $_SESSION['User_Type'];
+                	$urlToGoTo = $loc."/#/".$endLoc;
+                }
+                else 
+                	$urlToGoTo = $loc;
+                header('Location: ' . $urlToGoTo);
+                //$loc = http://a-team.cloudapp.net/Jeremy/CS4320-ATeam 
                         
 ?>
 

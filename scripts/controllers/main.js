@@ -28,13 +28,23 @@ angular.module('cs4320aTeamApp')
             });
         };
     
+    	if($scope.loggedInUser.User_Type == 'employer')
+    	{
+    		$http.get('./model/mongoGetDept.php?dept=' + $scope.loggedInUser.Department).then(function(response){
+    			$scope.deptForms = response.data;
+    		});
+    	};
+    
         //Fix this for your version.
         $scope.mongoForm = function(id){
             angular.forEach(id, function(value, key){
-                $window.location.href = "http://a-team.cloudapp.net/Mitch/CS4320-ATeam/model/makePDF.php?" + value;
+                $window.location.href = "http://a-team.cloudapp.net/Jeremy/CS4320-ATeam/model/makePDF.php?" + value;
             })
         };
-   
+   $scope.createdForms = [
+	    {"id":2345, "name":"myZou"},
+	    {"id":5432, "name":"other form"}
+	];
    $scope.groups = [
     {
       title: "Dynamic Group Header - 1",
@@ -217,25 +227,6 @@ angular.module('cs4320aTeamApp')
                 });
             };
         }
-	
-	if($scope.currentPath == "/admin")
-	{
-		$scope.createdForms = [];
-		$.ajax({
-		    url: './model/newForms.php',
-		    type: 'GET',
-		    dataType: 'json',
-		    success: function(data){
-			$scope.$apply(function() {
-				$.each(data, function(key, value){
-		
-			    		$scope.createdForms.push({'id': key, 'name': value[0].name, 'roles': value[0].roles});   
-				});
-			});
-		    }
-		});
-	}
-
 
 	// Adds a role when creating a form
 	$scope.addRole = function()
@@ -301,22 +292,9 @@ angular.module('cs4320aTeamApp')
 
 
 		// Submit the packaged form data to mongo
-		var formData = [{"name": $scope.form.name, "roles": $scope.addedRoles}];
-
-		//formData = angular.toJson(formData);
-		console.dir(formData);
-                
-		$.ajax({
-                    type: "POST",
-                    url: './model/newForms.php',
-                    data: {data : formData},
-                    success: function(data){console.log(data);},
-                    error: function(errorThrown){$scope.saveError = errorThrown;}
-                });
-
-		// Send to MongoDB script
-
-		// Return to admin page
+		var form = angular.toJson($scope.addedRoles);
+		
+		alert();
 	}
 	/*
 	$scope.editRole = function() {
