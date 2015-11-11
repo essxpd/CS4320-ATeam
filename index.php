@@ -46,12 +46,10 @@
     
 <body ng-app="cs4320aTeamApp">
     <header>
-        <div class="container">
             <div class="jumbotron">
-                <h1>Student Information Systems</h1>
-                <h2>Security Access Request Form</h2>
+                <h1 id="headertitle">STUDENT INFORMATION SYSTEMS</h1>
+                <h1 id="headerdesc">SECURITY ACCESS REQUEST FORM</h1>
             </div>
-        </div>
     </header>
 	<div ng-view></div>
     <footer>
