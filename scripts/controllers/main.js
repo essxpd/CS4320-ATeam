@@ -40,10 +40,12 @@ angular.module('cs4320aTeamApp')
     
         //Fix this for your version.
         $scope.mongoForm = function(id){
+            var absUrl = $location.absUrl();
 			var htmlToPass = $scope.getSecurityRequestBoxes();
             angular.forEach(id, function(value, key){
-				
-                $window.location.href = "http://a-team.cloudapp.net/Cody/CS4320-ATeam/model/makePDF.php?" + value + "&htmlObject=" + htmlToPass;
+                var newLoc = absUrl + "model/makePDF.php?" + value + "&htmlObject=" + htmlToPass;
+                newLoc = newLoc.replace("#/", "");
+                $window.location.href = newLoc;
             })
         };
 	   $scope.findallforms = function(){   
