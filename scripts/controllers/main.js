@@ -70,7 +70,7 @@ angular.module('cs4320aTeamApp')
 	// Take the user to the form creator
 	$scope.createForm = function() {
 	    $location.path('/createForm');
-	}	
+	};	
 
 	// Will redirect to a place to edit forms
 	$scope.editForm = function(id) {
@@ -78,7 +78,7 @@ angular.module('cs4320aTeamApp')
 		//$location.path('/createForm');
 
 		$window.alert("You just tried to edit form " + id + "!");
-	}
+	};
 
 	// Will remove the form 
 	$scope.removeForm = function(id) {
@@ -86,7 +86,7 @@ angular.module('cs4320aTeamApp')
 	    if($response) {
 		$window.alert("You just tried to delete form " + id + "!");
 	    }
-	}
+	};
 
 	//If on form page, do this
 	if($scope.currentPath === '/form'){
@@ -270,7 +270,7 @@ angular.module('cs4320aTeamApp')
 					'update': $scope.role.update,
 					'view': $scope.role.view });
 		console.log($scope.role.view);
-	}
+	};
 
 	$scope.removeRole = function(removal) {
 		
@@ -278,7 +278,7 @@ angular.module('cs4320aTeamApp')
 			if($scope.addedRoles[i].name == removal)
 				$scope.addedRoles.splice(i, i + 1);
 		}
-	}
+	};
 
 	if($scope.currentPath == '/createForm')
 	{
@@ -322,7 +322,8 @@ angular.module('cs4320aTeamApp')
 
 		//formData = angular.toJson(formData);
 		console.dir(formData);
-                
+		
+		// Send to MongoDB script
 		$.ajax({
                     type: "POST",
                     url: './model/newForms.php',
@@ -330,11 +331,8 @@ angular.module('cs4320aTeamApp')
                     success: function(data){console.log(data);},
                     error: function(errorThrown){$scope.saveError = errorThrown;}
                 });
-	    	$location.path('/admin');
-		
-		// Send to MongoDB script
-
 		// Return to admin page
+	    	$location.path('/admin');
 	}
 	/*
 	$scope.editRole = function() {
@@ -346,5 +344,5 @@ angular.module('cs4320aTeamApp')
 		{
 			$scope.role.view = true;
 		}
-	}
+	};
 })
