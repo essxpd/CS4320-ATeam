@@ -38,19 +38,23 @@ angular.module('cs4320aTeamApp')
 		});
 	}
     
-   $scope.mongoForm = function(id){
+   $scope.mongoForm = function(id, date){
 		var absUrl = $location.absUrl();
 		var path = $location.path();
 		var str = "#" + path;
 		str = new RegExp(str, "g");
 		var locStr = absUrl.replace(str, "");
 		//var strToReplace = new RegExp(str, "g");
-		var htmlToPass = $scope.getSecurityRequestBoxes();
-		angular.forEach(id, function(value, key){
+		//var htmlToPass = $scope.getSecurityRequestBoxes(date);
+		$scope.getSecurityRequestBoxes(date, id, locStr);
+		//console.log("getting html");
+		//console.log(htmlToPass);
+		//console.log($scope.senthtmlobject);
+		/*angular.forEach(id, function(value, key){
 			var newLoc;
 			newLoc = locStr + "model/makePDF.php?" + value + "&htmlObject=" + htmlToPass;
 			$window.location.href = newLoc;
-		})
+		})*/
 	};
     
    $scope.findallforms = function(){
@@ -185,33 +189,58 @@ angular.module('cs4320aTeamApp')
 		//console.dir($scope.securityLevels);
 	};
 
-	$scope.getSecurityRequestBoxes = function(){
-		var htmlObject = "";
-		var instanceCounter;
-		for (var key in $scope.securityLevels) {
-			instanceCounter = 0;
-			var level = $scope.securityLevels[key];
-			for (var key2 in level.questionsArr) {
-				var question = level.questionsArr[key2];
-				if (question.selectedStatus.length > -1) {
-					if (instanceCounter == 0) {
-						htmlObject = htmlObject + "<h4>Requested security states from " + level.type + "</h4><br>";
-					}
-					htmlObject = htmlObject + "<p>For " + question.number + "level : Requesting ";
-					for (var key3 in question.selectedStatus) {
-						var status = question.selectedStatus[key3];
-						if (key == 0) {
-							htmlObject = htmlObject + status + ", and ";
-						} else {
-							htmlObject = htmlObject + status + ".";
+	$scope.getSecurityRequestBoxes = function(date, id, locStr){
+		$.ajax({
+			type: "GET",
+			url: './model/mongoScript.php',
+			data: {date : date},
+			dataType: "JSON",
+			success: function(response){
+			console.log(response);
+			for(var key in response){
+			var information = response[key];
+			var secLevels = information.securityLevels;
+			console.log(secLevels);
+			var htmlObject = "";
+			var instanceCounter;
+			for(var key in secLevels){
+				instanceCounter = 0;
+				var level = secLevels[key];
+				console.log(level);
+				for (var key2 in level.questionsArr) {
+					var question = level.questionsArr[key2];
+					if(question.selectedStatus != undefined){
+						if(question.selectedStatus.length > 0){
+							console.log("we in it");
+							if (instanceCounter == 0) {
+								htmlObject = htmlObject + "<h4>Requested security states from " + level.type + "</h4><br>";
+							}
+							htmlObject = htmlObject + "<p>For " + question.number + " level : Requesting ";
+							for (var key3 in question.selectedStatus) {
+								var status = question.selectedStatus[key3];
+								if(question.selectedStatus.length == 2){
+									if (key3 == 0) {
+										htmlObject = htmlObject + status + ", and ";
+									} else {
+										htmlObject = htmlObject + status;
+									}
+								}else{
+									htmlObject = htmlObject + status;
+								}
+							}
+							htmlObject = htmlObject + " permissions.</p><br>";
+							++instanceCounter;
 						}
 					}
-					htmlObject = htmlObject + "</p><br>";
-					++instanceCounter;
 				}
-			}
 		}
-		return htmlObject;
+		angular.forEach(id, function(value, key){
+			var newLoc;
+			newLoc = locStr + "model/makePDF.php?" + value + "&htmlObject=" + htmlObject;
+			$window.location.href = newLoc;
+		})
+		}}
+		});
 	};
             
             

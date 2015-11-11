@@ -27,7 +27,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="form in prevForms | orderBy: '-date'">
-                    <td><a ng-click="mongoForm(form._id)">{{form.date}}</a></td>
+                    <td><a ng-click="mongoForm(form._id, form.date)">{{form.date}}</a></td>
                    <!-- <td><button class="btn btn-primary" ng-click="mongoForm(form._id)">View</button></td> -->
                 </tr>
             </tbody>
