@@ -1,6 +1,6 @@
 angular.module('cs4320aTeamApp')
     .controller('MainCtrl', function($scope, $location, $http, $window, $sanitize, $timeout, data){
-
+	
 	$scope.isopen = false;
 	$scope.role = "";
 	$scope.role.update = false;
@@ -38,14 +38,16 @@ angular.module('cs4320aTeamApp')
 		});
 	}
     
-   $scope.mongoForm = function(id){
+   $scope.mongoForm = function(id, date){
+		date = 'test'
+
 		var absUrl = $location.absUrl();
 		var path = $location.path();
 		var str = "#" + path;
 		str = new RegExp(str, "g");
 		var locStr = absUrl.replace(str, "");
-		//var strToReplace = new RegExp(str, "g");
-		var htmlToPass = $scope.getSecurityRequestBoxes();
+		var htmlToPass = $scope.getSecurityRequestBoxes(date);
+		
 		angular.forEach(id, function(value, key){
 			var newLoc;
 			newLoc = locStr + "model/makePDF.php?" + value + "&htmlObject=" + htmlToPass;
@@ -103,7 +105,7 @@ angular.module('cs4320aTeamApp')
 	$scope.createForm = function() {
 	    $location.path('/createForm');
 	};
-
+	
 	// Will redirect to a place to edit forms
 	$scope.editForm = function(id) {
 		//$location.path('/createForm');
@@ -185,33 +187,58 @@ angular.module('cs4320aTeamApp')
 		//console.dir($scope.securityLevels);
 	};
 
-	$scope.getSecurityRequestBoxes = function(){
-		var htmlObject = "";
-		var instanceCounter;
-		for (var key in $scope.securityLevels) {
-			instanceCounter = 0;
-			var level = $scope.securityLevels[key];
-			for (var key2 in level.questionsArr) {
-				var question = level.questionsArr[key2];
-				if (question.selectedStatus.length > -1) {
-					if (instanceCounter == 0) {
-						htmlObject = htmlObject + "<h4>Requested security states from " + level.type + "</h4><br>";
-					}
-					htmlObject = htmlObject + "<p>For " + question.number + "level : Requesting ";
-					for (var key3 in question.selectedStatus) {
-						var status = question.selectedStatus[key3];
-						if (key == 0) {
-							htmlObject = htmlObject + status + ", and ";
-						} else {
-							htmlObject = htmlObject + status + ".";
+	$scope.getSecurityRequestBoxes = function(date, id, locStr){
+		$.ajax({
+			type: "GET",
+			url: './model/mongoScript.php',
+			data: {date : date},
+			dataType: "JSON",
+			success: function(response){
+			console.log(response);
+			for(var key in response){
+			var information = response[key];
+			var secLevels = information.securityLevels;
+			console.log(secLevels);
+			var htmlObject = "";
+			var instanceCounter;
+			for(var key in secLevels){
+				instanceCounter = 0;
+				var level = secLevels[key];
+				console.log(level);
+				for (var key2 in level.questionsArr) {
+					var question = level.questionsArr[key2];
+					if(question.selectedStatus != undefined){
+						if(question.selectedStatus.length > 0){
+							console.log("we in it");
+							if (instanceCounter == 0) {
+								htmlObject = htmlObject + "<h4>Requested security states from " + level.type + "</h4><br>";
+							}
+							htmlObject = htmlObject + "<p>For " + question.number + " level : Requesting ";
+							for (var key3 in question.selectedStatus) {
+								var status = question.selectedStatus[key3];
+								if(question.selectedStatus.length == 2){
+									if (key3 == 0) {
+										htmlObject = htmlObject + status + ", and ";
+									} else {
+										htmlObject = htmlObject + status;
+									}
+								}else{
+									htmlObject = htmlObject + status;
+								}
+							}
+							htmlObject = htmlObject + " permissions.</p><br>";
+							++instanceCounter;
 						}
 					}
-					htmlObject = htmlObject + "</p><br>";
-					++instanceCounter;
 				}
-			}
 		}
-		return htmlObject;
+		angular.forEach(id, function(value, key){
+			var newLoc;
+			newLoc = locStr + "model/makePDF.php?" + value + "&htmlObject=" + htmlObject;
+			$window.location.href = newLoc;
+		})
+		}}
+		});
 	};
             
             
@@ -288,47 +315,65 @@ angular.module('cs4320aTeamApp')
 		});
 	};
 
+	if($scope.currentPath == "/admin")
+	{
+		$scope.createdForms = [];
+		$.ajax({
+		    url: './model/newForms.php',
+		    type: 'GET',
+		    dataType: 'json',
+		    success: function(data){
+			$scope.$apply(function() {
+				$.each(data, function(key, value){
+			    		$scope.createdForms.push({'application': value[0].application, 'id': key, 'name': value[0].name, 'roles': value[0].roles});   
+				});
+			});
+		    }
+		});
+	}
+
 	// Adds a role when creating a form
 	$scope.addRole = function()
 	{
 		$scope.saveError = "";
 
-                // Check that all of the form was filled out
-                if(!$scope.role.name) {
-                        $scope.saveError = "Please give your role a name.";
-                        return "";
-                }
-                if(!$scope.role.description) {
-                        $scope.saveError = "Please give a description for the function of the role.";
-                        return "";
-                }
-                if(!$scope.role.update && !$scope.role.view) {
-                        $scope.saveError = "Must have atleast one access type selected.";
-                        return "";
-                }
-		
-                // Prevent duplicate roles with same name
-                angular.forEach( $scope.addedRoles, function(value, key) {
-                        if(value.name === $scope.role.name)
-                        {
-                                $scope.saveError = "That role already exists.";
-                                return "";
-                        }
-                });
-
-                if($scope.saveError)
-                        return "";
-               
-		if(!$scope.role.update) {
-			$scope.role.update = false;
+        // Check that all of the form was filled out
+        if(!$scope.role.name) {
+			$scope.saveError = "Please give your role a name.";
+			return "";
         }
-		if (!$scope.role.view) $scope.role.view = false;
+        if(!$scope.role.description) {
+			$scope.saveError = "Please give a description for the function of the role.";
+            return "";
+        }
+        if(!$scope.role.update && !$scope.role.view) {
+			$scope.saveError = "Must have atleast one access type selected.";
+			return "";
+        }
+		
+        // Prevent duplicate roles with same name
+        angular.forEach( $scope.addedRoles, function(value, key) {
+			if(value.name === $scope.role.name)
+            {
+                $scope.saveError = "That role already exists.";
+                return "";
+            }
+        });
 
-		$scope.addedRoles.push({'name': $scope.role.name,
-			'description': $scope.role.description,
-			'update': $scope.role.update,
-			'view': $scope.role.view });
+        if($scope.saveError)
+            return "";
+               
+		if(!$scope.role.update)
+			$scope.role.update = false;
+			
+		if (!$scope.role.view) 
+			$scope.role.view = false;
 
+        $scope.addedRoles.push({'name': $scope.role.name,
+				'description': $scope.role.description,
+				'update': $scope.role.update,
+				'view': $scope.role.view });
+		console.log($scope.role.view);
 	};
 
 	$scope.removeRole = function(removal) {
@@ -339,8 +384,34 @@ angular.module('cs4320aTeamApp')
 		}
 	};
 
+	// Grab the different application names for dropdown
+	if($scope.currentPath == '/createForm')
+	{
+		$scope.websites = [];
+		$.ajax({
+		    url: './model/applications.php',
+		    type: 'GET',
+		    dataType: 'json',
+		    success: function(data){
+			$scope.$apply(function() {
+				$.each(data, function(key, value){
+					$scope.websites.push({'name': value.name});
+				});
+			});
+		    }
+		});
+		
+	}
+
+
 	$scope.submitCreatedForm = function() {
 		$scope.submitError = "";
+
+		if(!$scope.form.application) {
+			$scope.submitError = "Choose an application.";
+			return;
+		}
+
 		if(!$scope.form.name) {
 			$scope.submitError = "Insert form name.";
 			return;
@@ -350,14 +421,29 @@ angular.module('cs4320aTeamApp')
 			return;
 		}
 
-
 		// Submit the packaged form data to mongo
-		var form = angular.toJson($scope.addedRoles);
+		var formData = [{"application": $scope.form.application , "name": $scope.form.name, "roles": $scope.addedRoles}];
+
+		//formData = angular.toJson(formData);
+		console.dir(formData);
 		
-		alert();
+		// Send to MongoDB script
+		$.ajax({
+            type: "POST",
+            url: './model/newForms.php',
+            data: {data : formData},
+            success: function(data){console.log(data);},
+            error: function(errorThrown){$scope.saveError = errorThrown;}
+        });
+		// Return to admin page
+	    $location.path('/admin');
 	};
-	/*
-	$scope.editRole = function() {
-		alert('editing');
-	}*/
+
+	$scope.updateCheckBox = function() {
+		if($scope.role.update)
+		{
+			$scope.role.view = true;
+		}
+	};
 });
+
