@@ -33,6 +33,9 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    
+    <!-- Style Sheet For Accordion -->  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
   
   <!-- Style Sheets -->
   <!-- Main Style Sheet -->
@@ -46,20 +49,22 @@
     
 <body ng-app="cs4320aTeamApp">
     <header>
-        <div class="container">
             <div class="jumbotron">
-                <h1>Student Information Systems</h1>
-                <h2>Security Access Request Form</h2>
+                <div class="animated fadeInDown">
+                    <h1 id="headertitle">STUDENT INFORMATION SYSTEMS</h1>
+                    <h1 id="headerdesc">SECURITY ACCESS REQUEST FORM</h1>
+                </div>    
             </div>
-        </div>
     </header>
+    
+    <div id="content">
 	<div ng-view></div>
-    <footer>
-        <div class="container">
-            Created by the A-Team
-        </div>
-        <div class="logout"><a href="./model/logout.php"><b>LOGOUT</a></div>
-    </footer>
+    </div>
+
+    <div id="footer">
+    <p>&copy; 2015 CS4320's A-Team</p>
+    </div>
+
 </body>
 
 </html>

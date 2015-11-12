@@ -1,9 +1,22 @@
 "use strict";
-angular.module('cs4320aTeamApp', ["ngRoute", "ngSanitize"])
+angular.module('cs4320aTeamApp', ["ngRoute", "ngSanitize","ui.bootstrap"])
 	.config(["$routeProvider", function($routeProvider){
 		$routeProvider
 			.when("/", {
 				templateUrl: "views/applicant.html",
+				controller: "MainCtrl",
+                resolve: {
+                    data: function($q, $http){
+                        var deferred = $q.defer();
+                        $http({method: 'GET', url: './model/biodata.php'}).then(function(data){
+                            deferred.resolve(data);
+                        });
+                        return deferred.promise;
+                    }
+                }
+			})
+			.when("/employer", {
+				templateUrl: "views/employer.html",
 				controller: "MainCtrl",
                 resolve: {
                     data: function($q, $http){

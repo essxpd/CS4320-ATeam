@@ -1,7 +1,7 @@
 .container button{
 		appearance: none;
 		outline: 0;
-		background-color: black;
+		background: black;
 		border: 0;
 		padding: 10px 15px;
 		color: #f1b82d;
