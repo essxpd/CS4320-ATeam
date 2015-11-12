@@ -21,11 +21,9 @@ create table authentication(
 
 /*drop table if exists log;*/
 create table log(
-	Registration_Date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	Active_Requests int,
-	Date_Approved date,
-	Request_Submitted date,
-    SSO varchar(15),
+	Time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	SSO varchar(15),
+	Action varchar(30),
     FOREIGN KEY (SSO) REFERENCES users(SSO)
 );
 
@@ -39,7 +37,4 @@ INSERT INTO testAuth.authentication (SSO,Password_Hash,Salt) VALUES ('101','317c
 INSERT INTO testAuth.authentication (SSO,Password_Hash,Salt) VALUES ('102','dc5e016f163aeb69207fa16d6da8c390a3f21dbe','9950fa661509b44cd695dc84a720875ed97eae55');
 INSERT INTO testAuth.authentication (SSO,Password_Hash,Salt) VALUES ('103','76373766ce100393fabd011d5e856c3e1a722f57','9950fa661509b44cd695dc84a720875ed97eae55');
 
-INSERT INTO testAuth.log (Active_Requests,Date_Approved,SSO)VALUES ('0','11/3/2015','100');
-INSERT INTO testAuth.log (Active_Requests,Date_Approved,SSO)VALUES ('0','11/3/2015','101');
-INSERT INTO testAuth.log (Active_Requests,Date_Approved,SSO)VALUES ('0','11/3/2015','102');
-INSERT INTO testAuth.log (Active_Requests,Date_Approved,SSO)VALUES ('0','11/3/2015','103');
+/*INSERT INTO testAuth.log (SSO,Action)VALUES ('100',$action);*/

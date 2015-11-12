@@ -11,7 +11,7 @@ angular.module('cs4320aTeamApp')
 
 	//User data is stored here.
 	$scope.loggedInUser = data.data;
-
+	logging('login');
 	//Grab current URL
 	$scope.currentPath = $location.path();
 
@@ -21,11 +21,20 @@ angular.module('cs4320aTeamApp')
 	if($scope.loggedInUser.Ferpa_Score > 85){
 		$scope.CurrentInstructionSet = true;
 	}
-    
+    function logging(action) {
+		var postData = {
+			action: action,
+			sso: $scope.loggedInUser.SSO
+		}
+		$.post("./model/updateLog.php", postData, function(response) {
+			console.log(response);
+		});
+		
+	}
     function refresh(){
         
         if($scope.loggedInUser){
-            $http.get('./model/mongoFindAll.php?paw=' + $scope.loggedInUser.SSO).then(function(response){
+            $http.get('model/mongoFindAll.php?paw=' + $scope.loggedInUser.SSO).then(function(response){
                 $scope.prevForms = response.data;    
             });
         }
