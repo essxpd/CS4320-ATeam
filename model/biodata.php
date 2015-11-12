@@ -1,4 +1,4 @@
-how <?PHP
+<?PHP
 require("dbconnect.php");
 session_start();
 //$SSO = 102;//change 100 to whatever the sso of the signed in user is however you like
