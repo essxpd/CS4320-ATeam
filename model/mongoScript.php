@@ -12,11 +12,14 @@
 	if($method == 'GET'){
 		$pawprint = $_GET['pawprint'];
 		$department = $_GET['department'];
+		$timestamp = $_GET['date'];
 		$collection = $db->$dataTable;
-		if($department =! NULL){
+		if(!is_null($department)){
 			$searchArray = array('dept' => $department);
-		}else{
+		}else if(!is_null($pawprint)){
 			$searchArray = array('paw' => $pawprint);
+		}else if(!is_null($timestamp)){
+			$searchArray = array('date' => $timestamp);
 		}
 		$cursor = $collection->find($searchArray);
 		$jsonArr = (json_encode(iterator_to_array($cursor)));
