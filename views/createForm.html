@@ -18,50 +18,54 @@
 <div class='container'>
 <h1>Create new security form</h1>
 <h3>{{submitError}}</h3>
+<h3><b>Application:</b></h3>
+<select class='form-control' ng-model='form.application'>
+        <option selected disabled hidden value=''></option>
+        <option ng-repeat='site in websites'>{{site.name}}</option>
+</select>
+<br><br>
 <label>
 	Form name:
 	<input type="text" class="form-control" ng-model='form.name'>
 </label>
 <div id="security-role-form">
-		<h3>Add role:</h3>
-		<h4>{{saveError}}</h4>
-		<label>
-			Role:
-			<input type='text' class='form-control' ng-model="role.name">
-		</label><br>
-		<label id="security-textarea">
-			Description: <br>
-			<textarea class='form-control' ng-model="role.description"></textarea>
-		</label><br>
-		<b>Access Type Options: </b><br>
-		<div class='checkbox'>
-			<label><input type='checkbox' value='View' ng-model="role.view"> View</label>
-		</div>
-		<div class='checkbox'>
-			<label><input type='checkbox' value='Update' ng-model="role.update"> Update</label>
-		</div>
-		
-		<input type="button" class="btn btn-success" ng-click="addRole()" value="+ Add a new security role">
-	</div>
-	<h3 ng-show='addedRoles.length > 0'>Roles:</h3>
-	<div id="added-roles">
-		<div ng-repeat='r in addedRoles' class='role'>
-			<div id='{{r.name}}'>
-				<h4><b>{{r.name}}</b></h4>
-			</div>
-			<input type="button" class="btn btn-role btn-lg btn-danger" ng-click="removeRole(r.name) " value="Remove">
-			<p class='description'><b>Description:</b> {{r.description}}</p>
-			<b>Access type options:</b>
-			<ul class='list-inline'>
-				<li ng-show='r.update==true' class='glyphicon glyphicon-ok'>update</li>
-				<li ng-show='r.update==false'class='glyphicon glyphicon-remove'>update</li>
-				<li ng-show='r.view==true' class='glyphicon glyphicon-ok'>view</li>
-				<li ng-show='r.view==false'class='glyphicon glyphicon-remove'>view</li>
-			</ul>	
-		</div>
-	</div>
-	
-	
+	             <h3>Add role:</h3>
+                <h4>{{saveError}}</h4>
+                <label>
+                        Role:
+                        <input type='text' class='form-control' ng-model="role.name">
+                </label><br>
+                <label id="security-textarea">
+                        Description: <br>
+                        <textarea class='form-control' ng-model="role.description"></textarea>
+                </label><br>
+                <b>Access Type Options: </b><br>
+                <div class='checkbox'>
+                        <label><input type='checkbox' ng-disabled='role.update' value='View' ng-model="role.view"> View</label>
+                </div>
+                <div class='checkbox'>
+                        <label><input type='checkbox' ng-click='updateCheckBox(role.update)' value='Update' ng-model="role.update"> Update</label>
+                </div>
+
+                <input type="button" class="btn btn-success" ng-click="addRole()" value="+ Add a new security role">
+        </div>
+        <h3 ng-show='addedRoles.length > 0'>Roles:</h3>
+        <div id="added-roles">
+                <div ng-repeat='r in addedRoles' class='role'>
+                        <div id='{{r.name}}'>
+                                <h4><b>{{r.name}}</b></h4>
+                        </div>
+                        <input type="button" class="btn btn-role btn-lg btn-danger" ng-click="removeRole(r.name) " value="Remove">
+                        <p class='description'><b>Description:</b> {{r.description}}</p>
+                        <b>Access type options:</b>
+                        <ul class='list-inline'>
+                                <li ng-show='r.update==true' class='glyphicon glyphicon-ok'>update</li>
+                                <li ng-show='r.update==false'class='glyphicon glyphicon-remove'>update</li>
+                                <li ng-show='r.view==true' class='glyphicon glyphicon-ok'>view</li>
+                                <li ng-show='r.view==false'class='glyphicon glyphicon-remove'>view</li>
+                        </ul>
+                </div>
+        </div>
 
 	<button type='button' ng-click='submitCreatedForm()'>SAVE</button>
 </div>

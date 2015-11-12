@@ -19,32 +19,34 @@
         <h3>Welcome, {{loggedInUser.Full_Name}}!</h3>
         <br>
         <!--Previous Submissions-->
-        <div>
+	<div>
                 <div id="accordionMain" class="panel-group">
                         <div class="panel panel-default">
                                 <div class="panel-heading">
                                         <h4 class="panel-title">
-                           			Created forms
+                                                Created forms
                                         </h4>
                                 </div>
                                 <div class="panel-collapse">
                                         <div class="panel-body">
-						<div ng-repeat="forms in createdForms">
-							<div>
-								<a ng-click="downloadCreatedForm(forms.id)">{{forms.name}}</a>
-								<div class="float-right">
-									<input type="button" class="btn btn-primary" ng-click="editForm(forms.id)" value="Edit">
-									<input type="button" class="btn btn-danger" ng-click="removeForm(forms.id)" value="Remove">
-								</div>
-							</div>
-							<br>
-						</div>
+                                                <div ng-repeat="forms in createdForms">
+                                                        <div>
+                                                                <span>{{forms.application}}</span>
+                                                                <a ng-click="downloadCreatedForm(forms.id)">{{forms.name}}</a>
+                                                                <div class="float-right">
+                                                                        <input type="button" class="btn btn-primary" ng-click="editForm(forms.id)" value="Edit">
+                                                                        <input type="button" class="btn btn-danger" ng-click="removeForm(forms.id)" value="Remove">
+                                                                </div>
+                                                        </div>
+                                                        <br>
+                                                </div>
                                         </div>
-                        	</div>
-                	</div>
-		</div>
-	</div>
-	    <div id="container">
+                                </div>
+                        </div>
+                </div>
+        </div>
+    
+	<div id="container">
 		
 		<form>
 			<input type="text" name="user" ng-model="search" required>
@@ -59,7 +61,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="form in allForms">
-                    <td><a ng-click="mongoForm(form._id)">{{form.date}}</a></td>
+                    <td><a ng-click="mongoForm(form._id, form.date)">{{form.date}}</a></td>
                    <!-- <td><button class="btn btn-primary" ng-click="mongoForm(form._id)">View</button></td> -->
                 </tr>
             </tbody>
