@@ -119,12 +119,14 @@ angular.module('cs4320aTeamApp')
 
 	// Will redirect to a place to edit forms
 	$scope.editForm = function(id) {
+		logging('edited form ' + id);
 		//$location.path('/createForm');
 		$window.alert("You just tried to edit form " + id + "!");
 	};
 
 	// Will remove the form 
 	$scope.removeForm = function(id) {
+		logging('removed form ' + id);
 		var $response = $window.confirm("Are you sure you would like to remove this form?");
 	    if($response) {
 			$window.alert("You just tried to delete form " + id + "!");
@@ -418,6 +420,7 @@ angular.module('cs4320aTeamApp')
 
 
 	$scope.submitCreatedForm = function() {
+		 logging('form created');
 		 $scope.submitError = "";
 
                 if(!$scope.form.application) {
