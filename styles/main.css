@@ -262,6 +262,38 @@ clip-path: polygon(0% 0%, 100% 0%, 100% 75%, 75% 75%, 47% 100%, 50% 75%, 0% 75%)
         text-shadow:none;
 }
 
+.btn-primary
+{
+    appearance: none;
+		outline: 0;
+		background: black;
+		border: 0;
+		padding: 10px 15px;
+		color: #f1b82d;
+		border-radius: 3px;
+		cursor: pointer;
+		font-size: 18px;
+		transition-duration: 0.25s;
+        margin-top: 1.3em;
+        text-shadow:none;
+}
+
+.btn-danger, .addRole
+{
+    appearance: none;
+		outline: 0;
+		background: black;
+		border: 0;
+		padding: 10px 15px;
+		color: #f1b82d;
+		border-radius: 3px;
+		cursor: pointer;
+		font-size: 18px;
+		transition-duration: 0.25s;
+        margin-top: 1.3em;
+        text-shadow:none;    
+}
+
 .btn-default:hover
 {
     background:black;
@@ -280,6 +312,36 @@ opacity: 0.7;
     background:black;
     color:#f1b82d;
 opacity: 0.7;
+}
+
+.btn-danger:hover{
+    background:black;
+    color:#f1b82d;
+opacity: 0.7;
+}
+
+.editButton, .deleteButton
+{
+      appearance: none;
+		outline: 0;
+		background: black;
+		border: 0;
+		border-radius: 3px;
+		color: #f1b82d;
+		cursor: pointer;
+		transition-duration: 0.25s;
+        text-shadow:none;  
+}
+
+.editButton:hover, .deleteButton:hover
+{
+    opacity:0.7;
+}
+
+
+.addRole:hover
+{
+    opacity:0.7;
 }
 
 #footer

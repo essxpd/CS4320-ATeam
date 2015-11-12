@@ -1,4 +1,4 @@
-<div class="usercontainer">
+            <div class="usercontainer">
   <div class="userinfo">
     <h4>Hello, <b>{{loggedInUser.Full_Name}}!</b><br>
     <small>Your current FERPA score is <b>{{loggedInUser.Ferpa_Score}}.</b></small></h4>
@@ -31,11 +31,10 @@
                                         <div class="panel-body">
 						<div ng-repeat="forms in createdForms">
 							<div>
-								<span>{{forms.application}}</span>
 								<a ng-click="downloadCreatedForm(forms.id)">{{forms.name}}</a>
 								<div class="float-right">
-									<input type="button" class="btn btn-primary" ng-click="editForm(forms.id)" value="Edit">
-									<input type="button" class="btn btn-danger" ng-click="removeForm(forms.id)" value="Remove">
+									<input type="button" class="editButton" ng-click="editForm(forms.id)" value="Edit">
+									<input type="button" class="deleteButton" ng-click="removeForm(forms.id)" value="Remove">
 								</div>
 							</div>
 							<br>
