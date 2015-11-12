@@ -39,22 +39,20 @@ angular.module('cs4320aTeamApp')
 	}
     
    $scope.mongoForm = function(id, date){
+		date = 'test'
+
 		var absUrl = $location.absUrl();
 		var path = $location.path();
 		var str = "#" + path;
 		str = new RegExp(str, "g");
 		var locStr = absUrl.replace(str, "");
-		//var strToReplace = new RegExp(str, "g");
-		//var htmlToPass = $scope.getSecurityRequestBoxes(date);
-		$scope.getSecurityRequestBoxes(date, id, locStr);
-		//console.log("getting html");
-		//console.log(htmlToPass);
-		//console.log($scope.senthtmlobject);
-		/*angular.forEach(id, function(value, key){
+		var htmlToPass = $scope.getSecurityRequestBoxes(date);
+		
+		angular.forEach(id, function(value, key){
 			var newLoc;
 			newLoc = locStr + "model/makePDF.php?" + value + "&htmlObject=" + htmlToPass;
 			$window.location.href = newLoc;
-		})*/
+		})
 	};
     
    $scope.findallforms = function(){
