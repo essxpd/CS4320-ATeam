@@ -11,7 +11,7 @@ angular.module('cs4320aTeamApp')
 
 	//User data is stored here.
 	$scope.loggedInUser = data.data;
-	logging('login');
+	
 	//Grab current URL
 	$scope.currentPath = $location.path();
 
@@ -255,7 +255,7 @@ angular.module('cs4320aTeamApp')
             
 	// To submit security level request data
 	$scope.saveRequest = function(){
-
+		logging('form submitted');
 		//Error Message if fields haven't been entered.
 		$scope.saveError = "";
 
