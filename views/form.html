@@ -1,3 +1,19 @@
+            <div class="usercontainer">
+  <div class="userinfo">
+    <h4>Hello, <b>{{loggedInUser.Full_Name}}!</b><br>
+    <small>Your current FERPA score is <b>{{loggedInUser.Ferpa_Score}}.</b></small></h4>
+      
+      <p>You are currently viewing our submission form!</p>
+      
+      <p>Other functionality stuff can go here, in the event that we discover something else we'd like to add for navigation purposes.</p>
+      
+    <h4 class="logout">
+        <a href="./model/logout.php"><b>LOGOUT</b></a>
+        </h4>
+        </div></div>
+
+<div id="pagecontainer">
+
 <div class="container">
 
 	<!--Auto Fill Bio Data-->
@@ -63,13 +79,20 @@
     <!-- cwm262 note: changed how this select group was working. Implemented ng-options -->
 	<div class="form-group" ng-show="askSecQuestions">
 		<label for="selectLevel">Requested Security Level: <small>*note: Update assumes access to View as well</small></label>
-        <select class="form-control" ng-model="selectedLevelQuestions" ng-options="levels.questions as levels.number for levels in securityLevels"></select>
-	</div>
+        <select class="form-control" ng-model="selectedLevelQuestions" ng-options="levels.questionsArr as levels.type for levels in securityLevels"></select>
+	</div>	
 
     <!-- cwm262 note: Changed how this was working to coincide with change to above select group.-->
-	<div class="checkbox" ng-model="selectedLevelQuestions" ng-repeat="questions in selectedLevelQuestions">
-		<label><input type="checkbox" ng-model="questions.value">{{questions.question}}</label>
-		<div ng-repeat="status in questions.status"><label><input type="radio" name="status" ng-model="questions.selectedStatus">{{status}}</label></div>
+	<div class="checkbox" ng-model="selectedLevelQuestions" ng-repeat="questionsArr in selectedLevelQuestions">
+			<p>{{questionsArr.number}}</p>
+			<div ng-repeat="questions in questionsArr.questions">
+				<p>{{questions.question}}</p>
+				<div ng-repeat="status in questions.status"><label><input type="checkbox" name="{{questionsArr.number}} : {{status}}" ng-click="setStatusOfCheckBox(status, questionsArr)" value="{{status}}">{{status}}</label></div>
+			</div>
+			<p>------------------------------------------</p>
+			<!--ng-click="questionsArr.selectedStatus.push(status); console.dir(securityLevels)"-->
+			<!--ng-click="setStatusOfCheckBox({{status}}, {{questionsArr.number}})"-->
+			<!--ng-model="questions.selectedStatus"-->
 	</div>
     
         <h2 class="error">{{saveError}}</h2>
@@ -84,3 +107,4 @@ $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();   
 });
 </script>
+</div>

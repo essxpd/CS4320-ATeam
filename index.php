@@ -46,20 +46,22 @@
     
 <body ng-app="cs4320aTeamApp">
     <header>
-        <div class="container">
             <div class="jumbotron">
-                <h1>Student Information Systems</h1>
-                <h2>Security Access Request Form</h2>
+                <div class="animated fadeInDown">
+                    <h1 id="headertitle">STUDENT INFORMATION SYSTEMS</h1>
+                    <h1 id="headerdesc">SECURITY ACCESS REQUEST FORM</h1>
+                </div>    
             </div>
-        </div>
     </header>
+    
+    <div id="content">
 	<div ng-view></div>
-    <footer>
-        <div class="container">
-            Created by the A-Team
-        </div>
-        <div class="logout"><a href="./model/logout.php"><b>LOGOUT</a></div>
-    </footer>
+    </div>
+
+    <div id="footer">
+    <p>&copy; 2015 CS4320's A-Team</p>
+    </div>
+
 </body>
 
 </html>

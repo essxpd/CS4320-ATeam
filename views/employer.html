@@ -1,0 +1,43 @@
+            <div class="usercontainer">
+  <div class="userinfo">
+    <h4>Hello, <b>{{loggedInUser.Full_Name}}!</b><br>
+    <small>Your current FERPA score is <b>{{loggedInUser.Ferpa_Score}}.</b></small></h4>
+      
+      <p>You are currently viewing our employer page!</p>
+      
+      <p>Other functionality stuff can go here, in the event that we discover something else we'd like to add for navigation purposes.</p>
+      
+    <h4 class="logout">
+        <a href="./model/logout.php"><b>LOGOUT</b></a>
+        </h4>
+        </div></div>
+
+
+<div id="pagecontainer">
+
+<div class="container">
+        <h3>User: {{loggedInUser.Full_Name}}</h3>
+        <h4>Department: {{loggedInUser.Department}}</h4>
+        <br>
+        <!--Previous Submissions-->
+        
+    <div id="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Forms Listed By Date Submitted</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="form in deptForms | orderBy:'-date'">
+                    <td><a ng-click="mongoForm(form._id)">{{form.name}} | {{form.date}}</a></td>
+            		<!--<input type="button" class="btn btn-primary" ng-click="editForm(forms.id)" value="Edit">
+					<input type="button" class="btn btn-danger" ng-click="removeForm(forms.id)" value="Remove">
+					<input type="button" class="btn btn-approve" ng-click="approveForm(forms.id)" value="Approve">-->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+        
+</div>
+</div>

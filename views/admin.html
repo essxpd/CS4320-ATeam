@@ -1,4 +1,21 @@
-<div class="container">
+<div class="usercontainer">
+  <div class="userinfo">
+    <h4>Hello, <b>{{loggedInUser.Full_Name}}!</b><br>
+    <small>Your current FERPA score is <b>{{loggedInUser.Ferpa_Score}}.</b></small></h4>
+      
+      <p>You are currently viewing our admin page!</p>
+      
+      <p>Other functionality stuff can go here, in the event that we discover something else we'd like to add for navigation purposes.</p>
+      
+    <h4 class="logout">
+        <a href="./model/logout.php"><b>LOGOUT</b></a>
+        </h4>
+        </div></div>
+
+
+<div id="pagecontainer">
+    
+    <div class="container">
         <h3>Welcome, {{loggedInUser.Full_Name}}!</h3>
         <br>
         <!--Previous Submissions-->
@@ -28,11 +45,27 @@
                 	</div>
 		</div>
 	</div>
-	<!--
-	<h3>Search</h3>
-	<input type='text' class='form-control' ng-model='searchQuery'>
-	<input type='button' class='btn btn-default success' ng-click="search(searchQuery)" value="search">
--->
+	    <div id="container">
+		
+		<form>
+			<input type="text" name="user" ng-model="search" required>
+			<button class="btn btn-primary" ng-click="findallforms(search)">Search</button>
+		</form>
+		
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Forms Listed By Date Submitted</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="form in allForms">
+                    <td><a ng-click="mongoForm(form._id)">{{form.date}}</a></td>
+                   <!-- <td><button class="btn btn-primary" ng-click="mongoForm(form._id)">View</button></td> -->
+                </tr>
+            </tbody>
+        </table>
+    </div>
         <!--Instruction Set-->
         <div class="center-block">
                 <br>
@@ -44,5 +77,5 @@
         </div>
         <br>
         <br>
-</div>
+    </div></div>
 
