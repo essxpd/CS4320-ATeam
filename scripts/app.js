@@ -1,5 +1,5 @@
 "use strict";
-angular.module('cs4320aTeamApp', ["ngRoute", "ngSanitize"])
+angular.module('cs4320aTeamApp', ["ngRoute", "ngSanitize","ui.bootstrap"])
 	.config(["$routeProvider", function($routeProvider){
 		$routeProvider
 			.when("/", {
