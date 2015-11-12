@@ -20,8 +20,18 @@
         <h4>Department: {{loggedInUser.Department}}</h4>
         <br>
         <!--Previous Submissions-->
-        
-    <div id="container">
+
+    
+    <div ng-app="accordion" class="accordion-test">
+
+  <uib-accordion>
+    
+    <uib-accordion-group>
+      
+        <uib-accordion-heading>
+            Forms Listed by Date Submitted <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+        </uib-accordion-heading>
+
         <table class="table">
             <thead>
                 <tr>
@@ -37,7 +47,11 @@
                 </tr>
             </tbody>
         </table>
-    </div>
+
+    </uib-accordion-group>
+  
+  </uib-accordion>
+</div>
         
 </div>
 </div>

@@ -35,21 +35,38 @@
 		</div>
 	</div> -->
     
-    <div id="container">
+    
+    <div ng-app="accordion" class="accordion-test">
+
+  <uib-accordion>
+    
+    <uib-accordion-group>
+      
+        <uib-accordion-heading>
+            Forms Listed by Date Submitted <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+        </uib-accordion-heading>
+
         <table class="table">
             <thead>
                 <tr>
-                    <th>Forms Listed By Date Submitted</th>
+                    <th>Forms Listed by Date Submitted</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="form in prevForms | orderBy: '-date'">
-                    <td><a ng-click="mongoForm(form._id, form.date)">{{form.date}}</a></td>
+                    <td><a ng-click="mongoForm(form._id)">{{form.date}}</a></td>
                    <!-- <td><button class="btn btn-primary" ng-click="mongoForm(form._id)">View</button></td> -->
                 </tr>
             </tbody>
         </table>
-    </div>
+
+    </uib-accordion-group>
+  
+  </uib-accordion>
+</div>
+    
+    
+    
 	
 	<!--Instruction Set-->
 	<div class="center-block">
