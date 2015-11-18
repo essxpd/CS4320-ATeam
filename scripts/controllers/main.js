@@ -269,6 +269,8 @@ angular.module('cs4320aTeamApp')
 			"securityLevels" : $scope.securityLevels
 		};
 
+		console.dir(newData);
+
 		//Replace securityLevels with the information from copySecurity if they've elected to do that instead.
 		if($scope.toggle === true){ //If copySecurity was selected,
 			//Fill in copySecurity array with text input. ToDo: Sanitize
@@ -317,6 +319,64 @@ angular.module('cs4320aTeamApp')
 		});
 	};
 
+	if($scope.currentPath == "/form")
+	{
+		$scope.applications = [];
+		
+                $.ajax({
+                    url: './model/applications.php',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data){
+                        $scope.$apply(function() {
+                                $.each(data, function(key, value){
+                                        $scope.applications.push({'name': value.name});
+					if(value.name == "MyZou")
+						$scope.requestApplication = "MyZou";
+				
+                                });
+
+		$.ajax({
+                    url: './model/form_templates.php',
+                    type: 'GET',
+		    data: {app: $scope.requestApplication},
+                    dataType: 'json',
+                    success: function(data){
+                        $scope.$apply(function() {
+				temp = [];
+				$.each(data, function(id, value) {
+					questionsArr = [];
+					$.each(value.roles, function(role_key, role) {
+						questions = [];
+						selectedStatus = [];
+						stat = [];
+						if(role.view == 'true')
+							stat.push('view');
+						if(role.update == 'true')
+							stat.push('update');
+
+						questions.push({'question': role.description, 'status': stat});
+						questionsArr.push({'number': role.name, 'questions': questions, 'selectedStatus': selectedStatus});
+					});
+					temp.push({'type': value.name, 'questionsArr': questionsArr});
+				});
+				console.dir(temp);
+				console.dir($scope.securityLevels);
+				$scope.securityLevels = temp;
+                        });
+                    }
+                });
+				
+                        });
+                    }
+                });
+                
+	}
+
+	$scope.appChanged = function() {
+		console.log('test');
+	};
+
 	if($scope.currentPath == "/admin")
         {
                 $scope.createdForms = [];
@@ -327,8 +387,7 @@ angular.module('cs4320aTeamApp')
                     success: function(data){
                         $scope.$apply(function() {
                                 $.each(data, function(key, value){
-                                        console.dir(value);
-                                        $scope.createdForms.push({'application': value[0].application, 'id': key, 'name': value[0].name, 'roles': value[0].roles});
+                                        $scope.createdForms.push({'application': value.application, 'id': key, 'name': value.name, 'roles': value.roles});
                                 });
                         });
                     }
@@ -426,7 +485,9 @@ angular.module('cs4320aTeamApp')
                 }
 
                 // Submit the packaged form data to mongo
-                var formData = [{"application": $scope.form.application , "name": $scope.form.name, "roles": $scope.addedRoles}];
+                var formData = {"application": $scope.form.application , "name": $scope.form.name, "roles": $scope.addedRoles};
+
+		console.dir(formData);
 
                 //formData = angular.toJson(formData);
                 console.dir(formData);
@@ -445,12 +506,5 @@ angular.module('cs4320aTeamApp')
 	$scope.editRole = function() {
 		alert('editing');
 	}*/
-
-	$scope.updateCheckBox = function() {
-                if($scope.role.update)
-                {
-                        $scope.role.view = true;
-                }
-        }
 
 });

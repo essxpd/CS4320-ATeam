@@ -41,10 +41,10 @@
                 </label><br>
                 <b>Access Type Options: </b><br>
                 <div class='checkbox'>
-                        <label><input type='checkbox' ng-disabled='role.update' value='View' ng-model="role.view"> View</label>
+                        <label><input type='checkbox' value='View' ng-model="role.view"> View</label>
                 </div>
                 <div class='checkbox'>
-                        <label><input type='checkbox' ng-click='updateCheckBox(role.update)' value='Update' ng-model="role.update"> Update</label>
+                        <label><input type='checkbox' value='Update' ng-model="role.update"> Update</label>
                 </div>
 
                 <input type="button" class="btn btn-success" ng-click="addRole()" value="+ Add a new security role">
@@ -59,10 +59,10 @@
                         <p class='description'><b>Description:</b> {{r.description}}</p>
                         <b>Access type options:</b>
                         <ul class='list-inline'>
-                                <li ng-show='r.update==true' class='glyphicon glyphicon-ok'>update</li>
-                                <li ng-show='r.update==false'class='glyphicon glyphicon-remove'>update</li>
-                                <li ng-show='r.view==true' class='glyphicon glyphicon-ok'>view</li>
-                                <li ng-show='r.view==false'class='glyphicon glyphicon-remove'>view</li>
+                                <li ng-show='r.update' class='glyphicon glyphicon-ok'>update</li>
+                                <li ng-show='!r.update'class='glyphicon glyphicon-remove'>update</li>
+                                <li ng-show='r.view' class='glyphicon glyphicon-ok'>view</li>
+                                <li ng-show='!r.view'class='glyphicon glyphicon-remove'>view</li>
                         </ul>
                 </div>
         </div>

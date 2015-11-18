@@ -25,6 +25,11 @@
     <p>Campus Address: {{loggedInUser.Campus_Address}}</p>
     <p>Phone Number: {{loggedInUser.Phone_Number}}</p>
     
+    <div class="form-group">
+        <label for="requestApplication">Choose which application you would like to make a request for</label>
+        <select class="form-control" ng-model="requestApplication" ng-options="app.name as app.name for app in applications" ng-change="appChanged()"></select>
+    </div>
+
     <!-- Choose appropriate request type -->
     <div class="form-group">
         <label for="requestType">Choose which type of request you would like to make:</label>
@@ -74,8 +79,7 @@
             <input type="text" class="form-control" name="empId" ng-model="copySecurity.empId" required>
         </div>
     </form>
-    
-	<!--Drop Down Menu-->
+ <!--Drop Down Menu-->
     <!-- cwm262 note: changed how this select group was working. Implemented ng-options -->
 	<div class="form-group" ng-show="askSecQuestions">
 		<label for="selectLevel">Requested Security Level: <small>*note: Update assumes access to View as well</small></label>
@@ -97,7 +101,7 @@
     
         <h2 class="error">{{saveError}}</h2>
     
-    <button type="button" ng-click="saveRequest()">SUBMIT</button>
+    <button type="button" ng-click="saveRequest()">SUBMIT</button>   
 </div>
         
         <br><br><br>

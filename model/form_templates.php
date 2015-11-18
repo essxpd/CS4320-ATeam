@@ -8,10 +8,16 @@
 	
 	$method = $_SERVER['REQUEST_METHOD'];
 
+	
 	if($method == "GET")
 	{
+		$app = $_GET['app'];
+		if(!is_null($app)){
+			$searchArray = array('application' => $app);
+		}
+
 		$collection = $db->$dataTable;
-		$cursor = $collection->find();
+		$cursor = $collection->find($searchArray);
 		$jsonArr = (json_encode(iterator_to_array($cursor)));
 		echo $jsonArr;
 	}
@@ -25,3 +31,5 @@
 		print "success!";
 	}
 ?>
+
+
