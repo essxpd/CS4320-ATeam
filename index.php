@@ -3,12 +3,14 @@
     session_start();
     //if(!$_SERVER['HTTPS'])
     //    header("Location: https://a-team.cloudapp.net/Cody/CS4320-ATeam/index.php");
+    $host  = $_SERVER['HTTP_HOST'];
+    $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
     if (!isset($_SESSION['loggedIn'])){
-        $host  = $_SERVER['HTTP_HOST'];
-        $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
         $extra = 'login.php';
         header("Location: http://$host$uri/$extra");
     }
+    
+    
 ?>
 <html>
 <head>

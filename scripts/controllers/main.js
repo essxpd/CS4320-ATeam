@@ -42,7 +42,7 @@ angular.module('cs4320aTeamApp')
     
 	if($scope.loggedInUser.User_Type == 'employer')
 	{
-		$http.get('./model/mongoGetDept.php?dept=' + $scope.loggedInUser.Department).then(function(response){
+		$http.get('./model/mongoScript.php?department=' + $scope.loggedInUser.Department).then(function(response){
 			$scope.deptForms = response.data;
 		});
 	}
