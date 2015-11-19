@@ -49,10 +49,48 @@
 	<div id="container">
 		
 		<form>
-			<input type="text" name="user" ng-model="search" required>
+			<label for="usersearch">Search for Users:</label>
+			<input placeholder="SSO" id="usersearch" type="text" name="user" ng-model="search" required></input>
+			
 			<button class="btn btn-primary" ng-click="findallforms(search)">Search</button>
 		</form>
-		
+		<table class="table">
+			<thead>
+				<tr>
+					<th>User Bio Data:</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><b>Full Name:</b> {{userBio.Full_Name}}</td>
+				</tr>
+				<tr>
+					<td><b>Title:</b> {{userBio.Title}}</td>
+				</tr>
+				<tr>	
+					<td><b>Department:</b> {{userBio.Department}}</td>
+				</tr>
+				<tr>	
+					<td><b>SSO:</b> {{userBio.SSO}}</td>
+				</tr>
+				<tr>	
+					<td><b>Employee ID:</b> {{userBio.Employee_ID}}</td>
+				</tr>
+				<tr>	
+					<td><b>Campus Address:</b> {{userBio.Campus_Address}}</td>
+				</tr>
+				<tr>	
+					<td><b>Phone Number:</b> {{userBio.Phone_Number}}</td>
+				</tr>
+				<tr>	
+					<td><b>FERPA Score:</b> {{userBio.Ferpa_Score}}</td>
+				</tr>
+				<tr>	
+					<td><b>User Type:</b> {{userBio.User_Type}}</td>	
+				</tr>
+			</tbody>
+			
+		</table>
         <table class="table">
             <thead>
                 <tr>
