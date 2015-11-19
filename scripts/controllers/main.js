@@ -67,11 +67,13 @@ angular.module('cs4320aTeamApp')
 	};
     
    $scope.findallforms = function(){
+	    $http.get('./model/finduserbio.php?paw=' + $scope.search).then(function(response){
+		$scope.userBio = response.data;
+		});
 		$http.get('./model/mongoFindAll.php?paw=' + $scope.search).then(function(response){
 		$scope.allForms = response.data;
 	});
    };
-
 	function goToHome(){
 		$location.path('/');
 	}
