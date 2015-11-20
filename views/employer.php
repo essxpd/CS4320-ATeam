@@ -46,7 +46,7 @@
     <uib-accordion-group>
       
         <uib-accordion-heading>
-            Forms Listed by Date Submitted <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+            Forms In Need of Approval <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
         </uib-accordion-heading>
 
         <table class="table">
