@@ -280,20 +280,35 @@ angular.module('cs4320aTeamApp')
                 }
                 else{
                     var htmlObject = "";
+					//adding in the approved by stuff
+					//console.log(information);
+					//console.log(information.isApprovedByAdmin);
+					//console.log(information.isApprovedByEmployer);
+					if(information.isApprovedByEmployer == "true"){
+						htmlObject = htmlObject + "<p><b>Your Employer has approved your form!</b></p>";
+					}else{
+						htmlObject = htmlObject + "<p><b>Your Employer has not yet approved your form.</b></p>";	
+					}
+					if(information.isApprovedByAdmin == "true"){
+						htmlObject = htmlObject + "<p><b>Administrative staff have approved your form!</b></p>";						
+					}else{
+						htmlObject = htmlObject + "<p><b>Administrative staff have not yet approved your form!</b></p>";	
+					}
+					htmlObject = htmlObject + "<hr>";
                     var instanceCounter;
                     for(var key in secLevels){
                         instanceCounter = 0;
                         var level = secLevels[key];
-                        console.log(level);
+                       // console.log(level);
                         for (var key2 in level.questionsArr) {
                             var question = level.questionsArr[key2];
                             if(question.selectedStatus != undefined){
                                 if(question.selectedStatus.length > 0){
-                                    console.log("we in it");
+                                    //console.log("we in it");
                                     if (instanceCounter == 0) {
-                                        htmlObject = htmlObject + "<h4>Requested security states from " + level.type + "</h4><br>";
+                                        htmlObject = htmlObject + "<h4>Requested security states from " + level.type + "</h4><ul>";
                                     }
-                                    htmlObject = htmlObject + "<p>For " + question.number + " level : Requesting ";
+                                    htmlObject = htmlObject + "<li>For " + question.number + " level : Requesting ";
                                     for (var key3 in question.selectedStatus) {
                                         var status = question.selectedStatus[key3];
                                         if(question.selectedStatus.length == 2){
@@ -306,11 +321,12 @@ angular.module('cs4320aTeamApp')
                                             htmlObject = htmlObject + status;
                                         }
                                     }
-                                    htmlObject = htmlObject + " permissions.</p><br>";
+                                    htmlObject = htmlObject + " permissions.</li>";
                                     ++instanceCounter;
                                 }
                             }
                         }
+						htmlObject = htmlObject + "</ul>";
                     }
                 }
                 }
@@ -323,7 +339,7 @@ angular.module('cs4320aTeamApp')
         }});
 	};
             
-            
+	
 	// To submit security level request data
 	$scope.saveRequest = function(){
 		logging('form submitted');
