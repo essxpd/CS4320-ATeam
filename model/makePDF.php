@@ -26,14 +26,45 @@ $dbhost = 'localhost';
 
 
 $mpdf->WriteHTML('
-	<p>Name: ' . $arr['Full_Name'] . '.</p>
-	<p>Title: ' . $arr['Title'] . '.</p>
-	<p>Department: ' . $arr['Department'] . '.</p>
-	<p>SSO: ' . $arr['SSO'] . '.</p>
-	<p>Employee ID: ' . $arr['Employee_ID'] . '.</p>
-	<p>Campus Address: ' . $arr['Campus_Address'] . '.</p>
-	<p>Phone Number: ' . $arr['Phone_Number'] . '.</p>
-	<p>Ferpa Score: ' . $arr['Ferpa_Score'] . '.</p>
+	<link rel="stylesheet" href="../styles/PDFform.css">
+	<h1>myZou SECURITY Request Form</h1>
+	<h2>University of Missouri - Columbia </h2>
+	<hr>
+	<table>
+		<tr>
+			<td>
+				Name: ' . $arr['Full_Name'] .'
+			</td>
+			<td>
+				SSO: ' . $arr['SSO'] .'
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Title: ' . $arr['Title'] .'
+			</td>
+			<td>
+				Employee ID: ' . $arr['Employee_ID'] .'
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Department: ' . $arr['Department'] .'
+			</td>
+			<td>
+				Campus Address: ' . $arr['Campus_Address'] .'
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Phone Number: ' . $arr['Phone_Number'] .'
+			</td>
+			<td>
+				Ferpa Score: ' . $arr['Ferpa_Score'] .'
+			</td>
+		</tr>
+	</table>
+	<hr>
 	' . $form
 	);
 	

@@ -3,7 +3,7 @@ angular.module('cs4320aTeamApp', ["ngRoute", "ngSanitize","ui.bootstrap"])
 	.config(["$routeProvider", function($routeProvider){
 		$routeProvider
 			.when("/", {
-				templateUrl: "views/applicant.html",
+				templateUrl: "views/applicant.php",
 				controller: "MainCtrl",
                 resolve: {
                     data: function($q, $http){
@@ -16,7 +16,7 @@ angular.module('cs4320aTeamApp', ["ngRoute", "ngSanitize","ui.bootstrap"])
                 }
 			})
 			.when("/employer", {
-				templateUrl: "views/employer.html",
+				templateUrl: "views/employer.php",
 				controller: "MainCtrl",
                 resolve: {
                     data: function($q, $http){
@@ -62,7 +62,7 @@ angular.module('cs4320aTeamApp', ["ngRoute", "ngSanitize","ui.bootstrap"])
 				redirectTo: "/admin"
 			})
 			.when("/admin", {
-				templateUrl: "views/admin.html",
+				templateUrl: "views/admin.php",
 				controller: "MainCtrl",
                 resolve: {
                     data: function($q, $http){

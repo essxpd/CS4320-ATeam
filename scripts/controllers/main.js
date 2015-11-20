@@ -11,7 +11,7 @@ angular.module('cs4320aTeamApp')
 
 	//User data is stored here.
 	$scope.loggedInUser = data.data;
-
+	
 	//Grab current URL
 	$scope.currentPath = $location.path();
 
@@ -21,22 +21,46 @@ angular.module('cs4320aTeamApp')
 	if($scope.loggedInUser.Ferpa_Score > 85){
 		$scope.CurrentInstructionSet = true;
 	}
-    
-    function refresh(){
+
+    function logging(action) {
+		var postData = {
+			action: action,
+			sso: $scope.loggedInUser.SSO
+		}
+		$.post("./model/updateLog.php", postData, function(response) {
+			console.log(response);
+		});
+		
+	}
+
+    function refresh(userType){
         
-        if($scope.loggedInUser){
+        if($scope.loggedInUser && userType == 'user'){
             $http.get('./model/mongoFindAll.php?paw=' + $scope.loggedInUser.SSO).then(function(response){
                 $scope.prevForms = response.data;    
             });
         }
+        if($scope.loggedInUser.User_Type == 'admin' && userType == 'admin'){
+            $http.get('./model/mongoFindAll.php?req=admin').then(function(response){
+                $scope.adminForms = response.data;
+            });
+        }
+        if($scope.loggedInUser.User_Type == 'employer' && userType == 'employer')
+        {
+            $http.get('./model/mongoFindAll.php?dept=' + $scope.loggedInUser.Department).then(function(response){
+                $scope.deptForms = response.data;
+            });
+        }
     }
     
+    /*
 	if($scope.loggedInUser.User_Type == 'employer')
 	{
-		$http.get('./model/mongoGetDept.php?dept=' + $scope.loggedInUser.Department).then(function(response){
+		$http.get('./model/mongoScript.php?department=' + $scope.loggedInUser.Department).then(function(response){
 			$scope.deptForms = response.data;
 		});
 	}
+    */
     
    $scope.mongoForm = function(id, date){
 		var absUrl = $location.absUrl();
@@ -58,17 +82,27 @@ angular.module('cs4320aTeamApp')
 	};
     
    $scope.findallforms = function(){
+	    $http.get('./model/finduserbio.php?paw=' + $scope.search).then(function(response){
+		$scope.userBio = response.data;
+		});
 		$http.get('./model/mongoFindAll.php?paw=' + $scope.search).then(function(response){
 		$scope.allForms = response.data;
 	});
    };
-
 	function goToHome(){
 		$location.path('/');
 	}
     
     if($scope.currentPath === '/'){
-        refresh();
+        refresh('user');
+    }
+    
+    if($scope.currentPath === '/admin'){
+        refresh('admin');
+    }
+    
+    if($scope.currentPath === '/employer'){
+        refresh('employer');
     }
 
 	$scope.groups = [
@@ -110,17 +144,31 @@ angular.module('cs4320aTeamApp')
 
 	// Will redirect to a place to edit forms
 	$scope.editForm = function(id) {
+		logging('edited form ' + id);
 		//$location.path('/createForm');
 		$window.alert("You just tried to edit form " + id + "!");
 	};
 
 	// Will remove the form 
 	$scope.removeForm = function(id) {
+		logging('removed form ' + id);
 		var $response = $window.confirm("Are you sure you would like to remove this form?");
 	    if($response) {
 			$window.alert("You just tried to delete form " + id + "!");
 	    }
 	};
+    
+    $scope.approveForm = function(id, userType){
+        $.ajax({
+			type: "POST",
+			url: './model/mongoFindOne.php',
+			data: {id: id, userType: userType},
+			dataType: "JSON",
+			success: function(response){
+                refresh(userType);
+            }
+        });
+    }
 
 	//NgHide and NgShow to control whether security access questions are revealed
 	$scope.askSecQuestions = true;
@@ -185,7 +233,7 @@ angular.module('cs4320aTeamApp')
 		}else{
 			question.selectedStatus.push(status);
 		}
-		$scope.getSecurityRequestBoxes();
+		//$scope.getSecurityRequestBoxes();
 		//console.dir($scope.securityLevels);
 	};
 
@@ -196,57 +244,75 @@ angular.module('cs4320aTeamApp')
 			data: {date : date},
 			dataType: "JSON",
 			success: function(response){
-			console.log(response);
-			for(var key in response){
-			var information = response[key];
-			var secLevels = information.securityLevels;
-			console.log(secLevels);
-			var htmlObject = "";
-			var instanceCounter;
-			for(var key in secLevels){
-				instanceCounter = 0;
-				var level = secLevels[key];
-				console.log(level);
-				for (var key2 in level.questionsArr) {
-					var question = level.questionsArr[key2];
-					if(question.selectedStatus != undefined){
-						if(question.selectedStatus.length > 0){
-							console.log("we in it");
-							if (instanceCounter == 0) {
-								htmlObject = htmlObject + "<h4>Requested security states from " + level.type + "</h4><br>";
-							}
-							htmlObject = htmlObject + "<p>For " + question.number + " level : Requesting ";
-							for (var key3 in question.selectedStatus) {
-								var status = question.selectedStatus[key3];
-								if(question.selectedStatus.length == 2){
-									if (key3 == 0) {
-										htmlObject = htmlObject + status + ", and ";
-									} else {
-										htmlObject = htmlObject + status;
-									}
-								}else{
-									htmlObject = htmlObject + status;
-								}
-							}
-							htmlObject = htmlObject + " permissions.</p><br>";
-							++instanceCounter;
-						}
-					}
-				}
-		}
-		angular.forEach(id, function(value, key){
-			var newLoc;
-			newLoc = locStr + "model/makePDF.php?" + value + "&htmlObject=" + htmlObject;
-			$window.location.href = newLoc;
-		})
-		}}
-		});
+                for(var key in response){
+                var information = response[key];
+                var secLevels = information.securityLevels;
+                var copySec = information.copySecurityRequest;
+                if(copySec){
+                    var htmlObject = "<p><h4>Copy Security Request</h4></p><br>";
+                    angular.forEach(copySec, function(value, key){
+                        angular.forEach(value, function(v, k){
+                            if(k == "isCurrentEmployee"){
+                                htmlObject = htmlObject + "<p>Copy Security for CURRENT Employee</p><br>";
+                            }
+                            else if(k == "isFormerEmployee"){
+                                htmlObject = htmlObject + "<p>Copy Security for FORMER Employee</p><br>";
+                            }
+                            else{
+                                htmlObject = htmlObject + "<p>" + k + ": " + v + "</p><br>";
+                            }
+                        });    
+                    });
+                }
+                else{
+                    var htmlObject = "";
+                    var instanceCounter;
+                    for(var key in secLevels){
+                        instanceCounter = 0;
+                        var level = secLevels[key];
+                        console.log(level);
+                        for (var key2 in level.questionsArr) {
+                            var question = level.questionsArr[key2];
+                            if(question.selectedStatus != undefined){
+                                if(question.selectedStatus.length > 0){
+                                    console.log("we in it");
+                                    if (instanceCounter == 0) {
+                                        htmlObject = htmlObject + "<h4>Requested security states from " + level.type + "</h4><br>";
+                                    }
+                                    htmlObject = htmlObject + "<p>For " + question.number + " level : Requesting ";
+                                    for (var key3 in question.selectedStatus) {
+                                        var status = question.selectedStatus[key3];
+                                        if(question.selectedStatus.length == 2){
+                                            if (key3 == 0) {
+                                                htmlObject = htmlObject + status + ", and ";
+                                            } else {
+                                                htmlObject = htmlObject + status;
+                                            }
+                                        }else{
+                                            htmlObject = htmlObject + status;
+                                        }
+                                    }
+                                    htmlObject = htmlObject + " permissions.</p><br>";
+                                    ++instanceCounter;
+                                }
+                            }
+                        }
+                    }
+                }
+                }
+                angular.forEach(id, function(value, key){
+                    var newLoc;
+                    newLoc = locStr + "model/makePDF.php?" + value + "&htmlObject=" + htmlObject;
+                    $window.location.href = newLoc;
+
+                });
+        }});
 	};
             
             
 	// To submit security level request data
 	$scope.saveRequest = function(){
-
+		logging('form submitted');
 		//Error Message if fields haven't been entered.
 		$scope.saveError = "";
 
@@ -266,6 +332,8 @@ angular.module('cs4320aTeamApp')
 			"requestType" : $scope.requestType,
 			"studentWorker" : $scope.studentWorker,
 			"explainRequest" : $sanitize($scope.explainRequest),
+            "isApprovedByAdmin": false,
+            "isApprovedByEmployer": false,
 			"securityLevels" : $scope.securityLevels
 		};
 
@@ -275,21 +343,30 @@ angular.module('cs4320aTeamApp')
 		if($scope.toggle === true){ //If copySecurity was selected,
 			//Fill in copySecurity array with text input. ToDo: Sanitize
 			$scope.copySecurity = [
+                {"isCurrentEmployee": $scope.currentEmpCopy},
+                {"isFormerEmployee": $scope.formerEmpCopy},
 				{"name": $scope.copySecurity.empName},
 				{"position": $scope.copySecurity.empPosition},
 				{"pawprint": $scope.copySecurity.empPawprint},
 				{"empId": $scope.copySecurity.empId}
 			];
-			if($scope.currentEmpCopy){
-				$scope.copySecurity = $scope.copySecurity.concat([
-					{"currentEmployee" : $scope.currentEmpCopy}
-				]);
-			} else{
-				$scope.copySecurity = $scope.copySecurity.concat([
-					{"formerEmployee" : $scope.formerEmpCopy}
-				]);
-			}
-			newData.securityLevels = angular.copy($scope.copySecurity);
+			var newData = {
+                "date" : date,
+                "paw" : $scope.loggedInUser.SSO,
+                "name" : $scope.loggedInUser.Full_Name,
+                "ferpa" : $scope.loggedInUser.Ferpa_Score,
+                "title" : $scope.loggedInUser.Title,
+                "dept" : $scope.loggedInUser.Department,
+                "id" : $scope.loggedInUser.Employee_ID,
+                "addr" : $scope.loggedInUser.Campus_Address,
+                "phoneNum" : $scope.loggedInUser.Phone_Number,
+                "requestType" : $scope.requestType,
+                "studentWorker" : $scope.studentWorker,
+                "explainRequest" : $sanitize($scope.explainRequest),
+                "isApprovedByAdmin": false,
+                "isApprovedByEmployer": false,
+                "copySecurityRequest" : $scope.copySecurity
+            };
 
 		}
 
@@ -304,15 +381,13 @@ angular.module('cs4320aTeamApp')
 			return;
 		}
 
-		console.dir(newData); // Show what's being saved. For testing.
-
 		// Inserts data into mongo, Temp notifies you in console when success
 		$.ajax({
 			type: "POST",
 			url: './model/mongoScript.php',
 			data: {data : newData},
 			success: function(){
-				refresh();
+				refresh('user');
 				goToHome();
 			},
 			error: function(errorThrown){$scope.saveError = errorThrown;}
@@ -468,6 +543,7 @@ angular.module('cs4320aTeamApp')
 
 
 	$scope.submitCreatedForm = function() {
+		 logging('form created');
 		 $scope.submitError = "";
 
                 if(!$scope.form.application) {
