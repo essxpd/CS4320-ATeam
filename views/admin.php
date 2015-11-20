@@ -27,12 +27,38 @@
         </h4>
         </div></div>
 
-
 <div id="pagecontainer">
     
     <div class="container">
         <h3>Welcome, {{loggedInUser.Full_Name}}!</h3>
         <br>
+    <!--Previous Submissions-->
+        <uib-accordion>
+    
+            <uib-accordion-group>
+
+                <uib-accordion-heading>
+                    Forms In Need of Approval <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+                </uib-accordion-heading>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Forms Listed by Date Submitted</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="form in adminForms | orderBy: '-date'">
+                            <td><a ng-click="mongoForm(form._id, form.date)">{{form.date}}</a></td>
+                            <td><button type="button" ng-click="approveForm(form._id, 'admin')">Approve</button></td>
+                           <!-- <td><button class="btn btn-primary" ng-click="mongoForm(form._id)">View</button></td> -->
+                        </tr>
+                    </tbody>
+                </table>
+
+            </uib-accordion-group>
+
+      </uib-accordion>
         <!--Previous Submissions-->
 	<div ng-app="accordion" class="accordion-test">
 		<uib-accordion>

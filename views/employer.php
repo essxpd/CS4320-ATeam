@@ -56,19 +56,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="form in deptForms | orderBy: '-date'">
+                <tr ng-repeat="form in deptForms | orderBy:'-date'">
                     <td><a ng-click="mongoForm(form._id, form.date)">{{form.name}} | {{form.date}}</a></td>
+                    <td><button type="button" ng-click="approveForm(form._id, 'employer')">Approve</button></td>
             		<!--<input type="button" class="btn btn-primary" ng-click="editForm(forms.id)" value="Edit">
-					-->
-					<td>                	
-						<input type="button" class="btn btn-approve" ng-click="approveForm(forms.id)" value="Approve">
-					</td>
-					<td>
-						<input type="button" class="btn btn-danger" ng-click="removeForm(forms.id)" value="Remove">
-					</td>
-
+					<input type="button" class="btn btn-danger" ng-click="removeForm(forms.id)" value="Remove">
+					<input type="button" class="btn btn-approve" ng-click="approveForm(form.id)" value="Approve">-->
                 </tr>
-
             </tbody>
         </table>
 
