@@ -22,21 +22,34 @@ angular.module('cs4320aTeamApp')
 		$scope.CurrentInstructionSet = true;
 	}
     
-    function refresh(){
+    function refresh(userType){
         
-        if($scope.loggedInUser){
+        if($scope.loggedInUser && userType == 'user'){
             $http.get('./model/mongoFindAll.php?paw=' + $scope.loggedInUser.SSO).then(function(response){
                 $scope.prevForms = response.data;    
             });
         }
+        if($scope.loggedInUser.User_Type == 'admin' && userType == 'admin'){
+            $http.get('./model/mongoFindAll.php?req=admin').then(function(response){
+                $scope.adminForms = response.data;
+            });
+        }
+        if($scope.loggedInUser.User_Type == 'employer' && userType == 'employer')
+        {
+            $http.get('./model/mongoFindAll.php?dept=' + $scope.loggedInUser.Department).then(function(response){
+                $scope.deptForms = response.data;
+            });
+        }
     }
     
+    /*
 	if($scope.loggedInUser.User_Type == 'employer')
 	{
 		$http.get('./model/mongoGetDept.php?dept=' + $scope.loggedInUser.Department).then(function(response){
 			$scope.deptForms = response.data;
 		});
 	}
+    */
     
    $scope.mongoForm = function(id, date){
 		var absUrl = $location.absUrl();
@@ -68,7 +81,15 @@ angular.module('cs4320aTeamApp')
 	}
     
     if($scope.currentPath === '/'){
-        refresh();
+        refresh('user');
+    }
+    
+    if($scope.currentPath === '/admin'){
+        refresh('admin');
+    }
+    
+    if($scope.currentPath === '/employer'){
+        refresh('employer');
     }
 
 	$scope.groups = [
@@ -121,6 +142,18 @@ angular.module('cs4320aTeamApp')
 			$window.alert("You just tried to delete form " + id + "!");
 	    }
 	};
+    
+    $scope.approveForm = function(id, userType){
+        $.ajax({
+			type: "POST",
+			url: './model/mongoFindOne.php',
+			data: {id: id, userType: userType},
+			dataType: "JSON",
+			success: function(response){
+                refresh(userType);
+            }
+        });
+    }
 
 	//NgHide and NgShow to control whether security access questions are revealed
 	$scope.askSecQuestions = true;
@@ -284,6 +317,8 @@ angular.module('cs4320aTeamApp')
 			"requestType" : $scope.requestType,
 			"studentWorker" : $scope.studentWorker,
 			"explainRequest" : $sanitize($scope.explainRequest),
+            "isApprovedByAdmin": false,
+            "isApprovedByEmployer": false,
 			"securityLevels" : $scope.securityLevels
 		};
 
@@ -311,6 +346,8 @@ angular.module('cs4320aTeamApp')
                 "requestType" : $scope.requestType,
                 "studentWorker" : $scope.studentWorker,
                 "explainRequest" : $sanitize($scope.explainRequest),
+                "isApprovedByAdmin": false,
+                "isApprovedByEmployer": false,
                 "copySecurityRequest" : $scope.copySecurity
             };
 
@@ -333,7 +370,7 @@ angular.module('cs4320aTeamApp')
 			url: './model/mongoScript.php',
 			data: {data : newData},
 			success: function(){
-				refresh();
+				refresh('user');
 				goToHome();
 			},
 			error: function(errorThrown){$scope.saveError = errorThrown;}

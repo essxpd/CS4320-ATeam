@@ -16,10 +16,24 @@
 		$cursor = $collection->find($searchArray);
 		$jsonArr = (json_encode(iterator_to_array($cursor)));
 		echo $jsonArr;
-	}/*else if($method == 'POST'){
-		$jsonData = $_POST['data'];
-		$collection = $db->$dataTable;
-		$collection->insert($jsonData);
-		echo "inserted successfully";
-	}*/
+	}
+    else if($method == 'POST'){
+        $tempId = $_POST["id"];
+        $userType = $_POST["userType"];
+        foreach($tempId as $value){
+            $id = $value;
+        }
+        $id = new MongoId($id);
+        $collection = $db->$dataTable;
+		$searchArray = array('_id' => $id);
+        if($userType == 'admin'){
+            $updateArray = array('isApprovedByAdmin' => true);
+        }
+        else{
+            $updateArray = array('isApprovedByEmployer' => true);
+        }
+		$cursor = $collection->findAndModify($searchArray, array('$set' => $updateArray), array('new' => true));
+		$jsonArr = (json_encode(iterator_to_array($cursor)));
+		echo $jsonArr;
+    }
 ?>
