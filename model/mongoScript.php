@@ -20,6 +20,8 @@
 			$searchArray = array('paw' => $pawprint);
 		}else if(!is_null($timestamp)){
 			$searchArray = array('date' => $timestamp);
+		}else{
+			$searchArray = array();
 		}
 		$cursor = $collection->find($searchArray);
 		$jsonArr = (json_encode(iterator_to_array($cursor)));
