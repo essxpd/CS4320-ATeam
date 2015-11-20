@@ -532,11 +532,15 @@ angular.module('cs4320aTeamApp')
 	};
 
 	$scope.removeRole = function(removal) {
-		
+			
+		var index;
 		for(var i = 0; i < $scope.addedRoles.length; i++) {
-			if($scope.addedRoles[i].name == removal)
-				$scope.addedRoles.splice(i, i + 1);
+			if($scope.addedRoles[i].name == removal) {
+				index = i;
+			}
 		}
+		console.log(index);
+		$scope.addedRoles.splice(index, 1);
 	};
 
 	if($scope.currentPath == '/createForm')
