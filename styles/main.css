@@ -179,14 +179,14 @@ clip-path: polygon(0 0, 100% 0%, 100% 79%, 0% 100%);
     font-size:15px;
 }
 
-.logout
+.navi
 {
     text-align:right;
     color:black;
     transition: ease-in all.5s;
 }
 
-.logout:hover
+.navi:hover
 {
     opacity:.6;
 }
