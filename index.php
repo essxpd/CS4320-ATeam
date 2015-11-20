@@ -65,10 +65,26 @@
     <div id="content">
 	<div ng-view></div>
     </div>
-
+        
     <div id="footer">
-    <p>&copy; 2015 CS4320's A-Team</p>
+    <p class="credits" onmouseover="PlaySound('yallreadyforthis')" 
+    onmouseout="StopSound('yallreadyforthis')">&copy; 2015 CS4320's A-Team</p>
     </div>
+    
+    <audio id='yallreadyforthis' src='styles/spacejam.ogg'/>
+    
+    <script type="text/javascript">
+function PlaySound(soundobj) {
+    var thissound=document.getElementById(soundobj);
+    thissound.play();
+}
+
+function StopSound(soundobj) {
+    var thissound=document.getElementById(soundobj);
+    thissound.pause();
+    thissound.currentTime = 0;
+}
+</script>
 
 </body>
 
