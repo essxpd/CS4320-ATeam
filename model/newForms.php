@@ -22,6 +22,7 @@
 		$collection = $db->$dataTable;
 		$collection->insert($jsonData);
 
+		print_r($jsonData);
 		print "success!";
 	}
 ?>

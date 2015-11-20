@@ -11,9 +11,14 @@
 	
 	if($method == "GET")
 	{
+		$id = $_GET['id'];
 		$app = $_GET['app'];
 		if(!is_null($app)){
 			$searchArray = array('application' => $app);
+		}
+		if(!is_null($id)) {
+        		$id = new MongoId($id);
+			$searchArray = array('_id' => $id);
 		}
 
 		$collection = $db->$dataTable;

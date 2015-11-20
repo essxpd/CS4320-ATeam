@@ -39,35 +39,36 @@
         <h3>Welcome, {{loggedInUser.Full_Name}}!</h3>
         <br>
         <!--Previous Submissions-->
-	<div>
-                <div id="accordionMain" class="panel-group">
-                        <div class="panel panel-default">
-                                <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                                Created forms
-                                        </h4>
-                                </div>
-                                <div class="panel-collapse">
-                                        <div class="panel-body">
-                                                <div ng-repeat="forms in createdForms">
-                                                        <div>
-                                                                <span>{{forms.application}}</span>
-                                                                <a ng-click="downloadCreatedForm(forms.id)">{{forms.name}}</a>
-                                                                <div class="float-right">
-                                                                        <input type="button" class="btn btn-primary" ng-click="editForm(forms.id)" value="Edit">
-                                                                        <input type="button" class="btn btn-danger" ng-click="removeForm(forms.id)" value="Remove">
-                                                                </div>
-                                                        </div>
-                                                        <br>
-                                                </div>
-                                        </div>
-                                </div>
-                        </div>
-                </div>
-        </div>
-    
+	<div ng-app="accordion" class="accordion-test">
+		<uib-accordion>
+			<uib-accordion-group>
+				<uib-accordion-heading>
+					Current Forms <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+				</uib-accordion-heading>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Application</th>
+							<th>Form</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="forms in createdForms | orderBy: '+application'">
+							<td>{{forms.application}}</td>
+							<td>{{forms.name}}</td>
+							<td><input type="button" class="btn btn-primary" ng-click="editForm(forms.id)" value="Edit">
+							<input type="button" class="btn btn-danger" ng-click="removeForm(forms.id)" value="Remove"></td>
+
+						</tr>
+					</tbody>
+				</table>
+			</uib-accordion-group>
+		</uib-accordion>
+	</div>
+	<br>
+	<hr>
 	<div id="container">
-		
+		<h2>Search Submitted Forms</h2>
 		<form>
 			<input type="text" name="user" ng-model="search" required>
 			<button class="btn btn-primary" ng-click="findallforms(search)">Search</button>
@@ -99,4 +100,3 @@
         <br>
         <br>
     </div></div>
-

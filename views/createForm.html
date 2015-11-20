@@ -19,9 +19,7 @@
 <h1>Create new security form</h1>
 <h3>{{submitError}}</h3>
 <h3><b>Application:</b></h3>
-<select class='form-control' ng-model='form.application'>
-        <option selected disabled hidden value=''></option>
-        <option ng-repeat='site in websites'>{{site.name}}</option>
+<select class='form-control' ng-model='form.application' ng-options="site.name for site in websites track by site.name">
 </select>
 <br><br>
 <label>

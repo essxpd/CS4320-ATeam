@@ -146,16 +146,30 @@ angular.module('cs4320aTeamApp')
 	$scope.editForm = function(id) {
 		logging('edited form ' + id);
 		//$location.path('/createForm');
-		$window.alert("You just tried to edit form " + id + "!");
+		$.cookie("edit", id);
+		$location.path('/createForm');
 	};
 
 	// Will remove the form 
 	$scope.removeForm = function(id) {
 		logging('removed form ' + id);
 		var $response = $window.confirm("Are you sure you would like to remove this form?");
-	    if($response) {
-			$window.alert("You just tried to delete form " + id + "!");
-	    }
+		if($response) {
+			//$window.alert("You just tried to delete form " + id + "!");
+			$.ajax({
+				type: "POST",
+				url: './model/removeForm.php',
+				data: {id: id},
+				dataType: "text",
+				success: function(response) {
+					console.log(response);
+					$window.location.reload();
+				},
+				error: function(errorThrown){
+					console.log(errorThrown);
+				}
+			});	
+	    	}
 	};
     
     $scope.approveForm = function(id, userType){
@@ -410,11 +424,23 @@ angular.module('cs4320aTeamApp')
 						$scope.requestApplication = "MyZou";
 				
                                 });
+				loadForm($scope.requestApplication);
+                        });
+                    }
+                });
+                
+	}
 
+	$scope.appChanged = function(app) {
+		//	console.log('test');
+		loadForm(app)
+	};
+
+	function loadForm(app) {
 		$.ajax({
                     url: './model/form_templates.php',
                     type: 'GET',
-		    data: {app: $scope.requestApplication},
+		    data: {app: app},
                     dataType: 'json',
                     success: function(data){
                         $scope.$apply(function() {
@@ -435,22 +461,13 @@ angular.module('cs4320aTeamApp')
 					});
 					temp.push({'type': value.name, 'questionsArr': questionsArr});
 				});
-				console.dir(temp);
-				console.dir($scope.securityLevels);
 				$scope.securityLevels = temp;
                         });
                     }
                 });
-				
-                        });
-                    }
-                });
-                
+		
 	}
 
-	$scope.appChanged = function() {
-		console.log('test');
-	};
 
 	if($scope.currentPath == "/admin")
         {
@@ -467,7 +484,6 @@ angular.module('cs4320aTeamApp')
                         });
                     }
                 });
-                console.dir($scope.createdForms);
         }
 
 
@@ -525,6 +541,7 @@ angular.module('cs4320aTeamApp')
 
 	if($scope.currentPath == '/createForm')
         {
+
                 $scope.websites = [];
                 $.ajax({
                     url: './model/applications.php',
@@ -536,11 +553,48 @@ angular.module('cs4320aTeamApp')
                                         $scope.websites.push({'name': value.name});
                                         //$scope.createdForms.push({'id': key, 'name': value[0].name, 'roles': value[0].roles});
                                 });
+		// Check if there is an edit cookie set
+		$scope.edit = $.cookie('edit');
+		$.removeCookie('edit');
+		// If there is then load in all edit data
+		if($scope.edit)
+		{
+			$.ajax({
+			    url: './model/form_templates.php',
+			    type: 'GET',
+			    data: {'id': $scope.edit},
+			    dataType: 'json',
+			    success: function(d){
+				$scope.$apply(function() {
+					console.dir(d);
+					$.each(d, function(k, v) {
+						$scope.form = [];
+						
+						for(var i = 0; i < $scope.websites.length; i++) 
+						{
+							if($scope.websites[i].name == v.application)
+								$scope.id_app = i;
+						}
+
+						$scope.form.application = $scope.websites[$scope.id_app];
+						
+						$scope.form.name = v.name;
+						$scope.addedRoles = v.roles.slice();
+						for(var i = 0; i < $scope.addedRoles.length; i++)
+						{
+							$scope.addedRoles[i].update = (v.roles[i].update == 'true');
+							$scope.addedRoles[i].view = (v.roles[i].view == 'true');
+						}
+					});
+				});
+			    }
+			});
+		}
+
                         });
                     }
                 });
         }
-
 
 	$scope.submitCreatedForm = function() {
 		 logging('form created');
@@ -550,6 +604,10 @@ angular.module('cs4320aTeamApp')
                         $scope.submitError = "Choose an application.";
                         return;
                 }
+
+		if($scope.form.application.name) {
+			$scope.form.application = $scope.form.application.name;
+		}
 
                 if(!$scope.form.name) {
                         $scope.submitError = "Insert form name.";
@@ -563,24 +621,28 @@ angular.module('cs4320aTeamApp')
                 // Submit the packaged form data to mongo
                 var formData = {"application": $scope.form.application , "name": $scope.form.name, "roles": $scope.addedRoles};
 
-		console.dir(formData);
-
-                //formData = angular.toJson(formData);
-                console.dir(formData);
-
-                $.ajax({
-                    type: "POST",
-                    url: './model/newForms.php',
-                    data: {data : formData},
-                    success: function(data){console.log(data);},
-                    error: function(errorThrown){$scope.saveError = errorThrown;}
-                });
+		if($scope.edit)
+		{	// Update
+			$.ajax({
+				type: "POST",
+				url: './model/updateForm.php',
+				datatype: 'JSON',
+				data: {data : formData, id : $scope.edit},
+				success: function(data){console.log(data);},
+				error: function(errorThrown){$scope.saveError = errorThrown;}
+			});
+		}
+		else
+		{	// Insert
+			$.ajax({
+				type: "POST",
+				url: './model/newForms.php',
+				data: {data : formData},
+				success: function(data){console.log(data);},
+				error: function(errorThrown){$scope.saveError = errorThrown;}
+			});
+		}
                 $location.path('/admin');
 
 	};
-	/*
-	$scope.editRole = function() {
-		alert('editing');
-	}*/
-
 });

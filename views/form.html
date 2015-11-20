@@ -27,7 +27,7 @@
     
     <div class="form-group">
         <label for="requestApplication">Choose which application you would like to make a request for</label>
-        <select class="form-control" ng-model="requestApplication" ng-options="app.name as app.name for app in applications" ng-change="appChanged()"></select>
+        <select class="form-control" ng-model="requestApplication" ng-options="app.name as app.name for app in applications" ng-change="appChanged(requestApplication)"></select>
     </div>
 
     <!-- Choose appropriate request type -->
