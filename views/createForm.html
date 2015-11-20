@@ -1,14 +1,7 @@
             <div class="usercontainer">
   <div class="userinfo">
-    <h4>Hello, <b>{{loggedInUser.Full_Name}}!</b><br>
-    <small>Your current FERPA score is <b>{{loggedInUser.Ferpa_Score}}.</b></small></h4>
-      
-      <p>You are currently viewing our form creation page!</p>
-      
-      <p>Other functionality stuff can go here, in the event that we discover something else we'd like to add for navigation purposes.</p>
-      
-    <h4 class="logout">
-        <a href="./model/logout.php"><b>LOGOUT</b></a>
+      <h4>Hello, <b>{{loggedInUser.Full_Name}}!</b><br></h4>
+        <h4><b ng-click="goToHome()" style="cursor:pointer;">HOME</b> &nbsp; &nbsp; <a class="logout" href="./model/logout.php"><b>LOGOUT</b></a>
         </h4>
         </div></div>
 

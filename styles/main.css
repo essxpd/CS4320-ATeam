@@ -33,7 +33,7 @@ body {
     line-height: 1.5em;
     color: #000000;
     background-color: #ffffff;
-    text-align: justify;
+    text-align: left;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -160,22 +160,18 @@ clip-path: polygon(0 0, 100% 0%, 100% 79%, 0% 100%);
 
 #pagecontainer
 {
-    max-width:70%;
+    width:100%;
 }
 
 .usercontainer
 {
-    margin-top: -100px;
-    background-color:white;
-    border: 1px #e9e9e9 solid;
-    border-radius:10px;
-    max-width:400px;
-    width:15%;
     position:absolute;
-    margin-left:70vw;
-/*-webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 75%, 75% 75%, 47% 100%, 50% 75%, 0% 75%);
-clip-path: polygon(0% 0%, 100% 0%, 100% 75%, 75% 75%, 47% 100%, 50% 75%, 0% 75%);
-    padding-bottom:80px; to be implemented later to give chat shape*/
+    top:0;
+    right:0;
+    text-align:right;
+    margin-right:1em;
+    max-width:400px;
+    width:30%;
 }
 
 .usercontainer p
@@ -185,8 +181,14 @@ clip-path: polygon(0% 0%, 100% 0%, 100% 75%, 75% 75%, 47% 100%, 50% 75%, 0% 75%)
 
 .logout
 {
-    padding-right:10%;
     text-align:right;
+    color:black;
+    transition: ease-in all.5s;
+}
+
+.logout:hover
+{
+    opacity:.6;
 }
 
 #security-role-form
@@ -302,4 +304,9 @@ clip-path: polygon(0 21%, 100% 0, 100% 100%, 0% 100%);
 .credits:hover
 {
     cursor:url('http://cur.cursors-4u.net/sports/spo-1/spo52.cur'), auto;
+}
+
+.ng-scope label
+{
+    margin-left:1em;
 }

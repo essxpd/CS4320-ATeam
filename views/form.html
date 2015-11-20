@@ -1,38 +1,36 @@
             <div class="usercontainer">
   <div class="userinfo">
-    <h4>Hello, <b>{{loggedInUser.Full_Name}}!</b><br>
-    <small>Your current FERPA score is <b>{{loggedInUser.Ferpa_Score}}.</b></small></h4>
-      
-      <p>You are currently viewing our submission form!</p>
-      
-      <p>Other functionality stuff can go here, in the event that we discover something else we'd like to add for navigation purposes.</p>
-      
-    <h4 class="logout">
-        <a href="./model/logout.php"><b>LOGOUT</b></a>
+      <h4>Hello, <b>{{loggedInUser.Full_Name}}!</b><br></h4>
+        <h4><b ng-click="goToHome()" style="cursor:pointer;">HOME</b> &nbsp; &nbsp; <a class="logout" href="./model/logout.php"><b>LOGOUT</b></a>
         </h4>
         </div></div>
 
 <div id="pagecontainer">
 
 <div class="container">
+    
+    <h2>Applicant Form &nbsp;<small><a ng-click="goToHome()" style="cursor:pointer;">Back to Home</a></small></h2> 
+    <hr>
 
 	<!--Auto Fill Bio Data-->
-    <p>Full Legal Name: {{loggedInUser.Full_Name}}</p>
-    <p>Title: {{loggedInUser.Title}}</p>
-    <p>Department: {{loggedInUser.Department}}</p>
-    <p>Pawprint/SSO: {{loggedInUser.SSO}}</p>
-    <p>Employee ID: {{loggedInUser.Employee_ID}}</p>
-    <p>Campus Address: {{loggedInUser.Campus_Address}}</p>
-    <p>Phone Number: {{loggedInUser.Phone_Number}}</p>
+    <p><b>Full Legal Name:</b> {{loggedInUser.Full_Name}}</p>
+    <p><b>Title:</b> {{loggedInUser.Title}}</p>
+    <p><b>Department:</b> {{loggedInUser.Department}}</p>
+    <p><b>Pawprint/SSO:</b> {{loggedInUser.SSO}}</p>
+    <p><b>Employee ID:</b> {{loggedInUser.Employee_ID}}</p>
+    <p><b>Campus Address:</b> {{loggedInUser.Campus_Address}}</p>
+    <p><b>Phone Number:</b> {{loggedInUser.Phone_Number}}</p>
+    
+    <hr>
     
     <div class="form-group">
-        <label for="requestApplication">Choose which application you would like to make a request for</label>
+        <label for="requestApplication">Please select which application you would like to make a request for:</label>
         <select class="form-control" ng-model="requestApplication" ng-options="app.name as app.name for app in applications" ng-change="appChanged(requestApplication)"></select>
     </div>
 
     <!-- Choose appropriate request type -->
     <div class="form-group">
-        <label for="requestType">Choose which type of request you would like to make:</label>
+        <label for="requestType">Please select which type of request you would like to make:</label>
         <select class="form-control" ng-model="requestType">
             <option value="new">New Request</option>
             <option value="additional">Additional Request</option>
@@ -41,7 +39,7 @@
     
     <!-- Are you a student worker? -->
     <div class="checkbox">
-        <label><input type="checkbox" ng-model="studentWorker"><b>Check if Student Worker</b></label>
+        <label><input id="studentworker" type="checkbox" ng-model="studentWorker"><b>Check if Student Worker</b></label>
     </div>
 
     <!-- Please describe why you need access? -->
@@ -79,21 +77,27 @@
             <input type="text" class="form-control" name="empId" ng-model="copySecurity.empId" required>
         </div>
     </form>
+    
+    
  <!--Drop Down Menu-->
-    <!-- cwm262 note: changed how this select group was working. Implemented ng-options -->
+    <!-- cwm262 note: changed how this select group was working. Implemented ng-options -->    
 	<div class="form-group" ng-show="askSecQuestions">
-		<label for="selectLevel">Requested Security Level: <small>*note: Update assumes access to View as well</small></label>
+		<label for="selectLevel">Requested Security Level:  &nbsp;&nbsp;<sub>PLEASE NOTE: Requesting 'UPDATE' assumes you are requesting to 'VIEW' as well.</sub></label>
         <select class="form-control" ng-model="selectedLevelQuestions" ng-options="levels.questionsArr as levels.type for levels in securityLevels"></select>
 	</div>	
 
     <!-- cwm262 note: Changed how this was working to coincide with change to above select group.-->
 	<div class="checkbox" ng-model="selectedLevelQuestions" ng-repeat="questionsArr in selectedLevelQuestions">
-			<p>{{questionsArr.number}}</p>
+			<h4>{{questionsArr.number}}</h4>
 			<div ng-repeat="questions in questionsArr.questions">
 				<p>{{questions.question}}</p>
-				<div ng-repeat="status in questions.status"><label><input type="checkbox" name="{{questionsArr.number}} : {{status}}" ng-click="setStatusOfCheckBox(status, questionsArr)" value="{{status}}">{{status}}</label></div>
+				<div ng-repeat="status in questions.status">
+                    <label>
+                        <input type="checkbox" name="{{questionsArr.number}} : {{status}}" ng-click="setStatusOfCheckBox(status, questionsArr)" value="{{status}}"><b>{{status}}</b>
+                    </label>
+                </div>
 			</div>
-			<p>------------------------------------------</p>
+			<hr>
 			<!--ng-click="questionsArr.selectedStatus.push(status); console.dir(securityLevels)"-->
 			<!--ng-click="setStatusOfCheckBox({{status}}, {{questionsArr.number}})"-->
 			<!--ng-model="questions.selectedStatus"-->

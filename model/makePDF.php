@@ -24,43 +24,43 @@ $dbhost = 'localhost';
 
 
 
-
+$stylesheet = file_get_contents('../styles/main.css');
 $mpdf->WriteHTML('
-	<link rel="stylesheet" href="../styles/PDFform.css">
+    <link rel="stylesheet" href="../styles/PDFform.css">
 	<h1>myZou SECURITY Request Form</h1>
 	<h2>University of Missouri - Columbia </h2>
 	<hr>
 	<table>
 		<tr>
 			<td>
-				Name: ' . $arr['Full_Name'] .'
+				<b>Name:</b> ' . $arr['Full_Name'] .'
 			</td>
 			<td>
-				SSO: ' . $arr['SSO'] .'
-			</td>
-		</tr>
-		<tr>
-			<td>
-				Title: ' . $arr['Title'] .'
-			</td>
-			<td>
-				Employee ID: ' . $arr['Employee_ID'] .'
+				<b>SSO:</b> ' . $arr['SSO'] .'
 			</td>
 		</tr>
 		<tr>
 			<td>
-				Department: ' . $arr['Department'] .'
+				<b>Title:</b> ' . $arr['Title'] .'
 			</td>
 			<td>
-				Campus Address: ' . $arr['Campus_Address'] .'
+				<b>Employee ID:</b> ' . $arr['Employee_ID'] .'
 			</td>
 		</tr>
 		<tr>
 			<td>
-				Phone Number: ' . $arr['Phone_Number'] .'
+				<b>Department:</b> ' . $arr['Department'] .'
 			</td>
 			<td>
-				Ferpa Score: ' . $arr['Ferpa_Score'] .'
+				<b>Campus Address:</b> ' . $arr['Campus_Address'] .'
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<b>Phone Number:</b> ' . $arr['Phone_Number'] .'
+			</td>
+			<td>
+				<b>FERPA Score:</b> ' . $arr['Ferpa_Score'] .'
 			</td>
 		</tr>
 	</table>
