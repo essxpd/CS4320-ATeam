@@ -8,8 +8,8 @@ require("dbconnect.php");
 #               echo"<br> heading to first if";
 				$query1 = "SELECT Salt, Password_Hash FROM authentication WHERE SSO = ". $user;
 #                echo "<br>".$query1."<br>";
-				$result = mysqli_query($conn, $query1) or die('Getting salt and password_hash failed: '.mysqli_error());;
-                
+				//$result = mysqli_query($conn, $query1) or die('Getting salt and password_hash failed: '.mysqli_error());;
+                $result = mysqli_query($conn, $query1) or die(header('Location: ' . '../login.php'));;
 #				echo "<br> made it to begining of first if";
 				$row1 = mysqli_fetch_assoc($result);
 				$localhash = sha1($row1['Salt'].$pw);
@@ -56,7 +56,7 @@ require("dbconnect.php");
 							echo " -" .$action;
                 }
                 else
-                        exit("Invalid login credentials");
+                        header('Location: ' . 'login.php');
 
             	if($result3 = $conn->query("SELECT * FROM users WHERE SSO = ".$user)){
                 	$row3 = $result3->fetch_assoc();
