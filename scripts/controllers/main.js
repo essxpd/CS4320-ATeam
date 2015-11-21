@@ -282,20 +282,38 @@ angular.module('cs4320aTeamApp')
                 var copySec = information.copySecurityRequest;
 				//if the user copied another user then print out that users bio data
                 if(copySec){
-                    var htmlObject = "<p><h4>Copy Security Request</h4></p><br>";
+					var htmlObject = "";
+					//console.log(information);
+					//console.log(copySec);
+					//console.log(information.isApprovedByAdmin);
+					//if the user was approved by the employer then show that, else do not show that
+					if(information.isApprovedByEmployer == "true"){
+						htmlObject = htmlObject + "<p><b>Your Employer has approved your form!</b></p>";
+					}else{
+						htmlObject = htmlObject + "<p><b>Your Employer has not yet approved your form.</b></p>";	
+					}
+					//if the user was approved by the admin then show that, else do not show that
+					if(information.isApprovedByAdmin == "true"){
+						htmlObject = htmlObject + "<p><b>Administrative staff have approved your form!</b></p>";						
+					}else{
+						htmlObject = htmlObject + "<p><b>Administrative staff have not yet approved your form!</b></p>";	
+					}
+					htmlObject = htmlObject + "<hr>";
+                    htmlObject = htmlObject + "<p><h4>Copy Security Request</h4></p>";
                     angular.forEach(copySec, function(value, key){
                         angular.forEach(value, function(v, k){
                             if(k == "isCurrentEmployee"){
-                                htmlObject = htmlObject + "<p>Copy Security for CURRENT Employee</p><br>";
+                                htmlObject = htmlObject + "<p>Copy Security for CURRENT Employee</p><ul>";
                             }
                             else if(k == "isFormerEmployee"){
-                                htmlObject = htmlObject + "<p>Copy Security for FORMER Employee</p><br>";
+                                htmlObject = htmlObject + "<p>Copy Security for FORMER Employee</p><ul>";
                             }
                             else{
-                                htmlObject = htmlObject + "<p>" + k + ": " + v + "</p><br>";
+                                htmlObject = htmlObject + "<li>" + k + ": " + v + "</li>";
                             }
                         });    
                     });
+					htmlObject = htmlObject + "</ul>";
                 }
 				//else if the user created a new submissions for themselves then parse through everything
                 else{
