@@ -146,6 +146,9 @@
             </tbody>
         </table>
     </div>
+	<br>
+	<hr>
+	<h2>Create Form</h2>
         <!--Instruction Set-->
         <div class="center-block">
                 <br>
