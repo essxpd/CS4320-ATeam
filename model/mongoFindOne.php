@@ -27,13 +27,12 @@
         $collection = $db->$dataTable;
 		$searchArray = array('_id' => $id);
         if($userType == 'admin'){
-            $updateArray = array('isApprovedByAdmin' => true);
+            $updateArray = array('isApprovedByAdmin' => 'true');
         }
         else{
-            $updateArray = array('isApprovedByEmployer' => true);
+            $updateArray = array('isApprovedByEmployer' => 'true');
         }
-		$cursor = $collection->findAndModify($searchArray, array('$set' => $updateArray), array('new' => true));
-		$jsonArr = (json_encode(iterator_to_array($cursor)));
-		echo $jsonArr;
+		$cursor = $collection->findAndModify($searchArray, array('$set' => $updateArray), array('new' => 'true'));
+		echo "success";
     }
 ?>
