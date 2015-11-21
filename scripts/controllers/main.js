@@ -38,7 +38,7 @@ angular.module('cs4320aTeamApp')
         
         if($scope.loggedInUser && userType == 'user'){
             $http.get('./model/mongoFindAll.php?paw=' + $scope.loggedInUser.SSO).then(function(response){
-                $scope.prevForms = response.data;    
+                $scope.prevForms = response.data;
             });
         }
         if($scope.loggedInUser.User_Type == 'admin' && userType == 'admin'){
@@ -178,9 +178,8 @@ angular.module('cs4320aTeamApp')
 			type: "POST",
 			url: './model/mongoFindOne.php',
 			data: {id: id, userType: userType},
-			dataType: "JSON",
 			success: function(response){
-                refresh(userType);
+                $window.location.reload();
             }
         });
     }
@@ -347,7 +346,8 @@ angular.module('cs4320aTeamApp')
 		//Error Message if fields haven't been entered.
 		$scope.saveError = "";
 
-		var date = new Date();
+        var shortDateFormat = 'MM-dd-yyyy  HH:mm:ss';
+		var date = jQuery.format.date(new Date(), shortDateFormat);
 
 		//JSON obj to be pushed to mongo // To be changed: swap $scope variables with non-dummy login-acquired data
 		var newData = {

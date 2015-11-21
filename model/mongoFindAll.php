@@ -10,7 +10,8 @@
 	// Operations
 	$method = $_SERVER['REQUEST_METHOD'];
     if($method == 'GET' && $_GET['req'] == 'admin'){
-        $where = array('isApprovedByAdmin' => 'false', 'isApprovedByEmployer' => 'true');
+        //$where = array('isApprovedByAdmin' => 'false', 'isApprovedByEmployer' => 'true');
+        $where = array( '$and' => array( array('isApprovedByEmployer' => 'true'), array('isApprovedByAdmin' => 'false') ) );
         $collection = $db->$dataTable;
         $cursor = $collection->find($where);
         $jsonArr = json_encode(iterator_to_array($cursor));
