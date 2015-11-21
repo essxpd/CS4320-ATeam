@@ -8,6 +8,7 @@ angular.module('cs4320aTeamApp')
 	$scope.roleNames = [];
 	$scope.form = "";
 	$scope.addedRoles = [];
+	$scope.toggle = false;
 
 	//User data is stored here.
 	$scope.loggedInUser = data.data;

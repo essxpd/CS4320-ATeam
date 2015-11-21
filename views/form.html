@@ -87,22 +87,23 @@
 	</div>	
 
     <!-- cwm262 note: Changed how this was working to coincide with change to above select group.-->
-	<div class="checkbox" ng-model="selectedLevelQuestions" ng-repeat="questionsArr in selectedLevelQuestions">
-			<h4>{{questionsArr.number}}</h4>
-			<div ng-repeat="questions in questionsArr.questions">
-				<p>{{questions.question}}</p>
-				<div ng-repeat="status in questions.status">
-                    <label>
-                        <input type="checkbox" name="{{questionsArr.number}} : {{status}}" ng-click="setStatusOfCheckBox(status, questionsArr)" value="{{status}}"><b>{{status}}</b>
-                    </label>
-                </div>
+	<div ng-show='!toggle'>
+		<div class="checkbox" ng-model="selectedLevelQuestions" ng-repeat="questionsArr in selectedLevelQuestions">
+				<h4>{{questionsArr.number}}</h4>
+				<div ng-repeat="questions in questionsArr.questions">
+					<p>{{questions.question}}</p>
+					<div ng-repeat="status in questions.status">
+			    <label>
+				<input type="checkbox" name="{{questionsArr.number}} : {{status}}" ng-click="setStatusOfCheckBox(status, questionsArr)" value="{{status}}"><b>{{status}}</b>
+			    </label>
 			</div>
-			<hr>
-			<!--ng-click="questionsArr.selectedStatus.push(status); console.dir(securityLevels)"-->
-			<!--ng-click="setStatusOfCheckBox({{status}}, {{questionsArr.number}})"-->
-			<!--ng-model="questions.selectedStatus"-->
-	</div>
-    
+				</div>
+				<hr>
+				<!--ng-click="questionsArr.selectedStatus.push(status); console.dir(securityLevels)"-->
+				<!--ng-click="setStatusOfCheckBox({{status}}, {{questionsArr.number}})"-->
+				<!--ng-model="questions.selectedStatus"-->
+		</div>
+    	</div>
         <h2 class="error">{{saveError}}</h2>
     
     <button type="button" ng-click="saveRequest()">SUBMIT</button>   
