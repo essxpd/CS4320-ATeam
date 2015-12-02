@@ -59,14 +59,9 @@
         </uib-accordion-heading>
 
         <table class="table">
-            <thead>
-                <tr>
-                    <th>Forms Listed by Date Submitted</th>
-                </tr>
-            </thead>
             <tbody>
-                <tr ng-repeat="form in prevForms | orderBy: '-date'">
-                    <td><a ng-click="mongoForm(form._id, form.date)">{{form.date}}</a></td>
+                <tr ng-repeat="form in prevForms" ng-class="{'rejected' : form.isRejected == 'true'}">
+                    <td><a ng-click="mongoForm(form._id, form.date)">{{form.date}}</a><span ng-if="form.isRejected == 'true'">&nbsp; &nbsp;<b>REJECTED</b></span></td>
                    <!-- <td><button class="btn btn-primary" ng-click="mongoForm(form._id)">View</button></td> -->
                 </tr>
             </tbody>

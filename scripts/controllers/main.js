@@ -194,6 +194,17 @@ angular.module('cs4320aTeamApp')
             }
         });
     }
+    
+    $scope.rejectForm = function(id){
+        $.ajax({
+            type: "POST",
+            url: './model/mongoFindOne.php',
+            data: {id: id, action: "reject"},
+            success: function(response){
+                $window.location.reload();
+            }
+        });    
+    }
 
 	//NgHide and NgShow to control whether security access questions are revealed
 	$scope.askSecQuestions = true;
@@ -287,17 +298,24 @@ angular.module('cs4320aTeamApp')
 					//console.log(copySec);
 					//console.log(information.isApprovedByAdmin);
 					//if the user was approved by the employer then show that, else do not show that
-					if(information.isApprovedByEmployer == "true"){
-						htmlObject = htmlObject + "<p><b>Your Employer has approved your form!</b></p>";
-					}else{
-						htmlObject = htmlObject + "<p><b>Your Employer has not yet approved your form.</b></p>";	
-					}
-					//if the user was approved by the admin then show that, else do not show that
-					if(information.isApprovedByAdmin == "true"){
-						htmlObject = htmlObject + "<p><b>Administrative staff have approved your form!</b></p>";						
-					}else{
-						htmlObject = htmlObject + "<p><b>Administrative staff have not yet approved your form!</b></p>";	
-					}
+                    if(information.isRejected == "true"){
+                        htmlObject = htmlObject + "<p><b>Your form has been rejected.</b></p>";
+                    }
+                    else{
+                        if(information.isApprovedByEmployer == "true"){
+                            htmlObject = htmlObject + "<p><b>Your Employer has approved your form!</b></p>";
+                        }
+                        else{
+                            htmlObject = htmlObject + "<p><b>Your Employer has not yet approved your form.</b></p>";	
+                        }
+                        //if the user was approved by the admin then show that, else do not show that
+                        if(information.isApprovedByAdmin == "true"){
+                            htmlObject = htmlObject + "<p><b>Administrative staff have approved your form!</b></p>";						
+                        }else{
+                            htmlObject = htmlObject + "<p><b>Administrative staff have not yet approved your form!</b></p>";	
+                        }
+                        
+                    }
 					htmlObject = htmlObject + "<hr>";
                     htmlObject = htmlObject + "<p><h4>Copy Security Request</h4></p>";
                     angular.forEach(copySec, function(value, key){
@@ -319,17 +337,24 @@ angular.module('cs4320aTeamApp')
                 else{
                     var htmlObject = "";
 					//if the user was approved by the employer then show that, else do not show that
-					if(information.isApprovedByEmployer == "true"){
-						htmlObject = htmlObject + "<p><b>Your Employer has approved your form!</b></p>";
-					}else{
-						htmlObject = htmlObject + "<p><b>Your Employer has not yet approved your form.</b></p>";	
-					}
-					//if the user was approved by the admin then show that, else do not show that
-					if(information.isApprovedByAdmin == "true"){
-						htmlObject = htmlObject + "<p><b>Administrative staff have approved your form!</b></p>";						
-					}else{
-						htmlObject = htmlObject + "<p><b>Administrative staff have not yet approved your form!</b></p>";	
-					}
+					if(information.isRejected == "true"){
+                        htmlObject = htmlObject + "<p><b>Your form has been rejected.</b></p>";
+                    }
+                    else{
+                        if(information.isApprovedByEmployer == "true"){
+                            htmlObject = htmlObject + "<p><b>Your Employer has approved your form!</b></p>";
+                        }
+                        else{
+                            htmlObject = htmlObject + "<p><b>Your Employer has not yet approved your form.</b></p>";	
+                        }
+                        //if the user was approved by the admin then show that, else do not show that
+                        if(information.isApprovedByAdmin == "true"){
+                            htmlObject = htmlObject + "<p><b>Administrative staff have approved your form!</b></p>";						
+                        }else{
+                            htmlObject = htmlObject + "<p><b>Administrative staff have not yet approved your form!</b></p>";	
+                        }
+                        
+                    }
 					htmlObject = htmlObject + "<hr>";
                     var instanceCounter;
 					//for every security level get the security states and all requested statuses
@@ -384,9 +409,10 @@ angular.module('cs4320aTeamApp')
 		//Error Message if fields haven't been entered.
 		$scope.saveError = "";
 
-        var shortDateFormat = 'MM-dd-yyyy  HH:mm:ss';
-		var date = jQuery.format.date(new Date(), shortDateFormat);
-
+        //var shortDateFormat = 'yyyy-MM-dd HH:mm:ss';
+		//var date = jQuery.format.date(new Date(), shortDateFormat);
+        var date = new Date();
+        
 		//JSON obj to be pushed to mongo
 		var newData = {
 			"date" : date,
@@ -403,6 +429,7 @@ angular.module('cs4320aTeamApp')
 			"explainRequest" : $sanitize($scope.explainRequest),
             "isApprovedByAdmin": false,
             "isApprovedByEmployer": false,
+            "isRejected": false,
 			"securityLevels" : $scope.securityLevels
 		};
 
@@ -435,6 +462,7 @@ angular.module('cs4320aTeamApp')
                 "explainRequest" : $sanitize($scope.explainRequest),
                 "isApprovedByAdmin": false,
                 "isApprovedByEmployer": false,
+                "isRejected": false,
                 "copySecurityRequest" : $scope.copySecurity
             };
 

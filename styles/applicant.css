@@ -42,3 +42,8 @@ a:hover
 {
     float:right;
 }
+
+.rejected
+{
+    background-color: firebrick;
+}
