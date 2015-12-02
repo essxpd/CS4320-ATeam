@@ -60,8 +60,8 @@
 
         <table class="table">
             <tbody>
-                <tr ng-repeat="form in prevForms" ng-class="{'rejected' : form.isRejected == 'true'}">
-                    <td><a ng-click="mongoForm(form._id, form.date)">{{form.date}}</a><span ng-if="form.isRejected == 'true'">&nbsp; &nbsp;<b>REJECTED</b></span></td>
+                <tr ng-repeat="form in prevForms" ng-class="{'rejected' : form.isRejected == 'true', 'approved' : form.isApprovedByAdmin == 'true' && form.isApprovedByEmployer == 'true'}">
+                    <td><a ng-click="mongoForm(form._id, form.date)">{{form.date}}</a><span ng-if="form.isRejected == 'true'">&nbsp; &nbsp;<b>REJECTED</b></span><span ng-if="form.isApprovedByAdmin == 'true' && form.isApprovedByEmployer == 'true'">&nbsp; &nbsp<b>APPROVED</b></span></td>
                    <!-- <td><button class="btn btn-primary" ng-click="mongoForm(form._id)">View</button></td> -->
                 </tr>
             </tbody>

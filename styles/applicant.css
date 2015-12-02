@@ -47,3 +47,8 @@ a:hover
 {
     background-color: firebrick;
 }
+
+.approved
+{
+    background-color: palegreen;
+}
