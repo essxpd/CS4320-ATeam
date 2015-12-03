@@ -615,7 +615,11 @@ angular.module('cs4320aTeamApp')
                                         'update': $scope.role.update,
                                         'view': $scope.role.view });
                 console.log($scope.role.view);
-
+		$scope.role.name = "";
+		$scope.role.description = "";
+		$scope.role.update = false;
+		$scope.role.view = false;
+		$('#roleName').focus();
 	};
 	//scope function to remove a role
 	$scope.removeRole = function(removal) {
