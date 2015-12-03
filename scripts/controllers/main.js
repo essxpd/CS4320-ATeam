@@ -1,5 +1,5 @@
 angular.module('cs4320aTeamApp')
-    .controller('MainCtrl', function($scope, $location, $http, $window, $sanitize, $timeout, data){
+    .controller('MainCtrl', function($scope, $location, $http, $window, $sanitize, $timeout, data, $q){
 	/*Variables for the users role */
 	$scope.isopen = false;
 	$scope.role = "";
@@ -46,8 +46,15 @@ angular.module('cs4320aTeamApp')
 		//if the user is an admin then get admin data from mongoDB
         if($scope.loggedInUser.User_Type == 'admin' && userType == 'admin'){
             $http.get('./model/mongoFindAll.php?req=admin').then(function(response){
-                $scope.adminForms = response.data;
+                $scope.adminForms = response.data;  
             });
+            $http.get('./model/mongoFindAll.php?req=process').then(function(response){
+                $scope.rdyForms = response.data;    
+            });
+            $q.all([$scope.adminForms, $scope.rdyForms]).then(function(arrayOfResults){
+                $scope.currentPath === '/admin';    
+            });
+            
         }
 		//if the user is an employer then refresh the page given a department
         if($scope.loggedInUser.User_Type == 'employer' && userType == 'employer')
@@ -193,7 +200,7 @@ angular.module('cs4320aTeamApp')
                 $window.location.reload();
             }
         });
-    }
+    };
     
     $scope.rejectForm = function(id){
         $.ajax({
@@ -204,7 +211,18 @@ angular.module('cs4320aTeamApp')
                 $window.location.reload();
             }
         });    
-    }
+    };
+    
+    $scope.processForm = function(id){
+        $.ajax({
+            type: "POST",
+            url: './model/mongoFindOne.php',
+            data: {id: id, action: "process"},
+            success: function(response){
+                $window.location.reload();
+            }
+        });    
+    };
 
 	//NgHide and NgShow to control whether security access questions are revealed
 	$scope.askSecQuestions = true;
@@ -430,6 +448,7 @@ angular.module('cs4320aTeamApp')
             "isApprovedByAdmin": false,
             "isApprovedByEmployer": false,
             "isRejected": false,
+            "isProcessed": false,
 			"securityLevels" : $scope.securityLevels
 		};
 
@@ -463,6 +482,7 @@ angular.module('cs4320aTeamApp')
                 "isApprovedByAdmin": false,
                 "isApprovedByEmployer": false,
                 "isRejected": false,
+                "isProcessed": false,
                 "copySecurityRequest" : $scope.copySecurity
             };
 

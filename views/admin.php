@@ -60,6 +60,27 @@
             </uib-accordion-group>
 
       </uib-accordion>
+        
+        <uib-accordion>
+    
+            <uib-accordion-group>
+
+                <uib-accordion-heading>
+                    Forms Ready For Data Entry <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
+                </uib-accordion-heading>
+
+                <table class="table">
+                    <tbody>
+                        <tr ng-repeat="rdy in rdyForms">
+                            <td><a ng-click="mongoForm(rdy._id, rdy.date)">{{rdy.date}}</a></td>
+                            <td><button type="button" ng-click="processForm(rdy._id)">Processed</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </uib-accordion-group>
+
+      </uib-accordion>
         <!--Previous Submissions-->
 	<div ng-app="accordion" class="accordion-test">
 		<uib-accordion>

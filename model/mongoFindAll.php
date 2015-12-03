@@ -17,6 +17,13 @@
         $jsonArr = json_encode(iterator_to_array($cursor));
         echo $jsonArr;
     }
+    else if($method == 'GET' && $_GET['req'] == 'process'){
+        $where = array( '$and' => array( array('isApprovedByEmployer' => 'true'), array('isApprovedByAdmin' => 'true'), array('isProcessed' => 'false')) );
+        $collection = $db->$dataTable;
+        $cursor = $collection->find($where);
+        $jsonArr = json_encode(iterator_to_array($cursor));
+        echo $jsonArr;
+    }
 	else if($method == 'GET' && isset($_GET['dept']))
     {
         $dept = $_GET['dept'];

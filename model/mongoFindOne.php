@@ -30,7 +30,19 @@
 		$cursor = $collection->findAndModify($searchArray, array('$set' => $updateArray), array('new' => 'true'));
 		echo "success";
     }
-    else if($method == 'POST'){
+    else if($method == 'POST' && $action == 'process'){
+        $tempId = $_POST["id"];
+        foreach($tempId as $value){
+            $id = $value;
+        }
+        $id = new MongoId($id);
+        $collection = $db->$dataTable;
+		$searchArray = array('_id' => $id);
+        $updateArray = array('isProcessed' => 'true');
+		$cursor = $collection->findAndModify($searchArray, array('$set' => $updateArray), array('new' => 'true'));
+		echo "success";   
+    }
+    else if($method == 'POST' && isset($_POST["userType"])){
         $tempId = $_POST["id"];
         $userType = $_POST["userType"];
         foreach($tempId as $value){
