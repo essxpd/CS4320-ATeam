@@ -170,14 +170,8 @@
     </div>
 	<br>
 	<hr>
-	<h2>Create Form</h2>
         <!--Instruction Set-->
         <div class="center-block">
-                <br>
-		<h4>Instructions: </h4>
-                <p>Instructions to create new forms...</p>
-                <br>
-                <br>
                 <input type="button" class="btn btn-default btn-lg" ng-click="createForm()" value="Create new form">
         </div>
         <br>
